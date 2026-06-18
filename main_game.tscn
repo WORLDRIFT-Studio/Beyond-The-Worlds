@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://mbfm4y7umcos"]
+
+[ext_resource type="PackedScene" uid="uid://dy3y43v4fky1j" path="res://gruby-col.glb" id="1_1oj5k"]
+[ext_resource type="PackedScene" uid="uid://gcapyibi0dp8" path="res://free_cam.tscn" id="1_ykeeq"]
+[ext_resource type="PackedScene" uid="uid://bbalg6dcuipww" path="res://test_arena.tscn" id="3_6bm6p"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_yx7mw"]
+sky_top_color = Color(0.10829178, 0.50428545, 0.5544404, 1)
+sky_horizon_color = Color(0.40894184, 0.66423446, 0.9890948, 1)
+sky_curve = 0.01845763
+ground_bottom_color = Color(0.09557185, 3.137824e-05, 0.12524828, 1)
+ground_horizon_color = Color(0.6795964, 0.56950706, 1, 1)
+ground_curve = 0.06276706
+ground_energy_multiplier = 1.2
+sun_angle_max = 151.45
+sun_curve = 1.1591289
+energy_multiplier = 3.88
+
+[sub_resource type="Sky" id="Sky_yx7mw"]
+sky_material = SubResource("ProceduralSkyMaterial_yx7mw")
+
+[sub_resource type="Environment" id="Environment_iwlnr"]
+background_mode = 2
+background_color = Color(0.69440806, 0.779026, 1, 1)
+sky = SubResource("Sky_yx7mw")
+ssr_enabled = true
+glow_enabled = true
+glow_blend_mode = 0
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.02
+volumetric_fog_albedo = Color(0.24104936, 0.08918684, 0.23774801, 1)
+
+[node name="Master" type="Node3D" unique_id=749043557]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1844801500]
+environment = SubResource("Environment_iwlnr")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=599780670]
+transform = Transform3D(0.025812179, -0.56061125, -0.82767665, -0.25035217, 0.79794323, -0.54827946, 0.96781063, 0.22136292, -0.11975361, 97.86211, 50.873253, -181.30513)
+light_color = Color(0.8462353, 0.5916802, 0, 1)
+light_energy = 1.159
+shadow_enabled = true
+
+[node name="FreeCam" parent="." unique_id=1186657965 instance=ExtResource("1_ykeeq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+
+[node name="gruby" parent="." unique_id=1853275922 instance=ExtResource("1_1oj5k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 72, 4, -51)
+
+[node name="test_arena" parent="." unique_id=776285244 instance=ExtResource("3_6bm6p")]
+
+[editable path="FreeCam"]
