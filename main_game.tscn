@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://dy3y43v4fky1j" path="res://gruby-col.glb" id="1_1oj5k"]
 [ext_resource type="PackedScene" uid="uid://gcapyibi0dp8" path="res://free_cam.tscn" id="1_ykeeq"]
 [ext_resource type="PackedScene" uid="uid://bbalg6dcuipww" path="res://test_arena.tscn" id="3_6bm6p"]
+[ext_resource type="Script" uid="uid://viv07me8fm8u" path="res://orbital_cam.gd" id="4_6bm6p"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_yx7mw"]
 sky_top_color = Color(0.10829178, 0.50428545, 0.5544404, 1)
@@ -35,16 +36,28 @@ volumetric_fog_albedo = Color(0.24104936, 0.08918684, 0.23774801, 1)
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1844801500]
 environment = SubResource("Environment_iwlnr")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=599780670]
+[node name="Sun" type="DirectionalLight3D" parent="." unique_id=599780670]
 transform = Transform3D(0.025812179, -0.56061125, -0.82767665, -0.25035217, 0.79794323, -0.54827946, 0.96781063, 0.22136292, -0.11975361, 97.86211, 50.873253, -181.30513)
 light_color = Color(0.8462353, 0.5916802, 0, 1)
 light_energy = 1.159
 shadow_enabled = true
 
+[node name="CamTarget" type="Node3D" parent="." unique_id=455476269]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 82.35849, 0, -87.04098)
+script = ExtResource("4_6bm6p")
+
+[node name="CamGimbal" type="Node3D" parent="CamTarget" unique_id=1257993883]
+unique_name_in_owner = true
+
+[node name="Camera3D" type="Camera3D" parent="CamTarget/CamGimbal" unique_id=837070252]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 0.81915206, 0.57357645, 0, -0.57357645, 0.81915206, 0, 40, 100)
+
 [node name="FreeCam" parent="." unique_id=1186657965 instance=ExtResource("1_ykeeq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+visible = false
 
-[node name="gruby" parent="." unique_id=1853275922 instance=ExtResource("1_1oj5k")]
+[node name="TestEnemy" parent="." unique_id=1853275922 instance=ExtResource("1_1oj5k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 72, 4, -51)
 
-[node name="test_arena" parent="." unique_id=776285244 instance=ExtResource("3_6bm6p")]
+[node name="TestingArena" parent="." unique_id=776285244 instance=ExtResource("3_6bm6p")]

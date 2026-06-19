@@ -16,7 +16,7 @@ func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 func _physics_process(delta: float) -> void:
-	var input_dir: Vector2 = Input.get_vector("move_left", "move_right", "move_toward", "move_backward")
+	var input_dir: Vector2 = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
 	var move_up_down: float = 0.0
 	
 	if Input.is_action_pressed("move_up"):
@@ -27,9 +27,9 @@ func _physics_process(delta: float) -> void:
 	var dir: Vector3 = (camera.transform.basis * Vector3(input_dir.x, move_up_down, input_dir.y)).normalized()
 	
 	if dir:
-		velocity = velocity.move_toward(dir * speed, 20.0 * delta)
+		velocity = velocity.move_toward(dir * speed, 200.0 * delta)
 	else:
-		velocity = velocity.move_toward(Vector3.ZERO, 40.0 * delta)
+		velocity = velocity.move_toward(Vector3.ZERO, 200.0 * delta)
 	
 	move_and_slide()
 	
