@@ -8,7 +8,7 @@ extends CharacterBody3D
 #endregion
 
 #region Nodes
-@onready var camera: Camera3D = %Camera3D
+@onready var _camera: Camera3D = %Camera3D
 #endregion
 
 #region Logic
@@ -24,7 +24,7 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("move_down"):
 		move_up_down -= gravity
 		
-	var dir: Vector3 = (camera.transform.basis * Vector3(input_dir.x, move_up_down, input_dir.y)).normalized()
+	var dir: Vector3 = (_camera.transform.basis * Vector3(input_dir.x, move_up_down, input_dir.y)).normalized()
 	
 	if dir:
 		velocity = velocity.move_toward(dir * speed, 200.0 * delta)
@@ -35,10 +35,10 @@ func _physics_process(delta: float) -> void:
 	
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
-		camera.rotation.y -= (PI * event.relative.x * sensitive)
-		camera.rotation.x -= (PI * event.relative.y * sensitive)
+		_camera.rotation.y -= (PI * event.relative.x * sensitive)
+		_camera.rotation.x -= (PI * event.relative.y * sensitive)
 
-		camera.rotation.x = clampf(camera.rotation.x, -PI/2, PI/2)
+		_camera.rotation.x = clampf(_camera.rotation.x, -PI/2, PI/2)
 		
 	
 #endregion
