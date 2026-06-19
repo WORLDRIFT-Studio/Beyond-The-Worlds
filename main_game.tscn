@@ -48,5 +48,3 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 72, 4, -51)
 
 [node name="test_arena" parent="." unique_id=776285244 instance=ExtResource("3_6bm6p")]
-
-[editable path="FreeCam"]
