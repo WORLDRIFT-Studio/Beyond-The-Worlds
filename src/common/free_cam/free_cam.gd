@@ -1,9 +1,19 @@
 extends CharacterBody3D
 
+## Skrypt kontrolujący pracę free camery.
+##
+## Odpowiada za swobodne poruszanie się kamery w przestrzeni 3D za pomocą klawiatury (WASD + SHIFT/SPACE) oraz obrót kamery za pomocą myszy.
+
+
 #region Move Parameters
 @export_category("Move parameters")
+## Czułość obrotu kamery. Wyższe wartości oznaczają szybszy obrót. Zakres od 0.001 do 1, z krokiem 0.01.
 @export_range(0.001, 1, 0.01, "prefer_slider") var sensitive: float = 0.001
+
+## Prędkość poruszania się kamery. Wyższe wartości oznaczają szybsze poruszanie się. Zakres od 10 do 100, z krokiem 0.1.
 @export_range(10, 100, 0.1, "prefer_slider") var speed: float = 5.0
+
+##	Siła grawitacji działająca na kamerę. Wyższe wartości oznaczają silniejszą grawitację (szybsze opadanie). Zakres od 1 do 10, z krokiem 0.5.
 @export_range(1, 10, 0.5, "prefer_slider") var gravity: float = 5.0
 #endregion
 
