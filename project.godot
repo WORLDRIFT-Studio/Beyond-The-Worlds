@@ -13,6 +13,12 @@ config_version=5
 config/name="Beyon The Worlds"
 config/features=PackedStringArray("4.7", "Forward Plus")
 
+[autoload]
+
+AudioManager="*uid://1xqq2lyvll1f"
+Events="*uid://dlu5kp25t77a8"
+GameManager="*uid://b6qvdre8yjiw1"
+
 [display]
 
 window/size/viewport_width=1920

@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://dy3y43v4fky1j"
-path="res://.godot/imported/gruby-col.glb-9711e65f4429351c5a8938b5d11cea64.scn"
+uid="uid://b8brap681ft0d"
+path="res://.godot/imported/test_enemy.glb-9f10d29e8bc30b59312ae9067d72c219.scn"
 
 [deps]
 
-source_file="res://gruby-col.glb"
-dest_files=["res://.godot/imported/gruby-col.glb-9711e65f4429351c5a8938b5d11cea64.scn"]
+source_file="res://src/enemies/test_enemy.glb"
+dest_files=["res://.godot/imported/test_enemy.glb-9f10d29e8bc30b59312ae9067d72c219.scn"]
 
 [params]
 
