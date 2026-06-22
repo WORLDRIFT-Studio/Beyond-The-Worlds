@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://jfvvwru1ymiu"]
 
-[ext_resource type="Script" uid="uid://viv07me8fm8u" path="res://orbital_cam.gd" id="1_tqvdp"]
+[ext_resource type="Script" uid="uid://3y7u1jtk7mt" path="res://src/common/orbital_cam/orbital_cam.gd" id="1_tqvdp"]
 
 [node name="CamTarget" type="Node3D" unique_id=1625004831]
 script = ExtResource("1_tqvdp")

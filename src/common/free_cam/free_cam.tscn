@@ -1,12 +1,11 @@
 [gd_scene format=3 uid="uid://gcapyibi0dp8"]
 
-[ext_resource type="Script" uid="uid://do8xcmws285aq" path="res://src/common/free_cam/free_cam.gd" id="1_k0xph"]
+[ext_resource type="Script" uid="uid://bdpmyvabj57it" path="res://src/common/free_cam/free_cam.cs" id="1_k0xph"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_iwlnr"]
 
 [node name="FreeCam" type="CharacterBody3D" unique_id=1186657965]
 script = ExtResource("1_k0xph")
-speed = 70.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2047504621]
 shape = SubResource("SphereShape3D_iwlnr")
