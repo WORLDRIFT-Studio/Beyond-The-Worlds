@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://bbalg6dcuipww"]
+
+[ext_resource type="PackedScene" uid="uid://bdq2uem5k4p1i" path="res://src/levels/level_test/test_arena.glb" id="1_haekg"]
+[ext_resource type="Shader" uid="uid://dtj0slqivy8qu" path="res://src/common/arena_wave.gdshader" id="2_oein3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2rkrw"]
+render_priority = 0
+shader = ExtResource("2_oein3")
+shader_parameter/amplitude = 0.2
+shader_parameter/speed = 2.0
+shader_parameter/phase = 0.0
+
+[node name="test_arena" unique_id=776285244 instance=ExtResource("1_haekg")]
+
+[node name="Cylinder" parent="." index="0" unique_id=982050839]
+unique_name_in_owner = true
+material_override = SubResource("ShaderMaterial_2rkrw")

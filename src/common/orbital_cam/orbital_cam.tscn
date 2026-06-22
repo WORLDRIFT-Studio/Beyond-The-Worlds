@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://jfvvwru1ymiu"]
+
+[ext_resource type="Script" uid="uid://3y7u1jtk7mt" path="res://src/common/orbital_cam/orbital_cam.gd" id="1_tqvdp"]
+
+[node name="CamTarget" type="Node3D" unique_id=1625004831]
+script = ExtResource("1_tqvdp")
+
+[node name="CamGimbal" type="Node3D" parent="." unique_id=1368057669]
+unique_name_in_owner = true
+
+[node name="Camera3D" type="Camera3D" parent="CamGimbal" unique_id=1044530050]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 0.81915206, 0.57357645, 0, -0.57357645, 0.81915206, 0, 40, 100)
