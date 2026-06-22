@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://gcapyibi0dp8"]
 
-[ext_resource type="Script" uid="uid://bdpmyvabj57it" path="res://src/common/free_cam/free_cam.cs" id="1_k0xph"]
+[ext_resource type="Script" uid="uid://bdpmyvabj57it" path="res://src/common/free_cam/FreeCam.cs" id="1_k0xph"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_iwlnr"]
 
