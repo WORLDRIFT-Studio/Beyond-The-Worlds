@@ -5,19 +5,17 @@ public partial class SpawnSystem : Node3D
 	[Export] public PackedScene EnemyScene {get;set;}
 	[Export] public MeshInstance3D SpawnArea {get;set;}
 
-	[Export] public float SpawnY = 0.5f;
+	[Export(PropertyHint.Range, "0, 20, 1")] public float SpawnY = 0.5f;
 
 	[Export] public Node3D Target;
 
 	[Export] public float timer = 5.0f;
-	private Timer SpawnTimer;
+	private Timer SpawnTimer => GetNode<Timer>("SpawnTimer");
 
 	private Vector3 SpawnPoint;
 
 	public override void _Ready() 
 	{
-		SpawnTimer = GetNode<Timer>("SpawnTimer");
-		
 		SpawnTimer.WaitTime = timer;
 		SpawnTimer.Start();
 		SpawnTimer.Timeout += SpawnEnemy;
@@ -45,23 +43,15 @@ public partial class SpawnSystem : Node3D
 		float RandomZ = new RandomNumberGenerator().RandfRange(MinZ, MaxZ);
 
 		float Direction = new RandomNumberGenerator().RandiRange(1,4);
-		
-		if (Direction == 1)
+
+		SpawnPoint = Direction switch
 		{
-			SpawnPoint = new Vector3(MinX, SpawnY, RandomZ);
-		}
-		else if (Direction == 2)
-		{
-			SpawnPoint = new Vector3(MaxX, SpawnY, RandomZ);
-		}
-		else if (Direction == 3)
-		{
-			SpawnPoint = new Vector3(RandomX, SpawnY, MinZ);
-		}
-		else if (Direction == 4)
-		{
-			SpawnPoint = new Vector3(RandomX, SpawnY, MaxZ);
-		}
+			1 => new Vector3(MinX, SpawnY, RandomZ),
+			2 => new Vector3(MaxX, SpawnY, RandomZ),
+			3 => new Vector3(RandomX, SpawnY, MinZ),
+			4 => new Vector3(RandomX, SpawnY, MaxZ),
+			_ => SpawnPoint
+		};
 
 		Enemy enemy = EnemyScene.Instantiate<Enemy>();
 

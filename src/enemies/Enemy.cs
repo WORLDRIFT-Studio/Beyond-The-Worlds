@@ -1,6 +1,4 @@
 using Godot;
-using System;
-using System.Collections;
 
 public partial class Enemy : CharacterBody3D 
 {
@@ -33,8 +31,6 @@ public partial class Enemy : CharacterBody3D
 
 	public override void _PhysicsProcess(double delta) 
 	{
-		UpdateTargetPosition();
-
 		if (NavAgent.IsNavigationFinished())
 		{
 			return;
