@@ -5,17 +5,19 @@ public partial class SpawnSystem : Node3D
 	[Export] public PackedScene EnemyScene {get;set;}
 	[Export] public MeshInstance3D SpawnArea {get;set;}
 
-	[Export(PropertyHint.Range, "0, 20, 1")] public float SpawnY = 0.5f;
+	[Export] public float SpawnY = 0.5f;
 
 	[Export] public Node3D Target;
 
-	[Export] public float timer = 5.0f;
-	private Timer SpawnTimer => GetNode<Timer>("SpawnTimer");
+	[Export(PropertyHint.Range, "0, 20, 1")] public float timer = 5.0f;
+	private Timer SpawnTimer;
 
 	private Vector3 SpawnPoint;
 
 	public override void _Ready() 
 	{
+		SpawnTimer = GetNode<Timer>("SpawnTimer");
+
 		SpawnTimer.WaitTime = timer;
 		SpawnTimer.Start();
 		SpawnTimer.Timeout += SpawnEnemy;
