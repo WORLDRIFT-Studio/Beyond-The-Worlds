@@ -16,8 +16,8 @@ config/features=PackedStringArray("4.7", "C#", "Forward Plus")
 [autoload]
 
 AudioManager="*uid://1xqq2lyvll1f"
-Events="*uid://dlu5kp25t77a8"
 GameManager="*uid://b6qvdre8yjiw1"
+Events="*uid://cbkvc1mf5tptl"
 
 [display]
 
