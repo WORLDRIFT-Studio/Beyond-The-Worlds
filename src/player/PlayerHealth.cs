@@ -3,7 +3,7 @@ using Godot;
 
 namespace BeyondTheWorlds.player;
 
-public partial class HealthSystem : Node
+public partial class PlayerHealth : Node
 {
 	public short MaxHealth { get; private set; } = 50;
 	

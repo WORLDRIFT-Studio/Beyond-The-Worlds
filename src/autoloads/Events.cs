@@ -2,6 +2,12 @@ using Godot;
 
 namespace BeyondTheWorlds.autoloads;
 
+/// <summary>
+/// W celu dodanie nowego Eventu należy zadeklarować go poprzez [Signal] w public delegate void, gdzie nazwa powinna być
+/// zakończona na 'EventHandler'. Nastepnie nalezy stowrzyć metode do emitowania sygnału poprzez użycie Instance.
+/// Nazwa nowej metody powinna zaczynać się od 'Emmit' a nastepnie zaweirac nazwe Eventu do którego należy (bez końcówki
+/// 'EventHandler').
+/// </summary>
 public partial class Events : Node
 {
     public static Events Instance { get; private set; }
