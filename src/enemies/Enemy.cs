@@ -1,3 +1,4 @@
+using BeyondTheWorlds.autoloads;
 using Godot;
 
 public partial class Enemy : CharacterBody3D 
@@ -20,6 +21,7 @@ public partial class Enemy : CharacterBody3D
 	private void OnTargetReached() 
 	{
 		GD.Print("Target reached!");
+		Events.EmitPlayerDamaged(1);
 		QueueFree();
 	}
 
