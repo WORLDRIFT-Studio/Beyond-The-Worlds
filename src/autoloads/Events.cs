@@ -7,14 +7,15 @@ public partial class Events : Node
     public static Events Instance { get; private set; }
     
     [Signal]
-    public delegate void PlayerDamagedEventHandler(short damage);
+    public delegate void PlayerTakedDamageEventHandler(short damage);
     [Signal]
     public delegate void PlayerHealedEventHandler(short heal);
     [Signal]
     public delegate void PlayerDiedEventHandler();
     [Signal]
     public delegate void PlayerHealthChangedEventHandler(short current, short max);
-
+    [Signal]
+    public delegate void NewGameStartedEventHandler();
 
     public override void _Ready()
     {
@@ -23,7 +24,7 @@ public partial class Events : Node
 
     public static void EmitPlayerDamaged(short damage)
     {
-        Instance.EmitSignalPlayerDamaged(damage);
+        Instance.EmitSignalPlayerTakedDamage(damage);
     }
 
     public static void EmitPLayerHealed(short heal)
@@ -39,5 +40,10 @@ public partial class Events : Node
     public static void EmitPlayerHealthChanged(short current, short max)
     {
         Instance.EmitSignalPlayerHealthChanged(current, max);
+    }
+
+    public static void EmitNewGameStarted()
+    {
+        Instance.EmitSignalNewGameStarted();
     }
 }

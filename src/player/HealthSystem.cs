@@ -5,7 +5,7 @@ namespace BeyondTheWorlds.player;
 
 public partial class HealthSystem : Node
 {
-	private short MaxHealth { get; set; } = 50;
+	public short MaxHealth { get; private set; } = 50;
 	
 	/// <summary>
 	/// Zmienna CurrentHealth typu short (int16 bit) przechowuje aktualny stan zdrowia gracza
@@ -13,10 +13,10 @@ public partial class HealthSystem : Node
 	/// gdy HP spadnie do 0, emituje stosowny sygnał, to samo w przypadku zmianny wartości.
 	/// </summary>
 	private short _currentHealth;
-	private short CurrentHealth
+	public short CurrentHealth
 	{
-		get { return _currentHealth; }
-		set
+		get => _currentHealth;
+		private set
 		{
 			_currentHealth = (short) Mathf.Clamp(value, 0, MaxHealth);
 			Events.EmitPlayerHealthChanged(_currentHealth, MaxHealth);
@@ -28,9 +28,18 @@ public partial class HealthSystem : Node
 	public override void _Ready()
 	{
 		_currentHealth = MaxHealth;
+		
+		Events.Instance.PlayerHealed += OnPlayerHealed;
+		Events.Instance.PlayerTakedDamage += OnPlayerTakedDamage;
 	}
-
-	private void HealPlayer(short value) => CurrentHealth += value;
-	private void TakeDamage(short value) =>  CurrentHealth -= value;
 	
+	
+	private void OnPlayerHealed(short value) => CurrentHealth += value;
+	private void OnPlayerTakedDamage(short value) =>  CurrentHealth -= value;
+
+	private void OnNewGameStarted()
+	{
+		_currentHealth = 50;
+		MaxHealth = 50;
+	}
 }
