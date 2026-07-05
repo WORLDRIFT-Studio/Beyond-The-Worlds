@@ -42,13 +42,13 @@ light_color = Color(0.8462353, 0.5916802, 0, 1)
 light_energy = 1.159
 shadow_enabled = true
 
-[node name="FreeCam" parent="." unique_id=1186657965 instance=ExtResource("1_ykeeq")]
-transform = Transform3D(1, 5.9604645e-08, 1.4901161e-08, 0, 1, 2.2351742e-08, -7.450581e-09, -1.4901161e-08, 1, -7.6293945e-06, 3.0000038, -1.5258789e-05)
-Sensitive = 0.003
-
 [node name="OrbitalCam" parent="." unique_id=1625004831 instance=ExtResource("1_6bm6p")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 72.52, 0, -84)
 visible = false
+
+[node name="FreeCam" parent="." unique_id=1186657965 instance=ExtResource("1_ykeeq")]
+transform = Transform3D(1, 5.9604645e-08, 1.4901161e-08, 0, 1, 2.2351742e-08, -7.450581e-09, -1.4901161e-08, 1, -7.6293945e-06, 3.0000038, -1.5258789e-05)
+Sensitive = 0.003
 
 [node name="TestEnemy" parent="." unique_id=1853275922 instance=ExtResource("1_1oj5k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 72, 4, -51)

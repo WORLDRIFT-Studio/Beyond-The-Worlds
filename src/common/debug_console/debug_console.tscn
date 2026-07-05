@@ -1,0 +1,119 @@
+[gd_scene format=3 uid="uid://sotggt4c131d"]
+
+[ext_resource type="Script" uid="uid://dcv0xuciy1rn5" path="res://src/common/debug_console/Exit.cs" id="1_64r88"]
+[ext_resource type="Script" uid="uid://76y5hl10ngij" path="res://src/common/debug_console/DebugConsole.cs" id="1_hxksn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iwlnr"]
+content_margin_left = 15.0
+content_margin_top = 5.0
+content_margin_right = 15.0
+content_margin_bottom = 5.0
+bg_color = Color(0.80382276, 0.6312594, 0.3456772, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.6151804, 0.47054696, 0.22498032, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hxksn"]
+content_margin_left = 18.0
+content_margin_top = 8.0
+content_margin_right = 18.0
+content_margin_bottom = 8.0
+bg_color = Color(0.6156863, 0.47058824, 0.22352941, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.44476852, 0.3346317, 0.14569047, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_drupc"]
+content_margin_left = 20.0
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_bottom = 2
+border_color = Color(0.6156863, 0.47058824, 0.22352941, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="DebugConsole" type="Window" unique_id=58834549 node_paths=PackedStringArray("ConsoleOutput", "ConsoleInput")]
+oversampling_override = 1.0
+title = "Beyon The Worlds - Debug Console"
+initial_position = 1
+size = Vector2i(440, 300)
+transient = true
+borderless = true
+popup_window = true
+min_size = Vector2i(440, 300)
+script = ExtResource("1_hxksn")
+ConsoleOutput = NodePath("MarginContainer/ScrollContainer/VBoxContainer/ConsoleOutput")
+ConsoleInput = NodePath("MarginContainer/ScrollContainer/VBoxContainer/ConsoleInput")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1781163994]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.15686275, 0.15686275, 0.21176471, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1297843554]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer" unique_id=1693665426]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/ScrollContainer" unique_id=1704933569]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/ScrollContainer/VBoxContainer" unique_id=1950552882]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer" unique_id=715395319]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_iwlnr")
+text = "Beyond The Worlds - Debug Console"
+
+[node name="Button" type="Button" parent="MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer" unique_id=746797405]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_styles/normal = SubResource("StyleBoxFlat_iwlnr")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_hxksn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_iwlnr")
+text = "EXIT"
+script = ExtResource("1_64r88")
+
+[node name="ConsoleOutput" type="RichTextLabel" parent="MarginContainer/ScrollContainer/VBoxContainer" unique_id=782041634]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ConsoleInput" type="LineEdit" parent="MarginContainer/ScrollContainer/VBoxContainer" unique_id=1138129012]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_drupc")
+placeholder_text = "Input command"

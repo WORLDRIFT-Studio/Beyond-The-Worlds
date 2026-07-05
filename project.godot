@@ -16,7 +16,6 @@ config/features=PackedStringArray("4.7", "C#", "Forward Plus")
 [autoload]
 
 AudioManager="*uid://1xqq2lyvll1f"
-Events="*uid://dlu5kp25t77a8"
 GameManager="*uid://b6qvdre8yjiw1"
 
 [display]
@@ -24,6 +23,7 @@ GameManager="*uid://b6qvdre8yjiw1"
 window/size/viewport_width=1920
 window/size/viewport_height=1080
 window/size/borderless=true
+window/subwindows/embed_subwindows=false
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
