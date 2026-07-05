@@ -18,6 +18,7 @@ config/features=PackedStringArray("4.7", "C#", "Forward Plus")
 AudioManager="*uid://1xqq2lyvll1f"
 GameManager="*uid://b6qvdre8yjiw1"
 Events="*uid://cbkvc1mf5tptl"
+PlayerHealth="*uid://kc1sn0m46mhe"
 
 [display]
 

@@ -19,8 +19,14 @@ public partial class PlayerHealth : Node
 		private set
 		{
 			_currentHealth = (short) Mathf.Clamp(value, 0, MaxHealth);
+			GD.Print($"HealthSystem: New HP value is {_currentHealth}/{MaxHealth}");
 			Events.EmitPlayerHealthChanged(_currentHealth, MaxHealth);
-			if (_currentHealth == 0) Events.EmitPlayerDied();
+			
+			if (_currentHealth == 0)
+			{
+				GD.Print("HealthSystem: Player died!");
+				Events.EmitPlayerDied();
+			}
 		}
 	}
 
@@ -32,13 +38,23 @@ public partial class PlayerHealth : Node
 		Events.Instance.PlayerHealed += OnPlayerHealed;
 		Events.Instance.PlayerTakedDamage += OnPlayerTakedDamage;
 	}
-	
-	
-	private void OnPlayerHealed(short value) => CurrentHealth += value;
-	private void OnPlayerTakedDamage(short value) =>  CurrentHealth -= value;
+
+
+	private void OnPlayerHealed(short value)
+	{
+		GD.Print($"HealthSystem: Healed {value} HP");
+		CurrentHealth += value;
+	}
+
+	private void OnPlayerTakedDamage(short value)
+	{
+		GD.Print($"HealthSystem: Taked {value} Damage");
+		CurrentHealth -= value;
+	}
 
 	private void OnNewGameStarted()
 	{
+		GD.Print("HealthSystem: HP reseted");
 		_currentHealth = 50;
 		MaxHealth = 50;
 	}
