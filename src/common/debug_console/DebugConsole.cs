@@ -2,13 +2,16 @@ using BeyondTheWorlds.autoloads;
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using FileAccess = Godot.FileAccess;
 
 namespace BeyondTheWorlds.common.debug_console;
 
 public partial class DebugConsole: Node
 {
-    // private string LogFilePath = $"user://logs/btw-logs-{System.DateTime.Now}.log";
-    // TODO: Zrobic zapis logow do pliku
+    
+    private string LogFilePath { get; set; } = $"user://logs/btw-logs-{Time.GetDatetimeStringFromSystem().Replace(":", "-").Replace("T", "-")}.log";
+
 
     /// <summary>
     /// Hisotira logów
@@ -39,6 +42,12 @@ public partial class DebugConsole: Node
     {
         Instance = this;
         ProcessMode = ProcessModeEnum.Always;
+        
+        using var dir = DirAccess.Open("user://");
+        if (dir != null && !dir.DirExists("logs"))
+        {
+            dir.MakeDir("logs");
+        }
     }
 
 
@@ -112,12 +121,14 @@ public partial class DebugConsole: Node
             _ => "#b8b3ab" //gray
         };
 
-        string time = $"{DateTime.Now.TimeOfDay.Hours}.{DateTime.Now.TimeOfDay.Minutes}.{DateTime.Now.TimeOfDay.Seconds}";
+        string cleanMessage = 
+            $"{Time.GetDatetimeStringFromSystem()} [ {level} ] ({type}) >>> {message}";
         string formatedMessage = 
-            $"\n[color=#787878][i]{time}[/i][/color] [color={color}][b][ {level} ][/b][/color] [i][color=#39cc9b]({type})[/color][/i] >>> {message}";
+            $"\n[color=#787878][i]{Time.GetDatetimeStringFromSystem().Split("T")[1]}[/i][/color] [color={color}][b][ {level} ][/b][/color] [i][color=#39cc9b]({type})[/color][/i] >>> {message}";
         _logHistory.Add(formatedMessage);
 
-
+        SaveLogs(LogFilePath, cleanMessage);
+        
         if (CurrentWindowInstance != null && GodotObject.IsInstanceValid(CurrentWindowInstance))
         {
             RichTextLabel Console = CurrentWindowInstance.GetNode<RichTextLabel>("%ConsoleOutput");
@@ -125,7 +136,26 @@ public partial class DebugConsole: Node
         }
         
     }
-    
+
+    /// <summary>
+    /// Zapisuje historie logów do pliku.
+    /// </summary>
+    /// <param name="pathLogsDir">Ścieżka do pliku logów</param>
+    /// <param name="plainLog">Wejśćie dla logów</param>
+    private void SaveLogs(string pathLogsDir, string plainLog)
+    {
+        using var logsFile = FileAccess.Open(pathLogsDir, FileAccess.ModeFlags.ReadWrite);
+        if (logsFile != null)
+        {
+            logsFile.SeekEnd();
+            logsFile.StoreLine(plainLog);
+        }
+        else
+        {
+            using var newFile = FileAccess.Open(pathLogsDir, FileAccess.ModeFlags.Write);
+            newFile?.StoreLine(plainLog);
+        }
+    }
     #endregion
 
     #region Tools
@@ -133,9 +163,7 @@ public partial class DebugConsole: Node
     private void ToggleConsole()
         {
             // Sprawdza czy okno faktycznie nie istnieje i nie zalega w pamięci
-            if (CurrentWindowInstance != null &&
-                GodotObject.IsInstanceValid(CurrentWindowInstance) &&
-                CurrentWindowInstance.Visible)
+            if (CurrentWindowInstance != null && GodotObject.IsInstanceValid(CurrentWindowInstance) && CurrentWindowInstance.Visible)
             {
                 CurrentWindowInstance.QueueFree();
                 CurrentWindowInstance = null;
@@ -149,8 +177,6 @@ public partial class DebugConsole: Node
                 LineEdit ConsoleInput = CurrentWindowInstance.GetNode<LineEdit>("%ConsoleInput");
                 ConsoleInput.TextSubmitted += OnCommandInput;
                 
-                Log("info", "Console", "Console succesfully opened!");
-                
                 CurrentWindowInstance.PopupCentered(new Vector2I(800, 600));
                 ConsoleInput.GrabFocus();
                 
@@ -159,6 +185,9 @@ public partial class DebugConsole: Node
                 {
                     ConsoleOutput.AppendText(oldLog);
                 }
+                
+                Log("info", "Console", "Console succesfully opened!");
+                
             }
         }
     
