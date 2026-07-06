@@ -115,4 +115,6 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 8
 theme_override_styles/normal = SubResource("StyleBoxFlat_drupc")
+theme_override_styles/read_only = SubResource("StyleBoxFlat_drupc")
+theme_override_styles/focus = SubResource("StyleBoxFlat_drupc")
 placeholder_text = "Input command"
