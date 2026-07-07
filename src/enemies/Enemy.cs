@@ -1,6 +1,5 @@
 using BeyondTheWorlds.autoloads;
 using Godot;
-
 public partial class Enemy : CharacterBody3D 
 {
 	[Export] public Node3D Target {get;set;}
