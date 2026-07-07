@@ -1,0 +1,132 @@
+[gd_scene format=3 uid="uid://b040pmcrjywqw"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iwlnr"]
+content_margin_left = 15.0
+content_margin_top = 5.0
+content_margin_right = 15.0
+content_margin_bottom = 5.0
+bg_color = Color(0.80382276, 0.6312594, 0.3456772, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.6151804, 0.47054696, 0.22498032, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hxksn"]
+content_margin_left = 18.0
+content_margin_top = 8.0
+content_margin_right = 18.0
+content_margin_bottom = 8.0
+bg_color = Color(0.6156863, 0.47058824, 0.22352941, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.44476852, 0.3346317, 0.14569047, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 20
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n4xws"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_drupc"]
+content_margin_left = 20.0
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_bottom = 2
+border_color = Color(0.6156863, 0.47058824, 0.22352941, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="Window" type="Window" unique_id=1023851705]
+transparent_bg = true
+handle_input_locally = false
+oversampling_override = 1.0
+title = "Beyond The Worlds - Debug Console"
+initial_position = 2
+size = Vector2i(400, 400)
+transient = true
+borderless = true
+transparent = true
+min_size = Vector2i(400, 400)
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=978340362]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+color = Color(0.15686275, 0.15686275, 0.21176471, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1901935906]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer" unique_id=2098941148]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/ScrollContainer" unique_id=658145767]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/ScrollContainer/VBoxContainer" unique_id=682892116]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer" unique_id=1316932371]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_iwlnr")
+text = "Beyond The Worlds - Debug Console"
+
+[node name="Button" type="Button" parent="MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer" unique_id=1152831830]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_styles/normal = SubResource("StyleBoxFlat_iwlnr")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_hxksn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_iwlnr")
+text = "EXIT"
+
+[node name="ConsoleOutput" type="RichTextLabel" parent="MarginContainer/ScrollContainer/VBoxContainer" unique_id=646118519]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ConsoleSuggest" type="ItemList" parent="MarginContainer/ScrollContainer/VBoxContainer" unique_id=377648536]
+unique_name_in_owner = true
+custom_maximum_size = Vector2(-1, 120)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7372549, 0.5647059, 1, 1)
+theme_override_font_sizes/font_size = 12
+theme_override_styles/panel = SubResource("StyleBoxEmpty_n4xws")
+auto_height = true
+
+[node name="ConsoleInput" type="LineEdit" parent="MarginContainer/ScrollContainer/VBoxContainer" unique_id=228825780]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_drupc")
+theme_override_styles/read_only = SubResource("StyleBoxFlat_drupc")
+theme_override_styles/focus = SubResource("StyleBoxFlat_drupc")
+placeholder_text = "Input command"
+keep_editing_on_text_submit = true
