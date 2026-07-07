@@ -3,6 +3,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using FileAccess = Godot.FileAccess;
 
 namespace BeyondTheWorlds.common.debug_console;
@@ -12,6 +13,12 @@ public partial class DebugConsole: Node
     
     private string LogFilePath { get; set; } = $"user://logs/btw-logs-{Time.GetDatetimeStringFromSystem().Replace(":", "-").Replace("T", "-")}.log";
 
+    private readonly List<String> _commandsList = new List<string>()
+    {
+        "pause",
+        "unpause"
+    };
+    
 
     /// <summary>
     /// Hisotira logów
@@ -33,6 +40,11 @@ public partial class DebugConsole: Node
     /// Zawiera scenę okna konsoli
     /// </summary>
     [Export] private PackedScene ConsoleWindowScene { get; set; }
+
+
+    private LineEdit ConsoleInput { get; set; }
+    private RichTextLabel ConsoleOutput { get; set; }
+    private ItemList ConsoleSuggestions { get; set; }
     
     #endregion
 
@@ -69,24 +81,30 @@ public partial class DebugConsole: Node
     /// Funkcja służąca do przyjmowania i wywoływania komend z konsoli debugowania
     /// </summary>
     /// <param name="command">Parametr przyjmuje komendę i na jej podsatwie wykonuje operacje</param>
-    private void OnCommandInput(string command)
+    private void OnConsoleInputTextEntered(string command)
+    {
+        String[] input = command.Split(" ");
+        UserInput(command);
+        
+        switch (input[0])
         {
-            switch (command)
-            {
-                case "TakeDamage":
-                    break;
-            }
+            case "pause":
+                GetTree().GetRoot().ProcessMode = ProcessModeEnum.Disabled;
+                Log("INFO", "System", "Game Paused");
+                break;
+            
+            case "unpause":
+                GetTree().GetRoot().ProcessMode = ProcessModeEnum.Always;
+                Log("INFO", "System", "Game Unpaused");
+                break;
+            
+            default:
+                Log("ERROR", "System", $"Command '{input[0]}' doesn't exist.");
+                break;
         }
-    
-    private void SuggestCommand(string input)
-        {
-            switch (input)
-            {
-                case "pause-game":
-                    break;
-                
-            }
-        }
+        ConsoleInput.Clear();
+        ConsoleInput.GrabFocus();
+    }
     
 
     #endregion
@@ -156,6 +174,22 @@ public partial class DebugConsole: Node
             newFile?.StoreLine(plainLog);
         }
     }
+
+    private void UserInput(String userCommand)
+    {
+        String fUserCommand =
+            $"\n[color=#bc90ff] ➜ {userCommand}[/color]";
+        String cUserCommand =
+            $" ➜ {userCommand}";
+        
+        _logHistory.Add(cUserCommand);
+        
+        if (CurrentWindowInstance != null && GodotObject.IsInstanceValid(CurrentWindowInstance))
+        {
+            RichTextLabel Console = CurrentWindowInstance.GetNode<RichTextLabel>("%ConsoleOutput");
+            Console.AppendText(fUserCommand);
+        }
+    }
     #endregion
 
     #region Tools
@@ -167,30 +201,80 @@ public partial class DebugConsole: Node
             {
                 CurrentWindowInstance.QueueFree();
                 CurrentWindowInstance = null;
+                
                 GD.Print("DebugConsole: Console Closed");
             }
             else
             {
-                CurrentWindowInstance = ConsoleWindowScene.Instantiate<Window>();
-                AddChild(CurrentWindowInstance);
-    
-                LineEdit ConsoleInput = CurrentWindowInstance.GetNode<LineEdit>("%ConsoleInput");
-                ConsoleInput.TextSubmitted += OnCommandInput;
-                
+                SetupSystem();
+
                 CurrentWindowInstance.PopupCentered(new Vector2I(800, 600));
                 ConsoleInput.GrabFocus();
                 
-                RichTextLabel ConsoleOutput = CurrentWindowInstance.GetNode<RichTextLabel>("%ConsoleOutput");
                 foreach (String oldLog in _logHistory)
                 {
                     ConsoleOutput.AppendText(oldLog);
                 }
                 
                 Log("info", "Console", "Console succesfully opened!");
-                
+
             }
         }
-    
+
+    private void SetupSystem()
+    {
+        CurrentWindowInstance = ConsoleWindowScene.Instantiate<Window>();
+        AddChild(CurrentWindowInstance);
+        
+        ConsoleInput = CurrentWindowInstance.GetNode<LineEdit>("%ConsoleInput");
+        ConsoleInput.TextSubmitted += OnConsoleInputTextEntered;
+        ConsoleInput.TextChanged += OnConsoleInputTextChanged;
+        
+        ConsoleOutput = CurrentWindowInstance.GetNode<RichTextLabel>("%ConsoleOutput");
+        
+        ConsoleSuggestions = CurrentWindowInstance.GetNode<ItemList>("%ConsoleSuggest");
+        ConsoleSuggestions.ItemSelected += OnCommandsSugestionsItemSelected;
+    }
+
+    private void OnCommandsSugestionsItemSelected(long index)
+    {
+        ItemList CommandsSugesions = CurrentWindowInstance.GetNode<ItemList>("%ConsoleSuggest");
+
+        string item = CommandsSugesions.GetItemText((int)index);
+        ConsoleInput.Text = item;
+        ConsoleInput.GrabFocus();
+        ConsoleInput.SetCaretColumn(item.Length);
+        ConsoleSuggestions.Hide();
+    }
+
+    private void OnConsoleInputTextChanged(string newText)
+    {
+        ItemList CommandsSugesions = CurrentWindowInstance.GetNode<ItemList>("%ConsoleSuggest");
+        
+        if (string.IsNullOrWhiteSpace(newText))
+        {
+            CommandsSugesions.Visible = false;
+        }
+        else 
+        {
+            CommandsSugesions.Clear();
+            
+            String[] command = newText.Split(" ");
+
+            List<String> matches = _commandsList
+                .Where(cmd => cmd.StartsWith(command[0], StringComparison.OrdinalIgnoreCase))
+                .ToList();
+
+            if (matches.Count > 0)
+            {
+                CommandsSugesions.Visible = true;
+                foreach (string match in matches)
+                {
+                    CommandsSugesions.AddItem(match);
+                }
+            }
+        }
+    }
 
     #endregion
 }

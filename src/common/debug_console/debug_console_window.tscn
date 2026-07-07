@@ -34,6 +34,8 @@ corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 corner_detail = 20
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n4xws"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_drupc"]
 content_margin_left = 20.0
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -110,6 +112,15 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 
+[node name="ConsoleSuggest" type="ItemList" parent="MarginContainer/ScrollContainer/VBoxContainer" unique_id=377648536]
+unique_name_in_owner = true
+custom_maximum_size = Vector2(-1, 120)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7372549, 0.5647059, 1, 1)
+theme_override_font_sizes/font_size = 12
+theme_override_styles/panel = SubResource("StyleBoxEmpty_n4xws")
+auto_height = true
+
 [node name="ConsoleInput" type="LineEdit" parent="MarginContainer/ScrollContainer/VBoxContainer" unique_id=228825780]
 unique_name_in_owner = true
 layout_mode = 2
@@ -118,3 +129,4 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_drupc")
 theme_override_styles/read_only = SubResource("StyleBoxFlat_drupc")
 theme_override_styles/focus = SubResource("StyleBoxFlat_drupc")
 placeholder_text = "Input command"
+keep_editing_on_text_submit = true
