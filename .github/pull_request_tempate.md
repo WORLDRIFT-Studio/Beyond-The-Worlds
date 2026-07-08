@@ -7,7 +7,7 @@
 - Ogólna informacja co tu się dzieje, miejsce na przemyślenia itp.
 
 ## Dokumentacja 
-- Nie musi to być wybitny tekst, kilka twoich słów, które mogą przydać sie dla pozostałych, tok rozumowania, cel wykjorzystania poszczególnych narzędzi itp w celu tworzenia dokumentacji, ułatwienia sprawdzania itp. 
+- Nie musi to być wybitny tekst, kilka Twoich słów, które mogą przydać się dla pozostałych, tok rozumowania, cel wykorzystania poszczególnych narzędzi itp. w celu tworzenia dokumentacji i ułatwienia sprawdzania itp.
   
 ## Checklista
 *Jeśli któreś z pól nie jest spełnione, nic nie szkodzi, ale jeśli jesteś w stanie sprawić aby było inaczej, zrób to*
