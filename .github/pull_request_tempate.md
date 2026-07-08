@@ -13,8 +13,8 @@
 *Jeśli któreś z pól nie jest spełnione, nic nie szkodzi, ale jeśli jesteś w stanie sprawić aby było inaczej, zrób to*
 - [ ] Czy kod się kompiluje ?
 - [ ] Czy dodano nowe testy ? (Jeśli wymagane)
-- [ ] Czy wszytskie tesy przechdzą ? 
-- [ ] Czy kod debugujacy został uprzątnięty ?
-- [ ] Czy dodałem/zaktualizowałem dokumentacje wewnątrz kodu (XML) ? (Jeśli potrzebna)
-- [ ] Czy kod spełania standard Single Resposibility Principle (SRP) ?
+- [ ] Czy wszystkie testy przechodzą?
+- [ ] Czy kod debugujący został uprzątnięty?
+- [ ] Czy dodałem/zaktualizowałem dokumentację wewnątrz kodu (XML)? (Jeśli potrzebna)
+- [ ] Czy kod spełnia standard Single Responsibility Principle (SRP)?
 
