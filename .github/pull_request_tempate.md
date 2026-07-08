@@ -4,7 +4,7 @@
 - link do zadania Jira
   
 ## Opis
-- Ogolna infarmacj co tu sie dzieje, miejsce do przemyslen itp.  
+- Ogólna informacja co tu się dzieje, miejsce na przemyślenia itp.
 
 ## Dokumentacja 
 - Nie musi to być wybitny tekst, kilka twoich słów, które mogą przydać sie dla pozostałych, tok rozumowania, cel wykjorzystania poszczególnych narzędzi itp w celu tworzenia dokumentacji, ułatwienia sprawdzania itp. 
