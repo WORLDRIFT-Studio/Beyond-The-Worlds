@@ -1,7 +1,7 @@
 # Opis
 
 ## Powiązane zadanie 
-- link do zadania JIra
+- link do zadania Jira
   
 ## Opis
 - Ogolna infarmacj co tu sie dzieje, miejsce do przemyslen itp.  
