@@ -43,14 +43,16 @@ public partial class CardsManager : Control
 	{
 		CardOnHand = new List<Node2D>(GetChildren().OfType<Node2D>());
 		int cardsCount = CardOnHand.Count;
-		
 		if (cardsCount == 0) return;
-		float xOffset = (float) ((cardsCount - 1) * CardSpacing) / 2;
+		
+		int currentWidth = cardsCount * CardSpacing;
+		float currentSpacing = currentWidth > MaxWidth ? MaxWidth/cardsCount : CardSpacing;
+		float xOffset = (cardsCount - 1) * currentSpacing / 2;
 
 		for (int i = 0; i < cardsCount; i++)
 		{
-			float xPos = CenterX + i * CardSpacing - xOffset ;
-			float weight = 2f * i / (cardsCount - 1) - 1;
+			float xPos = CenterX + i * currentSpacing - xOffset ;
+			float weight = cardsCount > 1 ? 2f * i / (cardsCount - 1) - 1 : 0f;
 			float yPos = BaseY + CardsArc.Sample(weight) * -ArcStrength;
 			CardOnHand[i].Position = new Vector2(xPos, yPos);
 			CardOnHand[i].RotationDegrees = weight * MaxRotation;

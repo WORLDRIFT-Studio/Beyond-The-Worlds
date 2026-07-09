@@ -111,10 +111,10 @@ offset_right = 120.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="Node2D7" type="Node2D" parent="Control2" unique_id=1057724987]
+[node name="Node2D8" type="Node2D" parent="Control2" unique_id=807891314]
 position = Vector2(933, 633)
 
-[node name="Panel" type="Panel" parent="Control2/Node2D7" unique_id=1601108152]
+[node name="Panel" type="Panel" parent="Control2/Node2D8" unique_id=1821348379]
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -126,70 +126,10 @@ offset_right = 120.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="Node2D8" type="Node2D" parent="Control2" unique_id=117929950]
+[node name="Node2D9" type="Node2D" parent="Control2" unique_id=1368825278]
 position = Vector2(933, 633)
 
-[node name="Panel" type="Panel" parent="Control2/Node2D8" unique_id=55215482]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -120.0
-offset_top = -360.0
-offset_right = 120.0
-grow_horizontal = 2
-grow_vertical = 0
-
-[node name="Node2D9" type="Node2D" parent="Control2" unique_id=243670387]
-position = Vector2(933, 633)
-
-[node name="Panel" type="Panel" parent="Control2/Node2D9" unique_id=486122238]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -120.0
-offset_top = -360.0
-offset_right = 120.0
-grow_horizontal = 2
-grow_vertical = 0
-
-[node name="Node2D10" type="Node2D" parent="Control2" unique_id=1459419014]
-position = Vector2(933, 633)
-
-[node name="Panel" type="Panel" parent="Control2/Node2D10" unique_id=529601135]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -120.0
-offset_top = -360.0
-offset_right = 120.0
-grow_horizontal = 2
-grow_vertical = 0
-
-[node name="Node2D11" type="Node2D" parent="Control2" unique_id=1269762231]
-position = Vector2(933, 633)
-
-[node name="Panel" type="Panel" parent="Control2/Node2D11" unique_id=954042288]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -120.0
-offset_top = -360.0
-offset_right = 120.0
-grow_horizontal = 2
-grow_vertical = 0
-
-[node name="Node2D12" type="Node2D" parent="Control2" unique_id=2000709945]
-position = Vector2(933, 633)
-
-[node name="Panel" type="Panel" parent="Control2/Node2D12" unique_id=1130391260]
+[node name="Panel" type="Panel" parent="Control2/Node2D9" unique_id=355949546]
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
