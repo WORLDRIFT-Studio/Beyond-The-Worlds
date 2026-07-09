@@ -208,7 +208,7 @@ public partial class DebugConsole: Node
             {
                 SetupSystem();
 
-                CurrentWindowInstance.PopupCentered(new Vector2I(800, 600));
+                CurrentWindowInstance?.PopupCentered(new Vector2I(800, 600));
                 ConsoleInput.GrabFocus();
                 
                 foreach (String oldLog in _logHistory)
