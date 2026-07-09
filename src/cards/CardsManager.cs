@@ -7,6 +7,9 @@ namespace BeyondTheWorlds.cards;
 
 public partial class CardsManager : Control
 {
+	[Signal]
+	public delegate void CardsAmmountChangedEventHandler();
+	
 	#region Variables
 	
 	[Export] 
@@ -36,9 +39,10 @@ public partial class CardsManager : Control
 	
 	public override  void _Ready()
 	{
+		CardsAmmountChanged += ArangeCards;
 		ArangeCards();
 	}
-
+	
 	private void ArangeCards()
 	{
 		CardOnHand = new List<Node2D>(GetChildren().OfType<Node2D>());
