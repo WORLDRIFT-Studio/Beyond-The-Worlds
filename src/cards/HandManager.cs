@@ -5,7 +5,7 @@ using Godot;
 
 namespace BeyondTheWorlds.cards;
 
-public partial class CardsManager : Control
+public partial class HandManager : Control
 {
 	[Signal]
 	public delegate void CardsAmmountChangedEventHandler();
@@ -61,6 +61,12 @@ public partial class CardsManager : Control
 			CardOnHand[i].Position = new Vector2(xPos, yPos);
 			CardOnHand[i].RotationDegrees = weight * MaxRotation;
 		}
+	}
+
+	private void LoadPlayerDeck()
+	{
+		Resource card = GD.Load("src/cards/cards_bases/test_card.tres");
+		
 	}
 }
 

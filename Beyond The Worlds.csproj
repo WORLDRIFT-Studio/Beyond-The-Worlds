@@ -8,6 +8,9 @@
   <ItemGroup>
     <Content Include="project.godot" />
     <Content Include="src\autoloads\Events.cs.uid" />
+    <Content Include="src\cards\CardData.cs.uid" />
+    <Content Include="src\cards\CardTemplate.cs.uid" />
+    <Content Include="src\cards\HandManager.cs.uid" />
     <Content Include="src\common\orbital_cam\orbital_cam.gd" />
     <Content Include="src\common\orbital_cam\orbital_cam.gd.uid" />
     <Content Include="src\common\orbital_cam\orbital_cam.tscn" />
