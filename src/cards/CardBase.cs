@@ -1,0 +1,40 @@
+using Godot;
+using System;
+using BeyondTheWorlds.common.debug_console;
+
+namespace BeyondTheWorlds.cards;
+
+public partial class CardBase : Node2D
+{
+	private string _cardName;
+	private Texture2D _cardTexture;
+	private int _cardCost;
+	private string _cardType;
+	private string _cardClass;
+	private string _cardDesc;
+
+	[ExportGroup("Nodes")]
+	[Export] private Label NodeCardName { get; set; }
+	[Export] private Label NodeCardCost { get; set; }
+	[Export] private TextureRect NodeCardTexture { get; set; }
+	[Export] private RichTextLabel NodeCardDesc { get; set; }
+	
+	public override void _Ready()
+	{
+	}
+
+	public void Initialize(CardData cardInfo)
+	{
+		_cardName = cardInfo.CardName;
+		_cardTexture = cardInfo.CardTexture;
+		_cardCost = cardInfo.CardCost;
+		_cardType = cardInfo.CardType;
+		_cardClass = cardInfo.CardClass;
+		_cardDesc = cardInfo.CardDescription;
+
+		NodeCardName.Text = _cardName;
+		NodeCardDesc.Text = _cardDesc;
+		NodeCardCost.Text = $"{_cardCost}";
+		NodeCardTexture.Texture = _cardTexture;
+	}
+}

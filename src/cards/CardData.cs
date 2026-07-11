@@ -1,6 +1,6 @@
 using Godot;
 
-namespace BeyondTheWorlds.cards.cards_bases;
+namespace BeyondTheWorlds.cards;
 
 [GlobalClass]
 public partial class CardData(ImageTexture cardTexture, string cardName, string cardType, string cardClass,
@@ -8,7 +8,7 @@ public partial class CardData(ImageTexture cardTexture, string cardName, string 
 {
     
     [Export]
-    public ImageTexture CardTexture { get; set; } = cardTexture;
+    public Texture2D CardTexture { get; set; } = cardTexture;
 
     [Export]
     public string CardName { get; set; } = cardName;

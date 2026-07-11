@@ -12,12 +12,12 @@ public partial class HandManager : Control
 	
 	#region Variables
 	
+	[ExportCategory("Cards Variables")]
+	[ExportGroup("Variables")]
+	
 	[Export] 
 	private Curve CardsArc { get; set; }
 	
-	[Export] 
-	private PointMesh StartEnd { get; set; }
-
 	[Export(PropertyHint.Range, "0, 200, 1, prefer_slider")]
 	private short CardSpacing { get; set; } = 150;
 
@@ -30,6 +30,9 @@ public partial class HandManager : Control
 	[Export(PropertyHint.Range, "0, 90, 1, prefer_slider")]
 	private int MaxRotation { get; set; } = 20;
 	
+	[ExportGroup("Nodes")]
+	[Export] private PackedScene CardBaseTscn { get; set; }
+	
 	private List<Node2D> CardOnHand { get; set; }
 	private float CenterX { get; set; } = 960;
 	private float MaxWidth { get; set; } = 1000f;
@@ -40,7 +43,7 @@ public partial class HandManager : Control
 	public override  void _Ready()
 	{
 		CardsAmmountChanged += ArangeCards;
-		ArangeCards();
+		LoadPlayerDeck();
 	}
 	
 	private void ArangeCards()
@@ -60,13 +63,18 @@ public partial class HandManager : Control
 			float yPos = BaseY + CardsArc.Sample(weight) * -ArcStrength;
 			CardOnHand[i].Position = new Vector2(xPos, yPos);
 			CardOnHand[i].RotationDegrees = weight * MaxRotation;
+			// TODO Zrobić dynamiczne pochylenie kart
+			// TODO Zrobić animacje kart
 		}
 	}
 
 	private void LoadPlayerDeck()
 	{
-		Resource card = GD.Load("src/cards/cards_bases/test_card.tres");
-		
+		CardData cardData = GD.Load<CardData>("src/cards/cards_bases/test_card.tres");
+		var scena = CardBaseTscn.Instantiate<CardBase>();
+		scena.Initialize(cardData);
+		AddChild(scena);
+		ArangeCards();
 	}
 }
 
