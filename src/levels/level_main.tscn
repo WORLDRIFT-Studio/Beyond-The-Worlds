@@ -3,7 +3,8 @@
 [ext_resource type="PackedScene" uid="uid://dshecx4c5mjdp" path="res://src/enemies/test_enemy.tscn" id="1_1oj5k"]
 [ext_resource type="PackedScene" uid="uid://jfvvwru1ymiu" path="res://src/common/orbital_cam/orbital_cam.tscn" id="1_6bm6p"]
 [ext_resource type="PackedScene" uid="uid://bbalg6dcuipww" path="res://src/levels/level_test/test_arena.tscn" id="3_6bm6p"]
-[ext_resource type="Script" uid="uid://bh0qyhgkg0xdn" path="res://src/cards/CardsManager.cs" id="4_08lp6"]
+[ext_resource type="Script" path="res://src/cards/HandManager.cs" id="4_r246h"]
+[ext_resource type="PackedScene" path="res://src/cards/card_base.tscn" id="5_r246h"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_yx7mw"]
 sky_top_color = Color(0.10829178, 0.50428545, 0.5544404, 1)
@@ -33,10 +34,8 @@ volumetric_fog_albedo = Color(0.24104936, 0.08918684, 0.23774801, 1)
 
 [sub_resource type="Curve" id="Curve_r246h"]
 _limits = [0.0, 1.0, -1.0, 1.0]
-_data = [Vector2(-1, 0), 0.0, 1.0, 0, 1, Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.0, 0.0, 1, 0]
+_data = [Vector2(-1, 0), 0.0, 0.5, 0, 1, Vector2(0, 0.5), 0.0, 0.0, 0, 0, Vector2(1, 0), -0.5, 0.0, 1, 0]
 point_count = 3
-
-[sub_resource type="PointMesh" id="PointMesh_08lp6"]
 
 [node name="Master" type="Node3D" unique_id=749043557]
 
@@ -62,81 +61,6 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-script = ExtResource("4_08lp6")
+script = ExtResource("4_r246h")
 CardsArc = SubResource("Curve_r246h")
-StartEnd = SubResource("PointMesh_08lp6")
-
-[node name="Node2D4" type="Node2D" parent="Control2" unique_id=2064050738]
-position = Vector2(933, 633)
-
-[node name="Panel" type="Panel" parent="Control2/Node2D4" unique_id=132105829]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -120.0
-offset_top = -360.0
-offset_right = 120.0
-grow_horizontal = 2
-grow_vertical = 0
-
-[node name="Node2D5" type="Node2D" parent="Control2" unique_id=281157513]
-position = Vector2(933, 633)
-
-[node name="Panel" type="Panel" parent="Control2/Node2D5" unique_id=240504856]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -120.0
-offset_top = -360.0
-offset_right = 120.0
-grow_horizontal = 2
-grow_vertical = 0
-
-[node name="Node2D6" type="Node2D" parent="Control2" unique_id=1302214880]
-position = Vector2(933, 633)
-
-[node name="Panel" type="Panel" parent="Control2/Node2D6" unique_id=628714900]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -120.0
-offset_top = -360.0
-offset_right = 120.0
-grow_horizontal = 2
-grow_vertical = 0
-
-[node name="Node2D8" type="Node2D" parent="Control2" unique_id=807891314]
-position = Vector2(933, 633)
-
-[node name="Panel" type="Panel" parent="Control2/Node2D8" unique_id=1821348379]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -120.0
-offset_top = -360.0
-offset_right = 120.0
-grow_horizontal = 2
-grow_vertical = 0
-
-[node name="Node2D9" type="Node2D" parent="Control2" unique_id=1368825278]
-position = Vector2(933, 633)
-
-[node name="Panel" type="Panel" parent="Control2/Node2D9" unique_id=355949546]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -120.0
-offset_top = -360.0
-offset_right = 120.0
-grow_horizontal = 2
-grow_vertical = 0
+CardBaseTscn = ExtResource("5_r246h")
