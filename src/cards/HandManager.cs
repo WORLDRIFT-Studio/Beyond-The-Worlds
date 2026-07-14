@@ -5,7 +5,7 @@ using Godot;
 
 namespace BeyondTheWorlds.cards;
 
-public partial class HandManager : Control
+public partial class HandManager : Node
 {
 	[Signal]
 	public delegate void CardsAmmountChangedEventHandler();
@@ -32,8 +32,8 @@ public partial class HandManager : Control
 	
 	[ExportGroup("Nodes")]
 	[Export] private PackedScene CardBaseTscn { get; set; }
-	
-	private List<Node2D> CardOnHand { get; set; }
+
+	public List<Node2D> CardOnHand { get; private set; } = [];
 	private float CenterX { get; set; } = 960;
 	private float MaxWidth { get; set; } = 1000f;
 	
@@ -43,10 +43,10 @@ public partial class HandManager : Control
 	public override  void _Ready()
 	{
 		CardsAmmountChanged += ArangeCards;
-		LoadPlayerDeck();
+		// LoadPlayerDeck();
 	}
 	
-	private void ArangeCards()
+	public void ArangeCards()
 	{
 		CardOnHand = new List<Node2D>(GetChildren().OfType<Node2D>());
 		int cardsCount = CardOnHand.Count;
@@ -68,13 +68,14 @@ public partial class HandManager : Control
 		}
 	}
 
-	private void LoadPlayerDeck()
-	{
-		CardData cardData = GD.Load<CardData>("src/cards/cards_bases/test_card.tres");
-		var scena = CardBaseTscn.Instantiate<CardBase>();
-		scena.Initialize(cardData);
-		AddChild(scena);
-		ArangeCards();
-	}
+
+	// private void LoadPlayerDeck()
+	// {
+	// 	CardData cardData = GD.Load<CardData>("src/cards/cards_bases/test_card.tres");
+	// 	var scena = CardBaseTscn.Instantiate<CardBase>();
+	// 	scena.Initialize(cardData);
+	// 	AddChild(scena);
+	// 	ArangeCards();
+	// }
 }
 

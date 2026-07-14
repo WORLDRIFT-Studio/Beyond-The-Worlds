@@ -4,7 +4,11 @@
 [ext_resource type="PackedScene" uid="uid://jfvvwru1ymiu" path="res://src/common/orbital_cam/orbital_cam.tscn" id="1_6bm6p"]
 [ext_resource type="PackedScene" uid="uid://bbalg6dcuipww" path="res://src/levels/level_test/test_arena.tscn" id="3_6bm6p"]
 [ext_resource type="Script" uid="uid://bh0qyhgkg0xdn" path="res://src/cards/HandManager.cs" id="4_r246h"]
+[ext_resource type="Script" uid="uid://cjfwl3f1y1frc" path="res://src/cards/TableManager.cs" id="4_uhw7n"]
 [ext_resource type="PackedScene" uid="uid://cdvad8beikwc5" path="res://src/cards/card_base.tscn" id="5_r246h"]
+[ext_resource type="Script" uid="uid://2a2dnq4eyprw" path="res://src/cards/CardGraveyard.cs" id="6_hdchn"]
+[ext_resource type="Script" uid="uid://ciw3natpklfla" path="res://src/cards/DeckManager.cs" id="7_hdchn"]
+[ext_resource type="Resource" uid="uid://b0safyq0k2m6r" path="res://src/cards/cards_bases/test_card.tres" id="8_xowka"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_yx7mw"]
 sky_top_color = Color(0.10829178, 0.50428545, 0.5544404, 1)
@@ -56,11 +60,36 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 72, 4, -51)
 [node name="CamTarget" parent="." unique_id=1625004831 instance=ExtResource("1_6bm6p")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 76, 0, -103.505035)
 
-[node name="Control2" type="Control" parent="." unique_id=659014098]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="TableManager" type="Node" parent="." unique_id=1585136143 node_paths=PackedStringArray("_tableManager", "_deckManager", "_handManager", "_endTourButton")]
+script = ExtResource("4_uhw7n")
+_tableManager = NodePath(".")
+_deckManager = NodePath("DeckManager")
+_handManager = NodePath("HandManager")
+_endTourButton = NodePath("../Button")
+_cardBaseTscn = ExtResource("5_r246h")
+
+[node name="HandManager" type="Node" parent="TableManager" unique_id=235432067]
 script = ExtResource("4_r246h")
 CardsArc = SubResource("Curve_r246h")
 CardBaseTscn = ExtResource("5_r246h")
+
+[node name="DeckManager" type="Node" parent="TableManager" unique_id=168628027]
+script = ExtResource("7_hdchn")
+TestCard = ExtResource("8_xowka")
+
+[node name="CardGraveyard" type="Node" parent="TableManager" unique_id=957230166]
+script = ExtResource("6_hdchn")
+
+[node name="Button" type="Button" parent="." unique_id=1570289088]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -138.0
+offset_top = -61.0
+offset_right = 138.0
+offset_bottom = 61.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Add card"
