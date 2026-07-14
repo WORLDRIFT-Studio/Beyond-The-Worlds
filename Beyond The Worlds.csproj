@@ -208,7 +208,7 @@
     <Content Include="src\autoloads\Events.cs.uid" />
     <Content Include="src\cards\CardBase.cs.uid" />
     <Content Include="src\cards\CardData.cs.uid" />
-    <Content Include="src\cards\CardGraveyard.cs.uid" />
+    <Content Include="src\cards\GraveyardManager.cs.uid" />
     <Content Include="src\cards\cards_bases\blood_mage.tres" />
     <Content Include="src\cards\cards_bases\test_card.tres" />
     <Content Include="src\cards\card_base.tscn" />

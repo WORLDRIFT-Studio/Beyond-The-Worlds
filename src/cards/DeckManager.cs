@@ -5,11 +5,12 @@ using BeyondTheWorlds.common.debug_console;
 
 namespace BeyondTheWorlds.cards;
 
+[GlobalClass]
 public partial class DeckManager : Node
 {
 	[Export] private CardData TestCard { get; set; }
 	
-	public Stack<CardData> PlayerCards { get; private set; } = [];
+	public Stack<CardData> PlayerCards { get; } = [];
 
 	public override void _Ready()
 	{

@@ -5,6 +5,7 @@ using Godot;
 
 namespace BeyondTheWorlds.cards;
 
+[GlobalClass]
 public partial class HandManager : Node
 {
 	[Signal]

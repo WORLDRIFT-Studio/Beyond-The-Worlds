@@ -4,6 +4,7 @@ using BeyondTheWorlds.common.debug_console;
 
 namespace BeyondTheWorlds.cards;
 
+[GlobalClass]
 public partial class CardBase : Node2D
 {
 	private string _cardName;
@@ -12,6 +13,7 @@ public partial class CardBase : Node2D
 	private string _cardType;
 	private string _cardClass;
 	private string _cardDesc;
+	public CardData CardInfo { get; private set; }
 
 	[ExportGroup("Nodes")]
 	[Export] private Label NodeCardName { get; set; }
@@ -25,6 +27,7 @@ public partial class CardBase : Node2D
 
 	public void Initialize(CardData cardInfo)
 	{
+		CardInfo = cardInfo;
 		_cardName = cardInfo.CardName;
 		_cardTexture = cardInfo.CardTexture;
 		_cardCost = cardInfo.CardCost;

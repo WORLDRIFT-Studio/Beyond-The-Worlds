@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Linq;
 using BeyondTheWorlds.common.debug_console;
 
 namespace BeyondTheWorlds.cards;
@@ -34,9 +35,10 @@ public partial class TableManager : Node
 	[ExportCategory("Table Manager")]
 	
 	[ExportGroup("Components")]
-	[Export] private TableManager _tableManager;
 	[Export] private DeckManager _deckManager;
 	[Export] private HandManager _handManager;
+	[Export] private GraveyardManager _graveyardManager;
+		
 	
 	[ExportGroup("Properties")]
 	[Export(PropertyHint.Range, "1, 10, 1, prefer_slider")]
@@ -54,10 +56,21 @@ public partial class TableManager : Node
 	public override void _Ready()
 	{
 		Instance = this;
+		_endTourButton.Pressed += RemoveCardsFromHand;
 		_endTourButton.Pressed += AddCardsToHand;
 		EmitSignalNewBattleStarted();
 	}
 
+	private void RemoveCardsFromHand()
+	{
+		foreach (CardBase card in _handManager.GetChildren().OfType<CardBase>())
+		{
+			CardData cardData = card.CardInfo;
+			card.QueueFree();
+			_graveyardManager.PushCardToGraveyard(cardData);
+		}
+	}
+	
 	private void AddCardsToHand()
 	{
 
@@ -67,10 +80,11 @@ public partial class TableManager : Node
 			var cardNode = _cardBaseTscn.Instantiate<CardBase>();
 			cardNode.Initialize(cardData);
 			_handManager.AddChild(cardNode);
-			_handManager.ArangeCards();
 			DebugConsole.Log("INFO", "CardSys", "Succesfully added card to Player hand.");
 			//TODO: Dodać animacje dodawnia karty
 		}
+		
+		_handManager.ArangeCards();
 	}
 
 	
