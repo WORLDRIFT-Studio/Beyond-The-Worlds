@@ -10,10 +10,17 @@ public partial class DeckManager : Node
 {
 	[Export] private CardData TestCard { get; set; }
 	
-	public Stack<CardData> PlayerCards { get; } = [];
+	public Stack<CardData> PlayerCards { get; private set;  } = [];
 
 	public override void _Ready()
 	{
+		PlayerCards.Push(TestCard);
+		PlayerCards.Push(TestCard);
+		PlayerCards.Push(TestCard);
+		PlayerCards.Push(TestCard);
+		PlayerCards.Push(TestCard);
+		PlayerCards.Push(TestCard);
+		PlayerCards.Push(TestCard);
 		PlayerCards.Push(TestCard);
 		PlayerCards.Push(TestCard);
 	}
@@ -33,7 +40,17 @@ public partial class DeckManager : Node
 		}
 		
 		CardData cardData = PlayerCards.Pop();
-		TableManager.EmitStackChanged((short) PlayerCards.Count);
+		// TableManager.EmitStackChanged();
 		return cardData;
 	}
+	
+	public void AddCards(Stack<CardData> reciviedCards)
+	{
+		DebugConsole.Log("INFO", "CardSys", "Otrzymano zestaw kart");
+		PlayerCards = reciviedCards;
+	}
+
+	public void AddCards(CardData reciviedCard) => PlayerCards.Push(reciviedCard);
+	
+	public int GetCardsCount() => PlayerCards.Count;
 }

@@ -69,6 +69,10 @@ public partial class HandManager : Node
 		}
 	}
 
+	public int GetCardsCount()
+	{
+		return GetChildren().OfType<CardBase>().Count();
+	}
 
 	// private void LoadPlayerDeck()
 	// {

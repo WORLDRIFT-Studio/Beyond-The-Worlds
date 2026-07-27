@@ -1,7 +1,10 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using BeyondTheWorlds.common.debug_console;
+using Godot.Collections;
+using Array = Godot.Collections.Array;
 
 namespace BeyondTheWorlds.cards;
 
@@ -11,7 +14,8 @@ public partial class TableManager : Node
 	#region Events
 	[Signal] public delegate void NextTurnStartedEventHandler();
 	[Signal] public delegate void NewBattleStartedEventHandler();
-	[Signal] public delegate void StackChangedEventHandler(short count);
+	[Signal] public delegate void StackChangedEventHandler();
+	[Signal] public delegate void GraveyardChangedEventHandler();
 	
 	public static void EmitNextTurnStarted()
 	{
@@ -23,12 +27,16 @@ public partial class TableManager : Node
 		Instance.EmitSignalNewBattleStarted();
 	}
 	
-	public static void EmitStackChanged(short count)
+	public static void EmitStackChanged()
 	{
-		Instance.EmitSignalStackChanged(count);
+		Instance.EmitSignalStackChanged();
+	}
+
+	public static void EmitGraveyardChanged()
+	{
+		Instance.EmitSignalGraveyardChanged();
 	}
 	#endregion
-
 	
 	
 	#region Exports
@@ -44,21 +52,57 @@ public partial class TableManager : Node
 	[Export(PropertyHint.Range, "1, 10, 1, prefer_slider")]
 	private short _defaultCardsNumber = 5;
 	
-	[ExportGroup("Nodes")] 
+	[ExportGroup("User Interface")] 
 	[Export] private Button _endTourButton;
+	[Export] private Label _graveyardCards;
+	[Export] private Label _deckCards;
+	
+	[ExportGroup("")]
 	[Export] private PackedScene _cardBaseTscn;  
 	#endregion
 	
-
 	
 	public static TableManager Instance { get; private set; }
 	
-	public override void _Ready()
+	public override  void _Ready()
 	{
 		Instance = this;
+		DebugConsole.Log("DEBUG", "CardSys", $"Limit na ręce: {_defaultCardsNumber}");
 		_endTourButton.Pressed += RemoveCardsFromHand;
 		_endTourButton.Pressed += AddCardsToHand;
-		EmitSignalNewBattleStarted();
+		StackChanged += OnStackChanged;
+		StackChanged += UpdateStackText;
+		GraveyardChanged += UpdateGraveyardText;
+		EmitSignalGraveyardChanged();
+		EmitSignalStackChanged();
+	}
+
+	private void OnStackChanged()
+	{
+		
+		if (_deckManager.GetCardsCount() == 0)
+		{
+			if (_graveyardManager.GetCardsCount() == 0)
+			{
+				DebugConsole.Log("WARNING", "CardSys", "W tali i na cmentarzu nie ma kart!");
+				return;
+			}
+			
+			List<CardData> cardsToMove = new List<CardData>(_graveyardManager.GetCards());
+
+
+			foreach (var card in cardsToMove)
+			{
+				_deckManager.AddCards(card);
+			}			
+			
+			_graveyardManager.ClearGraveyard();
+			UpdateGraveyardText();
+			UpdateStackText();
+		}
+
+		DebugConsole.Log("DEBUG", "CardSys", $"Liczba kart w stosie dobierania: {_deckManager.GetCardsCount()}");
+		DebugConsole.Log("DEBUG", "CardSys", $"Liczba kart na cmentarzu: {_graveyardManager.GetCardsCount()}");
 	}
 
 	private void RemoveCardsFromHand()
@@ -66,15 +110,16 @@ public partial class TableManager : Node
 		foreach (CardBase card in _handManager.GetChildren().OfType<CardBase>())
 		{
 			CardData cardData = card.CardInfo;
+			_graveyardManager.PushCard(cardData);
+			_handManager.RemoveChild(card);
 			card.QueueFree();
-			_graveyardManager.PushCardToGraveyard(cardData);
 		}
 	}
 	
 	private void AddCardsToHand()
 	{
 
-		while (_handManager.CardOnHand.Count < _defaultCardsNumber && _deckManager.PlayerCards.Count > 0)
+		while (_handManager.GetCardsCount() < _defaultCardsNumber && _deckManager.GetCardsCount() > 0)
 		{
 			CardData cardData = _deckManager.GetCard();
 			var cardNode = _cardBaseTscn.Instantiate<CardBase>();
@@ -85,9 +130,11 @@ public partial class TableManager : Node
 		}
 		
 		_handManager.ArangeCards();
+		EmitStackChanged();
 	}
 
-	
+	private void UpdateGraveyardText() => _graveyardCards.Text = $"{_graveyardManager.GetCardsCount()}";
+	private void UpdateStackText() => _deckCards.Text = $"{_deckManager.GetCardsCount()}";
 }
 
 

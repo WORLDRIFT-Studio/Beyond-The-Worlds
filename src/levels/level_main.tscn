@@ -60,12 +60,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 72, 4, -51)
 [node name="CamTarget" parent="." unique_id=1625004831 instance=ExtResource("1_6bm6p")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 76, 0, -103.505035)
 
-[node name="TableManager" type="Node" parent="." unique_id=1585136143 node_paths=PackedStringArray("_deckManager", "_handManager", "_graveyardManager", "_endTourButton")]
+[node name="TableManager" type="Node" parent="." unique_id=1585136143 node_paths=PackedStringArray("_deckManager", "_handManager", "_graveyardManager", "_endTourButton", "_graveyardCards", "_deckCards")]
 script = ExtResource("4_uhw7n")
 _deckManager = NodePath("DeckManager")
 _handManager = NodePath("HandManager")
 _graveyardManager = NodePath("GraveyardManager")
-_endTourButton = NodePath("../Button")
+_defaultCardsNumber = 3
+_endTourButton = NodePath("UI/Button")
+_graveyardCards = NodePath("UI/Panel2/GraveyardCards")
+_deckCards = NodePath("UI/Panel/DeckCards")
 _cardBaseTscn = ExtResource("5_r246h")
 
 [node name="HandManager" type="Node" parent="TableManager" unique_id=235432067]
@@ -80,7 +83,16 @@ TestCard = ExtResource("8_xowka")
 [node name="GraveyardManager" type="Node" parent="TableManager" unique_id=957230166]
 script = ExtResource("9_xowka")
 
-[node name="Button" type="Button" parent="." unique_id=1570289088]
+[node name="UI" type="Control" parent="TableManager" unique_id=776095685]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Button" type="Button" parent="TableManager/UI" unique_id=1570289088]
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -93,3 +105,42 @@ offset_bottom = 61.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Add card"
+
+[node name="Panel" type="Panel" parent="TableManager/UI" unique_id=1235756942]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -61.0
+offset_right = 310.0
+offset_bottom = 61.0
+grow_vertical = 2
+
+[node name="DeckCards" type="Label" parent="TableManager/UI/Panel" unique_id=1203214248]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel2" type="Panel" parent="TableManager/UI" unique_id=1983396534]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -310.0
+offset_top = -61.0
+offset_bottom = 61.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="GraveyardCards" type="Label" parent="TableManager/UI/Panel2" unique_id=1544103494]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

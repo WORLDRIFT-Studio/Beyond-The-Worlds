@@ -8,15 +8,27 @@ namespace BeyondTheWorlds.cards;
 [GlobalClass]
 public partial class GraveyardManager : Node
 {
-	private Stack<CardData> Graveyard { get; } = [];
+	public Stack<CardData> Graveyard { get; set; } = [];
 
-	public override void _Ready()
-	{
-		
-	}
-
-	public void PushCardToGraveyard(CardData card)
+	public void PushCard(CardData card)
 	{
 		Graveyard.Push(card);
+		TableManager.EmitGraveyardChanged();
+	}
+
+	public Stack<CardData> GetCards()
+	{
+		return Graveyard;
+	}
+
+	public int GetCardsCount()
+	{
+		return Graveyard.Count;
+	}
+
+	public void ClearGraveyard()
+	{
+		Graveyard.Clear();
+		Graveyard = [];
 	}
 }
