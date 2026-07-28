@@ -21,6 +21,9 @@ public partial class CardBase : Node2D
 	[Export] private TextureRect NodeCardTexture { get; set; }
 	[Export] private RichTextLabel NodeCardDesc { get; set; }
 	
+	[ExportGroup("Components")]
+	[Export] public AnimationComponent AnimationComponent { get; private set; }
+	
 	public override void _Ready()
 	{
 	}

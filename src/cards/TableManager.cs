@@ -56,6 +56,10 @@ public partial class TableManager : Node
 	[Export] private Button _endTourButton;
 	[Export] private Label _graveyardCards;
 	[Export] private Label _deckCards;
+	[ExportSubgroup("Card Anchor Points")]
+	[Export] private Control _cardSpawnPoint;
+	[Export] private Control _cardDespawnPoint;
+	[Export] private Control _cardCentralPoint;
 	
 	[ExportGroup("")]
 	[Export] private PackedScene _cardBaseTscn;  
@@ -101,8 +105,6 @@ public partial class TableManager : Node
 			UpdateStackText();
 		}
 
-		DebugConsole.Log("DEBUG", "CardSys", $"Liczba kart w stosie dobierania: {_deckManager.GetCardsCount()}");
-		DebugConsole.Log("DEBUG", "CardSys", $"Liczba kart na cmentarzu: {_graveyardManager.GetCardsCount()}");
 	}
 
 	private void RemoveCardsFromHand()
@@ -122,11 +124,12 @@ public partial class TableManager : Node
 		while (_handManager.GetCardsCount() < _defaultCardsNumber && _deckManager.GetCardsCount() > 0)
 		{
 			CardData cardData = _deckManager.GetCard();
-			var cardNode = _cardBaseTscn.Instantiate<CardBase>();
+			CardBase cardNode = _cardBaseTscn.Instantiate<CardBase>();
 			cardNode.Initialize(cardData);
+			cardNode.SetGlobalPosition(_cardSpawnPoint.GlobalPosition);
 			_handManager.AddChild(cardNode);
+			
 			DebugConsole.Log("INFO", "CardSys", "Succesfully added card to Player hand.");
-			//TODO: Dodać animacje dodawnia karty
 		}
 		
 		_handManager.ArangeCards();

@@ -31,10 +31,13 @@ public partial class HandManager : Node
 	[Export(PropertyHint.Range, "0, 90, 1, prefer_slider")]
 	private int MaxRotation { get; set; } = 20;
 	
-	[ExportGroup("Nodes")]
-	[Export] private PackedScene CardBaseTscn { get; set; }
 
-	public List<Node2D> CardOnHand { get; private set; } = [];
+	[ExportGroup("Nodes")] 
+	[Export] private PackedScene _cardBaseTscn;
+	[Export] private Control _cardCentralPoint;
+	
+
+	public List<CardBase> CardOnHand { get; private set; } = [];
 	private float CenterX { get; set; } = 960;
 	private float MaxWidth { get; set; } = 1000f;
 	
@@ -47,9 +50,9 @@ public partial class HandManager : Node
 		// LoadPlayerDeck();
 	}
 	
-	public void ArangeCards()
+	public async void ArangeCards()
 	{
-		CardOnHand = new List<Node2D>(GetChildren().OfType<Node2D>());
+		CardOnHand = new List<CardBase>(GetChildren().OfType<CardBase>());
 		int cardsCount = CardOnHand.Count;
 		if (cardsCount == 0) return;
 		
@@ -62,8 +65,12 @@ public partial class HandManager : Node
 			float xPos = CenterX + i * currentSpacing - xOffset ;
 			float weight = cardsCount > 1 ? 2f * i / (cardsCount - 1) - 1 : 0f;
 			float yPos = BaseY + CardsArc.Sample(weight) * -ArcStrength;
-			CardOnHand[i].Position = new Vector2(xPos, yPos);
-			CardOnHand[i].RotationDegrees = weight * MaxRotation;
+			Vector2 newPos = new Vector2(xPos, yPos);
+			float newRotation = weight * MaxRotation;
+			CardBase currentCard = CardOnHand[i];
+			
+			currentCard.AnimationComponent.CardEntry(_cardCentralPoint.GlobalPosition, newPos, newRotation);
+			await ToSignal(GetTree().CreateTimer(0.25), SceneTreeTimer.SignalName.Timeout);
 			// TODO Zrobić dynamiczne pochylenie kart
 			// TODO Zrobić animacje kart
 		}

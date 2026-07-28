@@ -60,21 +60,25 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 72, 4, -51)
 [node name="CamTarget" parent="." unique_id=1625004831 instance=ExtResource("1_6bm6p")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 76, 0, -103.505035)
 
-[node name="TableManager" type="Node" parent="." unique_id=1585136143 node_paths=PackedStringArray("_deckManager", "_handManager", "_graveyardManager", "_endTourButton", "_graveyardCards", "_deckCards")]
+[node name="TableManager" type="Node" parent="." unique_id=1585136143 node_paths=PackedStringArray("_deckManager", "_handManager", "_graveyardManager", "_endTourButton", "_graveyardCards", "_deckCards", "_cardSpawnPoint", "_cardDespawnPoint", "_cardCentralPoint")]
 script = ExtResource("4_uhw7n")
 _deckManager = NodePath("DeckManager")
 _handManager = NodePath("HandManager")
 _graveyardManager = NodePath("GraveyardManager")
 _defaultCardsNumber = 3
 _endTourButton = NodePath("UI/Button")
-_graveyardCards = NodePath("UI/Panel2/GraveyardCards")
-_deckCards = NodePath("UI/Panel/DeckCards")
+_graveyardCards = NodePath("UI/GraveyardCardPanel/GraveyardCards")
+_deckCards = NodePath("UI/DeckCardPanel/DeckCards")
+_cardSpawnPoint = NodePath("UI/DeckCardPanel/SpawnPoint")
+_cardDespawnPoint = NodePath("UI/GraveyardCardPanel/DespawnPoint")
+_cardCentralPoint = NodePath("UI/CenterCardPoint")
 _cardBaseTscn = ExtResource("5_r246h")
 
-[node name="HandManager" type="Node" parent="TableManager" unique_id=235432067]
+[node name="HandManager" type="Node" parent="TableManager" unique_id=235432067 node_paths=PackedStringArray("_cardCentralPoint")]
 script = ExtResource("4_r246h")
 CardsArc = SubResource("Curve_r246h")
-CardBaseTscn = ExtResource("5_r246h")
+_cardBaseTscn = ExtResource("5_r246h")
+_cardCentralPoint = NodePath("../UI/CenterCardPoint")
 
 [node name="DeckManager" type="Node" parent="TableManager" unique_id=168628027]
 script = ExtResource("7_hdchn")
@@ -106,17 +110,17 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Add card"
 
-[node name="Panel" type="Panel" parent="TableManager/UI" unique_id=1235756942]
+[node name="DeckCardPanel" type="Panel" parent="TableManager/UI" unique_id=1235756942]
 layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_top = -61.0
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -122.0
 offset_right = 310.0
-offset_bottom = 61.0
-grow_vertical = 2
+grow_vertical = 0
+pivot_offset_ratio = Vector2(0.5, 0.5)
 
-[node name="DeckCards" type="Label" parent="TableManager/UI/Panel" unique_id=1203214248]
+[node name="DeckCards" type="Label" parent="TableManager/UI/DeckCardPanel" unique_id=1203214248]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -124,23 +128,55 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Panel2" type="Panel" parent="TableManager/UI" unique_id=1983396534]
+[node name="SpawnPoint" type="Control" parent="TableManager/UI/DeckCardPanel" unique_id=34020262]
 layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
+anchors_preset = 8
+anchor_left = 0.5
 anchor_top = 0.5
-anchor_right = 1.0
+anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -310.0
-offset_top = -61.0
-offset_bottom = 61.0
-grow_horizontal = 0
+grow_horizontal = 2
 grow_vertical = 2
 
-[node name="GraveyardCards" type="Label" parent="TableManager/UI/Panel2" unique_id=1544103494]
+[node name="GraveyardCardPanel" type="Panel" parent="TableManager/UI" unique_id=1983396534]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -310.0
+offset_top = -122.0
+grow_horizontal = 0
+grow_vertical = 0
+pivot_offset_ratio = Vector2(0.5, 0.5)
+
+[node name="GraveyardCards" type="Label" parent="TableManager/UI/GraveyardCardPanel" unique_id=1544103494]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DespawnPoint" type="Control" parent="TableManager/UI/GraveyardCardPanel" unique_id=1335778000]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterCardPoint" type="Control" parent="TableManager/UI" unique_id=1489870268]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 960.0
+offset_top = 540.0
+offset_right = -960.0
+offset_bottom = -540.0
 grow_horizontal = 2
 grow_vertical = 2

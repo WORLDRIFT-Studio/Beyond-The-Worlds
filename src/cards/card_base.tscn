@@ -1,13 +1,16 @@
 [gd_scene format=3 uid="uid://cdvad8beikwc5"]
 
 [ext_resource type="Script" uid="uid://bi0y5rq2co8o5" path="res://src/cards/CardBase.cs" id="1_mesp3"]
+[ext_resource type="Script" uid="uid://d2jdy2dcgc2c3" path="res://src/cards/AnimationComponent.cs" id="2_xp6ld"]
 
-[node name="CardBase" type="Node2D" unique_id=504223493 node_paths=PackedStringArray("NodeCardName", "NodeCardCost", "NodeCardTexture", "NodeCardDesc")]
+[node name="CardBase" type="Node2D" unique_id=504223493 node_paths=PackedStringArray("NodeCardName", "NodeCardCost", "NodeCardTexture", "NodeCardDesc", "AnimationComponent")]
+scale = Vector2(0.2, 0.2)
 script = ExtResource("1_mesp3")
 NodeCardName = NodePath("Base/VBoxContainer/HBoxContainer/Name")
 NodeCardCost = NodePath("Base/VBoxContainer/HBoxContainer/Cost")
 NodeCardTexture = NodePath("Base/TextureRect")
 NodeCardDesc = NodePath("Base/VBoxContainer/RichTextLabel")
+AnimationComponent = NodePath("AnimationComponent")
 
 [node name="Base" type="PanelContainer" parent="." unique_id=885655861]
 anchors_preset = 7
@@ -23,6 +26,7 @@ grow_vertical = 0
 
 [node name="TextureRect" type="TextureRect" parent="Base" unique_id=1140987543]
 layout_mode = 2
+expand_mode = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Base" unique_id=697352693]
 layout_mode = 2
@@ -55,3 +59,7 @@ text = "Lorem Ipsum
 "
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="AnimationComponent" type="Node" parent="." unique_id=1519292061 node_paths=PackedStringArray("TargetCard")]
+script = ExtResource("2_xp6ld")
+TargetCard = NodePath("..")
