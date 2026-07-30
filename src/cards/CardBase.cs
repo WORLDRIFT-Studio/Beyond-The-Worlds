@@ -4,8 +4,9 @@ using BeyondTheWorlds.common.debug_console;
 
 namespace BeyondTheWorlds.cards;
 
+[Tool]
 [GlobalClass]
-public partial class CardBase : Node2D
+public partial class CardBase : Control
 {
 	private string _cardName;
 	private Texture2D _cardTexture;

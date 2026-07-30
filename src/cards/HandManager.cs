@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using BeyondTheWorlds.common.debug_console;
 using Godot;
 
@@ -49,8 +50,10 @@ public partial class HandManager : Node
 		CardsAmmountChanged += ArangeCards;
 		// LoadPlayerDeck();
 	}
+
+	public void ArangeCards() => _ = ArangeCardsAsync();
 	
-	public async void ArangeCards()
+	private async Task ArangeCardsAsync()
 	{
 		CardOnHand = new List<CardBase>(GetChildren().OfType<CardBase>());
 		int cardsCount = CardOnHand.Count;
@@ -68,9 +71,9 @@ public partial class HandManager : Node
 			Vector2 newPos = new Vector2(xPos, yPos);
 			float newRotation = weight * MaxRotation;
 			CardBase currentCard = CardOnHand[i];
-			
-			currentCard.AnimationComponent.CardEntry(_cardCentralPoint.GlobalPosition, newPos, newRotation);
-			await ToSignal(GetTree().CreateTimer(0.25), SceneTreeTimer.SignalName.Timeout);
+
+			await currentCard.AnimationComponent.CardEntry(_cardCentralPoint.GlobalPosition, newPos, newRotation);
+			// await ToSignal(GetTree().CreateTimer(0.25), SceneTreeTimer.SignalName.Timeout);
 			// TODO Zrobić dynamiczne pochylenie kart
 			// TODO Zrobić animacje kart
 		}
