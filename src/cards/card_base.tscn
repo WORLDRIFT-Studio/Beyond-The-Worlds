@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://cdvad8beikwc5"]
+
+[ext_resource type="Script" uid="uid://bi0y5rq2co8o5" path="res://src/cards/CardBase.cs" id="1_mesp3"]
+
+[node name="CardBase" type="Node2D" unique_id=504223493 node_paths=PackedStringArray("NodeCardName", "NodeCardCost", "NodeCardTexture", "NodeCardDesc")]
+script = ExtResource("1_mesp3")
+NodeCardName = NodePath("Base/VBoxContainer/HBoxContainer/Name")
+NodeCardCost = NodePath("Base/VBoxContainer/HBoxContainer/Cost")
+NodeCardTexture = NodePath("Base/TextureRect")
+NodeCardDesc = NodePath("Base/VBoxContainer/RichTextLabel")
+
+[node name="Base" type="PanelContainer" parent="." unique_id=885655861]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -120.0
+offset_top = -360.0
+offset_right = 120.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="TextureRect" type="TextureRect" parent="Base" unique_id=1140987543]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Base" unique_id=697352693]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Base/VBoxContainer" unique_id=125243674]
+layout_mode = 2
+
+[node name="Cost" type="Label" parent="Base/VBoxContainer/HBoxContainer" unique_id=1598256461]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Name" type="Label" parent="Base/VBoxContainer/HBoxContainer" unique_id=1201909620]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "Blood Mage"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Base/VBoxContainer" unique_id=386719093]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "Lorem Ipsum
+"
+horizontal_alignment = 1
+vertical_alignment = 1
