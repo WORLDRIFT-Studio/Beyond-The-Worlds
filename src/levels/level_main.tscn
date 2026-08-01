@@ -3,12 +3,13 @@
 [ext_resource type="PackedScene" uid="uid://dshecx4c5mjdp" path="res://src/enemies/test_enemy.tscn" id="1_1oj5k"]
 [ext_resource type="PackedScene" uid="uid://jfvvwru1ymiu" path="res://src/common/orbital_cam/orbital_cam.tscn" id="1_6bm6p"]
 [ext_resource type="PackedScene" uid="uid://bbalg6dcuipww" path="res://src/levels/level_test/test_arena.tscn" id="3_6bm6p"]
-[ext_resource type="Script" uid="uid://bh0qyhgkg0xdn" path="res://src/cards/HandManager.cs" id="4_r246h"]
-[ext_resource type="Script" uid="uid://cjfwl3f1y1frc" path="res://src/cards/TableManager.cs" id="4_uhw7n"]
+[ext_resource type="Script" uid="uid://bh0qyhgkg0xdn" path="res://src/cards/managers/HandManager.cs" id="4_r246h"]
+[ext_resource type="Script" uid="uid://cjfwl3f1y1frc" path="res://src/cards/managers/TableManager.cs" id="4_uhw7n"]
 [ext_resource type="PackedScene" uid="uid://cdvad8beikwc5" path="res://src/cards/card_base.tscn" id="5_r246h"]
-[ext_resource type="Script" uid="uid://ciw3natpklfla" path="res://src/cards/DeckManager.cs" id="7_hdchn"]
+[ext_resource type="PackedScene" uid="uid://hnfpnhiwh7es" path="res://src/cards/card_back_dummy.tscn" id="6_hqt4j"]
+[ext_resource type="Script" uid="uid://ciw3natpklfla" path="res://src/cards/managers/DeckManager.cs" id="7_hdchn"]
 [ext_resource type="Resource" uid="uid://b0safyq0k2m6r" path="res://src/cards/cards_bases/test_card.tres" id="8_xowka"]
-[ext_resource type="Script" uid="uid://2a2dnq4eyprw" path="res://src/cards/GraveyardManager.cs" id="9_xowka"]
+[ext_resource type="Script" uid="uid://2a2dnq4eyprw" path="res://src/cards/managers/GraveyardManager.cs" id="9_xowka"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_yx7mw"]
 sky_top_color = Color(0.10829178, 0.50428545, 0.5544404, 1)
@@ -65,7 +66,7 @@ script = ExtResource("4_uhw7n")
 _deckManager = NodePath("DeckManager")
 _handManager = NodePath("HandManager")
 _graveyardManager = NodePath("GraveyardManager")
-_defaultCardsNumber = 3
+_defaultCardsNumber = 6
 _endTourButton = NodePath("UI/Button")
 _graveyardCards = NodePath("UI/GraveyardCardPanel/GraveyardCards")
 _deckCards = NodePath("UI/DeckCardPanel/DeckCards")
@@ -73,6 +74,7 @@ _cardSpawnPoint = NodePath("UI/DeckCardPanel/SpawnPoint")
 _cardDespawnPoint = NodePath("UI/GraveyardCardPanel/DespawnPoint")
 _cardCentralPoint = NodePath("UI/CenterCardPoint")
 _cardBaseTscn = ExtResource("5_r246h")
+_cardReverseDummy = ExtResource("6_hqt4j")
 
 [node name="HandManager" type="Node" parent="TableManager" unique_id=235432067 node_paths=PackedStringArray("_cardCentralPoint")]
 script = ExtResource("4_r246h")

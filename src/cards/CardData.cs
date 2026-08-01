@@ -2,11 +2,25 @@ using Godot;
 
 namespace BeyondTheWorlds.cards;
 
+/// <summary>
+/// Przechowuje dane i parametry karty budowlanej.
+/// </summary>
+/// <param name="cardTexture">Dwuwymiarowa grafika karty (nie model 3D).</param>
+/// <param name="cardName">Wyświetlana nazwa karty.</param>
+/// <param name="cardType">Kategoria/typ karty.</param>
+/// <param name="cardClass">Klasa lub przynależność karty.</param>
+/// <param name="cardDescription">Tekst opisowy lub efekty karty.</param>
+/// <param name="cardCost">Koszt punktowy/zasobów wymagany do zagrania karty.</param>
 [GlobalClass]
-public partial class CardData(ImageTexture cardTexture, string cardName, string cardType, string cardClass,
-    string cardDescription, int cardCost) : Resource
+public partial class CardData(
+    Texture2D cardTexture,
+    string cardName,
+    string cardType,
+    string cardClass,
+    string cardDescription,
+    int cardCost) : Resource
 {
-    
+    /// <summary>Dwuwymiarowa grafika karty (nie model 3D)</summary>
     [Export]
     public Texture2D CardTexture { get; set; } = cardTexture;
 
@@ -23,8 +37,7 @@ public partial class CardData(ImageTexture cardTexture, string cardName, string 
     public string CardDescription { get; set; } = cardDescription;
 
     [Export(PropertyHint.Range, "0, 5, 1, prefer_slider")] 
-    public int CardCost { get; set; } = cardCost; 
+    public int CardCost { get; set; } = cardCost;
 
-    public CardData() : this(null, null, null, null, null, 0) {}
-
+    CardData() : this(null, null, null, null, null, 0) { }
 }

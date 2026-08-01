@@ -29,6 +29,10 @@ public partial class CardBase : Control
 	{
 	}
 
+	/// <summary>
+	/// Inicjalizuje dane karty na podstawie wejścia
+	/// </summary>
+	/// <param name="cardInfo">Dane bazowe karty, trzymane w <see cref="CardData"/></param>
 	public void Initialize(CardData cardInfo)
 	{
 		CardInfo = cardInfo;

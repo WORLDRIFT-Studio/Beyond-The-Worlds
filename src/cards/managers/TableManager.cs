@@ -5,8 +5,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using BeyondTheWorlds.common.debug_console;
 
-namespace BeyondTheWorlds.cards;
+namespace BeyondTheWorlds.cards.managers;
 
+/// <summary>
+/// Instancja menadżera gry, obsługuje System rozgrywki, zarządza grą i kartami. 
+/// </summary>
 [GlobalClass]
 public partial class TableManager : Node
 {
@@ -36,6 +39,7 @@ public partial class TableManager : Node
 	[ExportGroup("Properties")]
 	[Export(PropertyHint.Range, "1, 10, 1, prefer_slider")] 
 	private short _defaultCardsNumber = 5;
+	
 	[ExportGroup("User Interface")] 
 	[Export] private Button _endTourButton;
 	[Export] private Label _graveyardCards;
@@ -46,24 +50,29 @@ public partial class TableManager : Node
 	[Export] private Control _cardCentralPoint;
 	
 	[ExportGroup("")]
-	[Export] private PackedScene _cardBaseTscn;  
+	[Export] private PackedScene _cardBaseTscn;
+	[Export] private PackedScene _cardReverseDummy;
 	#endregion
 	
-	
+	/// <summary>
+	/// Instancja umożliwająca odwołanie się do niej w każdym skrypcie
+	/// </summary>
 	public static TableManager Instance { get; private set; }
-	
+
+	// Podłącza sygnały, inicjalizuje liczniki
 	public override  void _Ready()
 	{
 		Instance = this;
-		DebugConsole.Log("DEBUG", "CardSys", $"Limit na ręce: {_defaultCardsNumber}");
 		_endTourButton.Pressed += OnEndTourButtonPress;
-		StackChanged += OnStackChanged;
 		StackChanged += UpdateStackText;
 		GraveyardChanged += UpdateGraveyardText;
 		EmitSignalGraveyardChanged();
 		EmitSignalStackChanged();
 	}
 
+	/// <summary>
+	/// Zarządza przebiegiem akcji po zakończeniu tury
+	/// </summary>
 	private void OnEndTourButtonPress() => _ = ExecuteEndTour();
 
 	private async Task ExecuteEndTour()
@@ -75,7 +84,9 @@ public partial class TableManager : Node
 
 		_endTourButton.Disabled = false;
 	}
-	
+	/// <summary>
+	/// Iteruję po dzieciach <see cref="HandManager"/>, ekstarkuje czyste dane karty i przesyła na cmentarz, usuwając węzęł na koniec
+	/// </summary>
 	private async Task RemoveCardsFromHand()
 	{
 		CardBase[] cards = _handManager.GetChildren().OfType<CardBase>().ToArray();
@@ -85,16 +96,26 @@ public partial class TableManager : Node
 			await card.AnimationComponent.CardLeave(_cardCentralPoint.GlobalPosition, _cardDespawnPoint.GlobalPosition);
 			CardData cardData = card.CardInfo;
 			_graveyardManager.PushCard(cardData);
-			_handManager.RemoveChild(card);
 			card.QueueFree();
 		}
 	}
-
+	/// <summary>
+	/// Instancjonuje puste obiekty kart, incjalizuje je przesyłając dane karty i dodaje je jako dzieci węzlą <see cref="HandManager"/>.
+	/// Na końcu za pomocą metody <see cref="HandManager.ArangeCards"/>, ustawia je na właściwuch pozycjąch w ręce.
+	/// </summary>
 	private async Task AddCardsToHand()
 	{
 
-		while (_handManager.GetCardsCount() < _defaultCardsNumber && _deckManager.GetCardsCount() > 0)
+		while (_handManager.GetCardsCount() < _defaultCardsNumber)
 		{
+			if (_deckManager.GetCardsCount() == 0)
+			{
+				if (_graveyardManager.GetCardsCount() == 0)
+					break;
+
+				await ReshuffleGraveyardIntoDeck();
+			}
+			
 			CardData cardData = _deckManager.GetCard();
 			CardBase cardNode = _cardBaseTscn.Instantiate<CardBase>();
 			cardNode.Initialize(cardData);
@@ -102,35 +123,73 @@ public partial class TableManager : Node
 			_handManager.AddChild(cardNode);
 			
 			DebugConsole.Log("INFO", "CardSys", "Succesfully added card to Player hand.");
+			// EmitStackChanged();
+			
 		}
 		
-		_handManager.ArangeCards();
-		EmitStackChanged();
+		await _handManager.ArangeCardsAsync();
 	}
 	
-	private void OnStackChanged()
+	
+	private async Task ReshuffleGraveyardIntoDeck()
 	{
-		if (_deckManager.GetCardsCount() == 0)
-		{
-			if (_graveyardManager.GetCardsCount() == 0)
-			{
-				DebugConsole.Log("WARNING", "CardSys", "W tali i na cmentarzu nie ma kart!");
-				return;
-			}
 			
 			List<CardData> cardsToMove = new List<CardData>(_graveyardManager.GetCards());
-
-			foreach (var card in cardsToMove)
-				_deckManager.AddCards(card);
 			
 			_graveyardManager.ClearGraveyard();
-			UpdateGraveyardText();
-			UpdateStackText();
-		}
+			EmitGraveyardChanged();
+			
+			List<Task> animation = [];
 
+			
+			foreach (var card in cardsToMove)
+			{
+				_deckManager.AddCards(card);
+				
+				Control node = (Control) _cardReverseDummy.Instantiate();
+				node.SetGlobalPosition(_cardDespawnPoint.GlobalPosition);
+				AddChild(node);
+
+				await ToSignal(GetTree().CreateTimer(.1d), SceneTreeTimer.SignalName.Timeout);
+				animation.Add(TransferCardAnimation(node));
+				EmitSignalStackChanged();
+			}
+
+			await Task.WhenAll(animation);
+			EmitSignalStackChanged();
+			EmitGraveyardChanged();
 	}
 
+	private async Task TransferCardAnimation(Control node)
+	{
+		Tween tween = CreateTween()
+			.BindNode(node)
+			.SetParallel();
+
+		tween.TweenProperty(node, "global_position:x", _cardSpawnPoint.GlobalPosition.X, .5d)
+			.SetTrans(Tween.TransitionType.Linear);
+		tween.TweenProperty(node, "global_position:y", _cardCentralPoint.GlobalPosition.Y, .5d/2d)
+			.SetTrans(Tween.TransitionType.Sine)
+			.SetEase(Tween.EaseType.Out);
+		
+		Tween tweenY2 = CreateTween().BindNode(node);
+		tweenY2.TweenInterval(0.5d/2); 
+		tweenY2.TweenProperty(node, "global_position:y", _cardSpawnPoint.GlobalPosition.Y, .5d/2)
+			.SetTrans(Tween.TransitionType.Quad)
+			.SetEase(Tween.EaseType.In);
+
+		await ToSignal(tweenY2, Tween.SignalName.Finished);
+		node.QueueFree();
+	}
+	
+	/// <summary>
+	/// Aktualizuje licznik kart na cmentarzu
+	/// </summary>
 	private void UpdateGraveyardText() => _graveyardCards.Text = $"{_graveyardManager.GetCardsCount()}";
+	
+	/// <summary>
+	/// Aktualizuje licznik kart w tali
+	/// </summary>
 	private void UpdateStackText() => _deckCards.Text = $"{_deckManager.GetCardsCount()}";
 }
 

@@ -1,11 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BeyondTheWorlds.common.debug_console;
 using Godot;
 
-namespace BeyondTheWorlds.cards;
+namespace BeyondTheWorlds.cards.managers;
 
+/// <summary>
+/// Zarządza ręką gracza (by nie walił konia)
+/// </summary>
 [GlobalClass]
 public partial class HandManager : Node
 {
@@ -14,21 +16,25 @@ public partial class HandManager : Node
 	
 	#region Variables
 	
+	/// <summary>
+	/// Krzywa ręki
+	/// </summary>
 	[ExportCategory("Cards Variables")]
 	[ExportGroup("Variables")]
-	
-	[Export] 
-	private Curve CardsArc { get; set; }
-	
+	[Export] private Curve CardsArc { get; set; }
+	/// <summary>
+	/// Odstęp bazowy między kartami. Jeśli szerokoś
+	/// </summary>
 	[Export(PropertyHint.Range, "0, 200, 1, prefer_slider")]
 	private short CardSpacing { get; set; } = 150;
-
+	/// <summary>
+	/// Ostrość łuku
+	/// </summary>
 	[Export(PropertyHint.Range, "0, 200, 1, prefer_slider")]
 	private short ArcStrength { get; set; } = 100;
-	
 	[Export(PropertyHint.Range, "0, 2000, 10, prefer_slider")]
 	private float BaseY { get; set; } = 1200;
-
+	///Maksymalny obrótw karty	
 	[Export(PropertyHint.Range, "0, 90, 1, prefer_slider")]
 	private int MaxRotation { get; set; } = 20;
 	
@@ -53,7 +59,10 @@ public partial class HandManager : Node
 
 	public void ArangeCards() => _ = ArangeCardsAsync();
 	
-	private async Task ArangeCardsAsync()
+	/// <summary>
+	/// Ustala i ustawia pozycje kart
+	/// </summary>
+	public async Task ArangeCardsAsync()
 	{
 		CardOnHand = new List<CardBase>(GetChildren().OfType<CardBase>());
 		int cardsCount = CardOnHand.Count;
@@ -74,11 +83,15 @@ public partial class HandManager : Node
 
 			await currentCard.AnimationComponent.CardEntry(_cardCentralPoint.GlobalPosition, newPos, newRotation);
 			// await ToSignal(GetTree().CreateTimer(0.25), SceneTreeTimer.SignalName.Timeout);
+			TableManager.EmitStackChanged();
 			// TODO Zrobić dynamiczne pochylenie kart
 			// TODO Zrobić animacje kart
 		}
 	}
 
+	/// <summary>
+	/// Zwraca liczbę kart na ręce
+	/// </summary>
 	public int GetCardsCount()
 	{
 		return GetChildren().OfType<CardBase>().Count();

@@ -44,6 +44,10 @@ public partial class AnimationComponent : Node
     private Control _targetCard;
     private Control _cardHitBox;
     
+    private Tween _hoverTween;
+    private bool _isBaseSaved;
+    private float _basePositionY;
+    private Vector2 _baseScale;
     
     public override string[] _GetConfigurationWarnings()
     {
@@ -57,21 +61,7 @@ public partial class AnimationComponent : Node
 
         return warnings.ToArray();
     }
-
-    public override void _Ready()
-    {
-        if (Engine.IsEditorHint()) return;
-        CardHitBox.MouseEntered += CardHovered;
-        CardHitBox.MouseExited += CardDehovered;
-    }
-
-    public override void _ExitTree()
-    {
-        if (Engine.IsEditorHint()) return;
-        CardHitBox.MouseEntered -= CardHovered;
-        CardHitBox.MouseExited -= CardDehovered;
-    }
-
+    
     public async Task CardEntry(Vector2 checkpointPos, Vector2 targetPos, float targetRotation, double duration = .25d)
     {
         Tween tween = CreateTween()
@@ -87,10 +77,22 @@ public partial class AnimationComponent : Node
         tween.TweenProperty(TargetCard, "rotation_degrees", targetRotation, duration);
 
         await ToSignal(tween, Tween.SignalName.Finished);
+
+        CardHitBox.MouseEntered += CardHovered;
+        CardHitBox.MouseExited += CardDehovered;
+        
+        _basePositionY = TargetCard.GetGlobalPosition().Y;
+        _baseScale = TargetCard.GetScale();
+        _isBaseSaved = true;
     }
     
     public async Task CardLeave(Vector2 checkpointPos, Vector2 targetPos, double duration = .25d)
     {
+        CardHitBox.MouseEntered -= CardHovered;
+        CardHitBox.MouseExited -= CardDehovered;
+        
+        _hoverTween?.Kill();
+        
         Tween tween = CreateTween()
             .BindNode(TargetCard)
             .SetEase(Tween.EaseType.Out)
@@ -105,20 +107,19 @@ public partial class AnimationComponent : Node
 
         await ToSignal(tween, Tween.SignalName.Finished);
     }
-
+    
     private void CardHovered()
-    {
-        Vector2 position = TargetCard.GetGlobalPosition();
-        position.Y -= _hoverHeight;
+    { 
+        _hoverTween?.Kill();
         
-        Tween tween = CreateTween()
+        _hoverTween = CreateTween()
             .BindNode(TargetCard)
             .SetEase(Tween.EaseType.Out)
             .SetTrans(Tween.TransitionType.Sine)
             .SetParallel();
 
-        tween.TweenProperty(TargetCard, "scale", _hoverScale , _duration);
-        tween.TweenProperty(TargetCard, "position", position, _duration);
+        _hoverTween.TweenProperty(TargetCard, "scale", _hoverScale , _duration);
+        _hoverTween.TweenProperty(TargetCard, "position:y", _basePositionY - _hoverHeight, _duration);
     }
 
     private void CardDehovered()
@@ -126,13 +127,15 @@ public partial class AnimationComponent : Node
         Vector2 position = TargetCard.GetGlobalPosition();
         position.Y += _hoverHeight;
         
-        Tween tween = CreateTween()
+        _hoverTween?.Kill();
+        
+        _hoverTween = CreateTween()
             .BindNode(TargetCard)
             .SetEase(Tween.EaseType.Out)
             .SetTrans(Tween.TransitionType.Sine)
             .SetParallel();
 
-        tween.TweenProperty(TargetCard, "scale", new Vector2(1, 1) , _duration);
-        tween.TweenProperty(TargetCard, "position", position, _duration);
+        _hoverTween.TweenProperty(TargetCard, "scale", _baseScale , _duration);
+        _hoverTween.TweenProperty(TargetCard, "position:y", _basePositionY, _duration);
     }
 }

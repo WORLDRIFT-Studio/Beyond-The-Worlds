@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://hnfpnhiwh7es"]
+
+[ext_resource type="Texture2D" uid="uid://bh1ma7g4c8pmi" path="res://assets/card-reverse.jpg" id="1_hmea1"]
+
+[node name="CardBackDummy" type="Control" unique_id=747317479]
+layout_mode = 3
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+grow_vertical = 0
+
+[node name="Base" type="Panel" parent="." unique_id=892022230]
+layout_mode = 1
+anchors_preset = -1
+anchor_bottom = 1.0
+offset_left = -120.0
+offset_top = -360.0
+offset_right = 120.0
+mouse_filter = 1
+mouse_default_cursor_shape = 16
+
+[node name="CardTexture" type="TextureRect" parent="Base" unique_id=1597715281]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("1_hmea1")
+expand_mode = 3
