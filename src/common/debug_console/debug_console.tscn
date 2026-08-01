@@ -1,9 +1,0 @@
-[gd_scene format=3 uid="uid://sotggt4c131d"]
-
-[ext_resource type="Script" uid="uid://76y5hl10ngij" path="res://src/common/debug_console/DebugConsole.cs" id="1_hxksn"]
-[ext_resource type="PackedScene" uid="uid://b040pmcrjywqw" path="res://src/common/debug_console/debug_console_window.tscn" id="2_hxksn"]
-
-[node name="DebugConsole" type="Node" unique_id=1653956537]
-process_mode = 3
-script = ExtResource("1_hxksn")
-ConsoleWindowScene = ExtResource("2_hxksn")

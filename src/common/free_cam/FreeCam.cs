@@ -66,6 +66,7 @@ public partial class FreeCam:CharacterBody3D
 			Vector3 currentRotation = MainCamera3D.Rotation;
 			currentRotation.Y -= mouseMotion.Relative.X * Sensitive;
 			currentRotation.X -= mouseMotion.Relative.Y * Sensitive;
+			GD.Print("Mouse Motion: " + currentRotation);
 			currentRotation.X = Mathf.Clamp(currentRotation.X, -Mathf.Pi/2, Mathf.Pi/2);
 			MainCamera3D.Rotation = currentRotation;
 		}
