@@ -67,7 +67,6 @@ public partial class TableManager : Node
 	public override  void _Ready()
 	{
 		Instance = this;
-		DebugConsole.Log("DEBUG", "CardSys", $"Limit na ręce: {_defaultCardsNumber}");
 		_endTourButton.Pressed += RemoveCardsFromHand;
 		_endTourButton.Pressed += AddCardsToHand;
 		StackChanged += OnStackChanged;
@@ -84,7 +83,7 @@ public partial class TableManager : Node
 		{
 			if (_graveyardManager.GetCardsCount() == 0)
 			{
-				DebugConsole.Log("WARNING", "CardSys", "W tali i na cmentarzu nie ma kart!");
+				DebugConsole.Log("WARNING", "CardSys", "There are no cards in the deck and on the graveyard!");
 				return;
 			}
 			
@@ -100,9 +99,6 @@ public partial class TableManager : Node
 			UpdateGraveyardText();
 			UpdateStackText();
 		}
-
-		DebugConsole.Log("DEBUG", "CardSys", $"Liczba kart w stosie dobierania: {_deckManager.GetCardsCount()}");
-		DebugConsole.Log("DEBUG", "CardSys", $"Liczba kart na cmentarzu: {_graveyardManager.GetCardsCount()}");
 	}
 
 	private void RemoveCardsFromHand()

@@ -46,7 +46,7 @@ public partial class DeckManager : Node
 	
 	public void AddCards(Stack<CardData> reciviedCards)
 	{
-		DebugConsole.Log("INFO", "CardSys", "Otrzymano zestaw kart");
+		DebugConsole.Log("INFO", "CardSys", "Reciveid card set");
 		PlayerCards = reciviedCards;
 	}
 
