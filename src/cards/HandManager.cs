@@ -5,6 +5,9 @@ using Godot;
 
 namespace BeyondTheWorlds.cards;
 
+/// <summary>
+/// Zarządza ręką gracza (by nie walił konia)
+/// </summary>
 [GlobalClass]
 public partial class HandManager : Node
 {
@@ -13,21 +16,25 @@ public partial class HandManager : Node
 	
 	#region Variables
 	
+	/// <summary>
+	/// Krzywa ręki
+	/// </summary>
 	[ExportCategory("Cards Variables")]
 	[ExportGroup("Variables")]
-	
-	[Export] 
-	private Curve CardsArc { get; set; }
-	
+	[Export] private Curve CardsArc { get; set; }
+	/// <summary>
+	/// Odstęp bazowy między kartami. Jeśli szerokoś
+	/// </summary>
 	[Export(PropertyHint.Range, "0, 200, 1, prefer_slider")]
 	private short CardSpacing { get; set; } = 150;
-
+	/// <summary>
+	/// Ostrość łuku
+	/// </summary>
 	[Export(PropertyHint.Range, "0, 200, 1, prefer_slider")]
 	private short ArcStrength { get; set; } = 100;
-	
 	[Export(PropertyHint.Range, "0, 2000, 10, prefer_slider")]
 	private float BaseY { get; set; } = 1200;
-
+	///Maksymalny obrótw karty	
 	[Export(PropertyHint.Range, "0, 90, 1, prefer_slider")]
 	private int MaxRotation { get; set; } = 20;
 	
@@ -47,6 +54,9 @@ public partial class HandManager : Node
 		// LoadPlayerDeck();
 	}
 	
+	/// <summary>
+	/// Ustala i ustawia pozycje kart
+	/// </summary>
 	public void ArangeCards()
 	{
 		CardOnHand = new List<Node2D>(GetChildren().OfType<Node2D>());
@@ -69,6 +79,9 @@ public partial class HandManager : Node
 		}
 	}
 
+	/// <summary>
+	/// Zwraca liczbę kart na ręce
+	/// </summary>
 	public int GetCardsCount()
 	{
 		return GetChildren().OfType<CardBase>().Count();

@@ -21,10 +21,10 @@ public partial class CardBase : Node2D
 	[Export] private TextureRect NodeCardTexture { get; set; }
 	[Export] private RichTextLabel NodeCardDesc { get; set; }
 	
-	public override void _Ready()
-	{
-	}
-
+	/// <summary>
+	/// Inicjalizuje dane karty na podstawie wejścia
+	/// </summary>
+	/// <param name="cardInfo">Dane bazowe karty, trzymane w <see cref="CardData"/></param>
 	public void Initialize(CardData cardInfo)
 	{
 		CardInfo = cardInfo;
