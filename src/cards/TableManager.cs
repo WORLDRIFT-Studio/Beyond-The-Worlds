@@ -8,6 +8,9 @@ using Array = Godot.Collections.Array;
 
 namespace BeyondTheWorlds.cards;
 
+/// <summary>
+/// Instancja menadżera gry, obsługuje System rozgrywki, zarządza grą i kartami. 
+/// </summary>
 [GlobalClass]
 public partial class TableManager : Node
 {
@@ -46,7 +49,6 @@ public partial class TableManager : Node
 	[Export] private DeckManager _deckManager;
 	[Export] private HandManager _handManager;
 	[Export] private GraveyardManager _graveyardManager;
-		
 	
 	[ExportGroup("Properties")]
 	[Export(PropertyHint.Range, "1, 10, 1, prefer_slider")]
@@ -61,9 +63,12 @@ public partial class TableManager : Node
 	[Export] private PackedScene _cardBaseTscn;  
 	#endregion
 	
-	
+	/// <summary>
+	/// Instancja umożliwająca odwołanie się do niej w każdym skrypcie
+	/// </summary>
 	public static TableManager Instance { get; private set; }
-	
+
+	// Podłącza sygnały, inicjalizuje liczniki
 	public override  void _Ready()
 	{
 		Instance = this;
@@ -75,7 +80,10 @@ public partial class TableManager : Node
 		EmitSignalGraveyardChanged();
 		EmitSignalStackChanged();
 	}
-
+	
+	/// <summary>
+	/// Aktaulizuję liczniki w przypadku pustego stosu dobierania.
+	/// </summary>
 	private void OnStackChanged()
 	{
 		
@@ -88,12 +96,8 @@ public partial class TableManager : Node
 			}
 			
 			List<CardData> cardsToMove = new List<CardData>(_graveyardManager.GetCards());
-
-
 			foreach (var card in cardsToMove)
-			{
 				_deckManager.AddCards(card);
-			}			
 			
 			_graveyardManager.ClearGraveyard();
 			UpdateGraveyardText();
@@ -101,17 +105,25 @@ public partial class TableManager : Node
 		}
 	}
 
+	
+	/// <summary>
+	/// Iteruję po dzieciach <see cref="HandManager"/>, ekstarkuje czyste dane karty i przesyła na cmentarz, usuwając węzęł na koniec
+	/// </summary>
 	private void RemoveCardsFromHand()
 	{
-		foreach (CardBase card in _handManager.GetChildren().OfType<CardBase>())
+		Array<CardBase> cards = new Array<CardBase>(_handManager.GetChildren().OfType<CardBase>());
+		foreach (CardBase card in cards)
 		{
 			CardData cardData = card.CardInfo;
 			_graveyardManager.PushCard(cardData);
-			_handManager.RemoveChild(card);
 			card.QueueFree();
 		}
 	}
 	
+	/// <summary>
+	/// Instancjonuje puste obiekty kart, incjalizuje je przesyłając dane karty i dodaje je jako dzieci węzlą <see cref="HandManager"/>.
+	/// Na końcu za pomocą metody <see cref="HandManager.ArangeCards"/>, ustawia je na właściwuch pozycjąch w ręce.
+	/// </summary>
 	private void AddCardsToHand()
 	{
 
@@ -129,7 +141,14 @@ public partial class TableManager : Node
 		EmitStackChanged();
 	}
 
+	/// <summary>
+	/// Aktualizuje licznik kart na cmentarzu
+	/// </summary>
 	private void UpdateGraveyardText() => _graveyardCards.Text = $"{_graveyardManager.GetCardsCount()}";
+	
+	/// <summary>
+	/// Aktualizuje licznik kart w tali
+	/// </summary>
 	private void UpdateStackText() => _deckCards.Text = $"{_deckManager.GetCardsCount()}";
 }
 
