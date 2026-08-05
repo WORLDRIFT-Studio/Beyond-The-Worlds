@@ -5,4 +5,17 @@
     <EnableDynamicLoading>true</EnableDynamicLoading>
     <RootNamespace>BeyondTheWorlds</RootNamespace>
   </PropertyGroup>
+  <ItemGroup>
+    <Content Include="project.godot" />
+    <Content Include="src\autoloads\Events.cs.uid" />
+    <Content Include="src\common\orbital_cam\orbital_cam.gd" />
+    <Content Include="src\common\orbital_cam\orbital_cam.gd.uid" />
+    <Content Include="src\common\orbital_cam\orbital_cam.tscn" />
+    <Content Include="src\levels\level_main.tscn" />
+    <Content Include="src\levels\level_test\test_arena.gdshader.uid" />
+    <Content Include="src\levels\level_test\test_arena.glb" />
+    <Content Include="src\levels\level_test\test_arena.glb.import" />
+    <Content Include="src\levels\level_test\test_arena.tscn" />
+    <Content Include="src\player\PlayerHealth.cs.uid" />
+  </ItemGroup>
 </Project>

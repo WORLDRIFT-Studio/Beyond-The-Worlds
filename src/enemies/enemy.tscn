@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://cfdty7a4watbn"]
+
+[ext_resource type="PackedScene" uid="uid://db1jaos53cacb" path="res://src/enemies/Enemy.glb" id="1_a8hw6"]
+[ext_resource type="Script" uid="uid://da273tp3x1iyo" path="res://src/enemies/Enemy.cs" id="1_jg4ye"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_bfjso"]
+
+[node name="Enemy" type="CharacterBody3D" unique_id=247370470]
+script = ExtResource("1_jg4ye")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1145646279]
+target_desired_distance = 1.5
+avoidance_enabled = true
+debug_enabled = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1386488786]
+shape = SubResource("CapsuleShape3D_bfjso")
+
+[node name="Enemy" parent="." unique_id=630183784 instance=ExtResource("1_a8hw6")]
+transform = Transform3D(-1.7484556e-08, 0, 0.4, 0, 0.4, 0, -0.4, 0, -1.7484556e-08, 0, -0.93532187, 0)

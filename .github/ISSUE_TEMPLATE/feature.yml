@@ -1,0 +1,34 @@
+name: Feature
+description: Propozycja nowej funkcjonalności
+title: "[Feature]: "
+labels:
+  - feature
+
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Opis
+      description: Co ma zostać dodane?
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance Criteria
+      placeholder: |
+        - [ ] ...
+        - [ ] ...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priorytet
+      options:
+        - Low
+        - Medium
+        - High
+        - Critical
