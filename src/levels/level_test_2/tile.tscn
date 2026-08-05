@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://c2kp2gfa8omph"]
+
+[ext_resource type="PackedScene" uid="uid://dquo3yisip813" path="res://src/levels/level_test_2/tile.glb" id="1_n7hf8"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_mfg65"]
+height = 0.15
+radius = 0.63
+
+[node name="Tile" type="StaticBody3D" unique_id=2087550438]
+
+[node name="tile" parent="." unique_id=1587616343 instance=ExtResource("1_n7hf8")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=812490468]
+shape = SubResource("CylinderShape3D_mfg65")
