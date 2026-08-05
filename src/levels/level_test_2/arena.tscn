@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://b3tr1ffyksbwi"]
+
+[ext_resource type="Script" uid="uid://bx1ow671i435s" path="res://src/levels/level_test_2/Tiles.cs" id="1_hfgya"]
+[ext_resource type="PackedScene" uid="uid://c2kp2gfa8omph" path="res://src/levels/level_test_2/tile.tscn" id="2_dyhjc"]
+
+[node name="Arena" type="Node3D" unique_id=2118201539]
+
+[node name="Tiles" type="Node3D" parent="." unique_id=1230170750]
+script = ExtResource("1_hfgya")
+TileScene = ExtResource("2_dyhjc")
+_widthArena = 5
+_lengthArena = 5
+_spacing = 1.2
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=208378100]
+transform = Transform3D(-0.7462651, 0.14153653, -0.6504274, 0, 0.9771329, 0.21262941, 0.6656489, 0.1586779, -0.7292002, -0.86209345, 0.84173256, -1.0027938)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=396422413]
+transform = Transform3D(1, 0, 0, 0, -0.50000006, 0.8660254, 0, -0.8660254, -0.50000006, 0, 3.729155, -2)
