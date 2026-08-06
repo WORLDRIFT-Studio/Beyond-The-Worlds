@@ -59,9 +59,12 @@ public partial class HandManager : Node
 
 	public void ArangeCards() => _ = ArangeCardsAsync();
 	
+<<<<<<< Updated upstream
 	/// <summary>
 	/// Ustala i ustawia pozycje kart
 	/// </summary>
+=======
+>>>>>>> Stashed changes
 	public async Task ArangeCardsAsync()
 	{
 		CardOnHand = new List<CardBase>(GetChildren().OfType<CardBase>());

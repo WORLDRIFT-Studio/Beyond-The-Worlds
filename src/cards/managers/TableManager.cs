@@ -1,9 +1,8 @@
-using Godot;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BeyondTheWorlds.common.debug_console;
+using Godot;
 
 namespace BeyondTheWorlds.cards.managers;
 
@@ -158,6 +157,31 @@ public partial class TableManager : Node
 			await Task.WhenAll(animation);
 			EmitSignalStackChanged();
 			EmitGraveyardChanged();
+<<<<<<< Updated upstream
+=======
+	}
+
+	private async Task TransferCardAnimation(Control node)
+	{
+		Tween tween = CreateTween()
+			.BindNode(node)
+			.SetParallel();
+
+		tween.TweenProperty(node, "global_position:x", _cardSpawnPoint.GlobalPosition.X, .5d)
+			.SetTrans(Tween.TransitionType.Linear);
+		tween.TweenProperty(node, "global_position:y", _cardCentralPoint.GlobalPosition.Y, .5d/2d)
+			.SetTrans(Tween.TransitionType.Sine)
+			.SetEase(Tween.EaseType.Out);
+		
+		Tween tweenY2 = CreateTween().BindNode(node);
+		tweenY2.TweenInterval(0.5d/2); 
+		tweenY2.TweenProperty(node, "global_position:y", _cardSpawnPoint.GlobalPosition.Y, .5d/2)
+			.SetTrans(Tween.TransitionType.Quad)
+			.SetEase(Tween.EaseType.In);
+
+		await ToSignal(tweenY2, Tween.SignalName.Finished);
+		node.QueueFree();
+>>>>>>> Stashed changes
 	}
 
 	private async Task TransferCardAnimation(Control node)

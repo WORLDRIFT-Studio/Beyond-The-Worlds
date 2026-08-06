@@ -12,6 +12,6 @@ shader_parameter/phase = 0.0
 
 [node name="test_arena" unique_id=776285244 instance=ExtResource("1_haekg")]
 
-[node name="Cylinder" parent="." index="0" unique_id=982050839]
+[node name="Cylinder" parent="." index="0" unique_id=766879756]
 unique_name_in_owner = true
 material_override = SubResource("ShaderMaterial_2rkrw")
