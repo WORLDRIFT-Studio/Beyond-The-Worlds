@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="CardData" format=3 uid="uid://b0safyq0k2m6r"]
+
+[ext_resource type="Texture2D" uid="uid://h86l733wb2xm" path="res://assets/test_card.png" id="1_ry4mr"]
+[ext_resource type="Script" uid="uid://0mlkdt1v0h5v" path="res://src/cards/CardData.cs" id="2_lkuom"]
+
+[resource]
+script = ExtResource("2_lkuom")
+CardTexture = ExtResource("1_ry4mr")
+CardName = "Test Card"
+CardType = "Building"
+CardClass = "Secret"
+CardDescription = "A prototype card"
+CardCost = 2
+metadata/_custom_type_script = "uid://0mlkdt1v0h5v"
