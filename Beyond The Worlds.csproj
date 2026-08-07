@@ -369,13 +369,9 @@
     <Content Include="src\cards\AnimationComponent.cs.uid" />
     <Content Include="src\cards\CardBase.cs.uid" />
     <Content Include="src\cards\CardData.cs.uid" />
-    <Content Include="src\cards\GraveyardManager.cs.uid" />
     <Content Include="src\cards\cards_bases\blood_mage.tres" />
     <Content Include="src\cards\cards_bases\test_card.tres" />
     <Content Include="src\cards\card_base.tscn" />
-    <Content Include="src\cards\DeckManager.cs.uid" />
-    <Content Include="src\cards\HandManager.cs.uid" />
-    <Content Include="src\cards\TableManager.cs.uid" />
     <Content Include="src\common\orbital_cam\orbital_cam.gd" />
     <Content Include="src\common\orbital_cam\orbital_cam.gd.uid" />
     <Content Include="src\common\orbital_cam\orbital_cam.tscn" />

@@ -83,6 +83,7 @@ public partial class TableManager : Node
 
 		_endTourButton.Disabled = false;
 	}
+	
 	/// <summary>
 	/// Iteruję po dzieciach <see cref="HandManager"/>, ekstarkuje czyste dane karty i przesyła na cmentarz, usuwając węzęł na koniec
 	/// </summary>
@@ -98,6 +99,7 @@ public partial class TableManager : Node
 			card.QueueFree();
 		}
 	}
+
 	/// <summary>
 	/// Instancjonuje puste obiekty kart, incjalizuje je przesyłając dane karty i dodaje je jako dzieci węzlą <see cref="HandManager"/>.
 	/// Na końcu za pomocą metody <see cref="HandManager.ArangeCards"/>, ustawia je na właściwuch pozycjąch w ręce.
@@ -157,31 +159,6 @@ public partial class TableManager : Node
 			await Task.WhenAll(animation);
 			EmitSignalStackChanged();
 			EmitGraveyardChanged();
-<<<<<<< Updated upstream
-=======
-	}
-
-	private async Task TransferCardAnimation(Control node)
-	{
-		Tween tween = CreateTween()
-			.BindNode(node)
-			.SetParallel();
-
-		tween.TweenProperty(node, "global_position:x", _cardSpawnPoint.GlobalPosition.X, .5d)
-			.SetTrans(Tween.TransitionType.Linear);
-		tween.TweenProperty(node, "global_position:y", _cardCentralPoint.GlobalPosition.Y, .5d/2d)
-			.SetTrans(Tween.TransitionType.Sine)
-			.SetEase(Tween.EaseType.Out);
-		
-		Tween tweenY2 = CreateTween().BindNode(node);
-		tweenY2.TweenInterval(0.5d/2); 
-		tweenY2.TweenProperty(node, "global_position:y", _cardSpawnPoint.GlobalPosition.Y, .5d/2)
-			.SetTrans(Tween.TransitionType.Quad)
-			.SetEase(Tween.EaseType.In);
-
-		await ToSignal(tweenY2, Tween.SignalName.Finished);
-		node.QueueFree();
->>>>>>> Stashed changes
 	}
 
 	private async Task TransferCardAnimation(Control node)
