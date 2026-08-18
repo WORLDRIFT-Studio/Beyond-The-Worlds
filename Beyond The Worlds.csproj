@@ -7,6 +7,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include=".gitattributes" />
+    <Content Include=".github\ISSUE_TEMPLATE\feature.yml" />
+    <Content Include=".github\PULL_REQUEST_TEMPLATE.md" />
+    <Content Include=".github\PULL_REQUEST_TEMPLATE.md.md" />
     <Content Include=".gitignore" />
     <Content Include=".git\COMMIT_EDITMSG" />
     <Content Include=".git\config" />
@@ -31,6 +34,7 @@
     <Content Include=".git\info\exclude" />
     <Content Include=".git\info\refs" />
     <Content Include=".git\logs\HEAD" />
+    <Content Include=".git\logs\refs\heads\869egez31" />
     <Content Include=".git\logs\refs\heads\BW-3\CardSys" />
     <Content Include=".git\logs\refs\heads\BW-50\HealthSys" />
     <Content Include=".git\logs\refs\heads\BW-54\Templates" />
@@ -137,6 +141,7 @@
     <Content Include=".git\objects\aa\e92e67be067576732654e20524ff7cf5d4af3d" />
     <Content Include=".git\objects\ac\f505446bf41f1322cc012f29d031d8a55ccc4b" />
     <Content Include=".git\objects\b0\15b39b9c53d9c9930784a5d33cfd73cedb538e" />
+    <Content Include=".git\objects\b8\87f460c5a323ab81fc82520ba991d6c09138a5" />
     <Content Include=".git\objects\b8\c53cb50dec097c3a363ec837e525af8b4faf4e" />
     <Content Include=".git\objects\b9\71a2a9f70675facf8175b6eee24451ab96f115" />
     <Content Include=".git\objects\ba\3f81a2c270d6d01e9ab5afbae11bda63ac996f" />
@@ -157,6 +162,7 @@
     <Content Include=".git\objects\df\c7529f441e3ae5986ab62ebe21bbe899b2f5c8" />
     <Content Include=".git\objects\e1\b011599fae68286e5910735e4b26da4e3fe0aa" />
     <Content Include=".git\objects\e1\c84d92cf57a1c558079f13dbacf1aedfffeacd" />
+    <Content Include=".git\objects\e2\0305e824d808eeeca9238ddaef59ec339ba993" />
     <Content Include=".git\objects\e3\20752f29fc464141ffa58e011b0bff96c5b783" />
     <Content Include=".git\objects\e5\36bb821ce65de8d815e910a26b012dad1d520b" />
     <Content Include=".git\objects\e6\4c8ffd3bb4f969e217dc8582c89ea4ea9a1811" />
@@ -183,12 +189,16 @@
     <Content Include=".git\objects\pack\pack-4413208e76888bdbc737346610d3352d935e983e.idx" />
     <Content Include=".git\objects\pack\pack-4413208e76888bdbc737346610d3352d935e983e.pack" />
     <Content Include=".git\objects\pack\pack-4413208e76888bdbc737346610d3352d935e983e.rev" />
+    <Content Include=".git\objects\pack\pack-5d86a0e6c147da777f69415a4a9ac18d09c03762.idx" />
+    <Content Include=".git\objects\pack\pack-5d86a0e6c147da777f69415a4a9ac18d09c03762.pack" />
+    <Content Include=".git\objects\pack\pack-5d86a0e6c147da777f69415a4a9ac18d09c03762.rev" />
     <Content Include=".git\objects\pack\pack-f4884bc80cf287cfc1e5146002f87ab8d0d86abf.idx" />
     <Content Include=".git\objects\pack\pack-f4884bc80cf287cfc1e5146002f87ab8d0d86abf.mtimes" />
     <Content Include=".git\objects\pack\pack-f4884bc80cf287cfc1e5146002f87ab8d0d86abf.pack" />
     <Content Include=".git\objects\pack\pack-f4884bc80cf287cfc1e5146002f87ab8d0d86abf.rev" />
     <Content Include=".git\ORIG_HEAD" />
     <Content Include=".git\packed-refs" />
+    <Content Include=".git\refs\heads\869egez31" />
     <Content Include=".git\refs\heads\BW-3\CardSys" />
     <Content Include=".git\refs\heads\BW-50\HealthSys" />
     <Content Include=".git\refs\heads\BW-54\Templates" />
@@ -201,10 +211,19 @@
     <Content Include=".git\refs\remotes\origin\BW-54\Templates" />
     <Content Include=".git\refs\remotes\origin\dev" />
     <Content Include=".git\refs\remotes\origin\HEAD" />
+    <Content Include=".idea\.idea.Beyond The Worlds\.idea\.gitignore" />
+    <Content Include=".idea\.idea.Beyond The Worlds\.idea\.name" />
+    <Content Include=".idea\.idea.Beyond The Worlds\.idea\encodings.xml" />
+    <Content Include=".idea\.idea.Beyond The Worlds\.idea\indexLayout.xml" />
+    <Content Include=".idea\.idea.Beyond The Worlds\.idea\libraries\GdSdk.xml" />
+    <Content Include=".idea\.idea.Beyond The Worlds\.idea\projectSettingsUpdater.xml" />
+    <Content Include=".idea\.idea.Beyond The Worlds\.idea\vcs.xml" />
+    <Content Include=".idea\.idea.Beyond The Worlds\.idea\workspace.xml" />
     <Content Include="assets\test_card.png" />
     <Content Include="assets\test_card.png.import" />
     <Content Include="Beyond The Worlds.sln" />
     <Content Include="project.godot" />
+    <Content Include="README.md" />
     <Content Include="src\autoloads\Events.cs.uid" />
     <Content Include="src\cards\CardBase.cs.uid" />
     <Content Include="src\cards\CardData.cs.uid" />
@@ -218,6 +237,15 @@
     <Content Include="src\common\orbital_cam\orbital_cam.gd" />
     <Content Include="src\common\orbital_cam\orbital_cam.gd.uid" />
     <Content Include="src\common\orbital_cam\orbital_cam.tscn" />
+    <Content Include="src\enemies\Enemy.cs.uid" />
+    <Content Include="src\enemies\Enemy.glb" />
+    <Content Include="src\enemies\Enemy.glb.import" />
+    <Content Include="src\enemies\enemy.tscn" />
+    <Content Include="src\enemies\main.tscn" />
+    <Content Include="src\enemies\SpawnSystem.cs.uid" />
+    <Content Include="src\enemies\test_enemy.glb" />
+    <Content Include="src\enemies\test_enemy.glb.import" />
+    <Content Include="src\enemies\test_enemy.tscn" />
     <Content Include="src\levels\level_main.tscn" />
     <Content Include="src\levels\level_test\test_arena.gdshader.uid" />
     <Content Include="src\levels\level_test\test_arena.glb" />
@@ -226,6 +254,11 @@
     <Content Include="src\player\PlayerHealth.cs.uid" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include=".git\objects\info\" />
     <Folder Include=".git\refs\tags\" />
+    <Folder Include="addons\" />
+    <Folder Include="src\enemies\bases\" />
+    <Folder Include="src\enemies\components\" />
+    <Folder Include="src\enemies\states\" />
   </ItemGroup>
 </Project>
