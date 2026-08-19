@@ -17,6 +17,7 @@ config/features=PackedStringArray("4.7", "C#", "Forward Plus")
 
 AudioManager="*uid://1xqq2lyvll1f"
 Events="*uid://cbkvc1mf5tptl"
+GameManager="*uid://b6qvdre8yjiw1"
 PlayerHealth="*uid://kc1sn0m46mhe"
 DebugConsole="*uid://sotggt4c131d"
 
@@ -32,6 +33,10 @@ window/stretch/aspect="expand"
 [dotnet]
 
 project/assembly_name="Beyond The Worlds"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/GDQuest_GDScript_formatter/plugin.cfg", "res://addons/at-icons/plugin.cfg", "res://addons/godot-easy-icons/plugin.cfg")
 
 [input]
 
