@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://x3dihb87wy5a"]
+
+[ext_resource type="Script" uid="uid://bfawwhysttuwx" path="res://src/entities/bases/Entity.cs" id="1_orm24"]
+[ext_resource type="Script" uid="uid://bvic5n1da2jme" path="res://src/entities/bases/components/ComponentContainer.cs" id="2_mqqbq"]
+[ext_resource type="Script" uid="uid://dprcnb7152x3h" path="res://src/entities/components/RegenerationComponent.cs" id="4_kv56t"]
+[ext_resource type="Script" uid="uid://dre2c3u664dj3" path="res://src/entities/components/AttackComponent.cs" id="5_bh8cb"]
+[ext_resource type="Script" uid="uid://cmrvb3y0yhfir" path="res://src/entities/components/HealthComponent.cs" id="5_gfm82"]
+
+[node name="Entity" type="Node3D" unique_id=696804520 node_paths=PackedStringArray("ComponentContainer")]
+script = ExtResource("1_orm24")
+ComponentContainer = NodePath("ComponentContainer")
+
+[node name="ComponentContainer" type="Node3D" parent="." unique_id=1462938055]
+script = ExtResource("2_mqqbq")
+metadata/_custom_type_script = "uid://bvic5n1da2jme"
+
+[node name="HealthComponent" type="Node3D" parent="ComponentContainer" unique_id=795221362]
+script = ExtResource("5_gfm82")
+metadata/_custom_type_script = "uid://cmrvb3y0yhfir"
+
+[node name="RegenerationComponent" type="Node3D" parent="ComponentContainer" unique_id=1311891468 node_paths=PackedStringArray("HealthComponent")]
+script = ExtResource("4_kv56t")
+HealthComponent = NodePath("../HealthComponent")
+metadata/_custom_type_script = "uid://dprcnb7152x3h"
+
+[node name="AttackComponent" type="Node3D" parent="ComponentContainer" unique_id=1265405805]
+script = ExtResource("5_bh8cb")
+metadata/_custom_type_script = "uid://dre2c3u664dj3"

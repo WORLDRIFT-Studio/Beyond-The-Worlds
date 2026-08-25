@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://c8rfxueh2hmrb"]
+
+[ext_resource type="Script" uid="uid://bcq3tx80bmwl6" path="res://src/entities/components/RangeComponent.cs" id="1_cqgkr"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_iwlnr"]
+radius = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6vucf"]
+transparency = 1
+albedo_color = Color(1, 0.5176471, 0.8392157, 0.5137255)
+
+[node name="RangeComponent" type="Node3D" unique_id=513893120]
+script = ExtResource("1_cqgkr")
+metadata/_custom_type_script = "uid://bcq3tx80bmwl6"
+
+[node name="DetectionArea" type="Area3D" parent="." unique_id=740870039]
+unique_name_in_owner = true
+
+[node name="DetectionHandler" type="CollisionShape3D" parent="DetectionArea" unique_id=874485042]
+unique_name_in_owner = true
+shape = SubResource("SphereShape3D_iwlnr")
+
+[node name="DetectionSphere" type="CSGSphere3D" parent="DetectionArea" unique_id=603336202]
+unique_name_in_owner = true
+radius = 1.0
+material = SubResource("StandardMaterial3D_6vucf")

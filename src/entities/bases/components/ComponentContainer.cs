@@ -8,7 +8,7 @@ namespace BeyondTheWorlds.enemies.bases;
 [GlobalClass, Icon("res://addons/at-icons/node/archive.svg")]
 public partial class ComponentContainer : Node3D
 {
-    public T GetComponent<T>()
+    public T? GetComponent<T>()
         where T : class
     {
         return Components.Values.OfType<T>().FirstOrDefault();
@@ -31,6 +31,9 @@ public partial class ComponentContainer : Node3D
     {
         var children = GetChildren().OfType<BaseComponent>();
         foreach (var child in children)
+        {
+            child.Parent = GetOwner<Node3D>();
             Components[child.Name] = child;
+        }
     }
 }

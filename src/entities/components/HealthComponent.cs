@@ -3,20 +3,16 @@ using BeyondTheWorlds.enemies.bases;
 using BeyondTheWorlds.Interfaces;
 using Godot;
 
-namespace BeyondTheWorlds.enemies.components;
+namespace BeyondTheWorlds.entities.components;
 
 [Tool]
-[GlobalClass, Icon("res://addons/at-icons/node3d/heart.svg")]
+[GlobalClass]
+[Icon("res://addons/at-icons/node3d/heart.svg")]
 public partial class HealthComponent : BaseComponent, IDamageable, IHealable
 {
-    [Signal]
-    public delegate void HealthChangedEventHandler(double currentHealth, double maxHealth);
-
-    [Signal]
-    public delegate void DeathEventHandler();
+    private double _currentHealth;
 
     private double _maxHealth;
-    private double _currentHealth;
 
     [Export(PropertyHint.Range, "1, 1000, 1, prefer_slider, or_greater, suffix:HP")]
     public double MaxHealth
@@ -24,7 +20,7 @@ public partial class HealthComponent : BaseComponent, IDamageable, IHealable
         get => _maxHealth;
         private set
         {
-            double percentage = _currentHealth / _maxHealth;
+            var percentage = _currentHealth / _maxHealth;
             _maxHealth = value;
             _currentHealth += _currentHealth * percentage;
             if (Engine.IsEditorHint())
@@ -57,7 +53,7 @@ public partial class HealthComponent : BaseComponent, IDamageable, IHealable
     }
 
     /// <summary>
-    /// Deal damage to object by given amount.
+    ///     Deal damage to object by given amount.
     /// </summary>
     /// <param name="damage">amount to take</param>
     public void TakeDamage(int damage)
@@ -68,7 +64,7 @@ public partial class HealthComponent : BaseComponent, IDamageable, IHealable
     }
 
     /// <summary>
-    /// Heal object by given amount.
+    ///     Heal object by given amount.
     /// </summary>
     /// <param name="health">amount to heal</param>
     public void Heal(int health)
@@ -79,7 +75,7 @@ public partial class HealthComponent : BaseComponent, IDamageable, IHealable
     }
 
     /// <summary>
-    /// Heal object by a given percentage of maximal health
+    ///     Heal object by a given percentage of maximal health
     /// </summary>
     /// <param name="percent">max health percentage to heal</param>
     public void HealByPercent(double percent)
@@ -88,4 +84,10 @@ public partial class HealthComponent : BaseComponent, IDamageable, IHealable
             return;
         CurrentHealth += (int)(_maxHealth * percent);
     }
+
+    [Signal]
+    public delegate void HealthChangedEventHandler(double currentHealth, double maxHealth);
+
+    [Signal]
+    public delegate void DeathEventHandler();
 }
