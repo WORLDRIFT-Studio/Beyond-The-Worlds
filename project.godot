@@ -11,6 +11,7 @@ config_version=5
 [application]
 
 config/name="Beyond The Worlds"
+run/main_scene="uid://gcapyibi0dp8"
 config/features=PackedStringArray("4.7", "C#", "Forward Plus")
 
 [autoload]

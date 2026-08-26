@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://cximo3n2gh3dq"]
+
+[sub_resource type="GDScript" id="GDScript_stqje"]
+script/source = "extends Node2D
+
+func _ready() -> void:
+	# Create and configure wave generator
+	var wave_generator = WaveGenerator.new()
+
+	# Load enemy data resources
+	#var zombie_data = preload(\"res://resources/enemies/zombie.EnemyData\")
+	#var soldier_data = preload(\"res://resources/enemies/soldier.EnemyData\")
+	#var boss_data = preload(\"res://resources/enemies/boss.EnemyData\")
+
+	# Set up enemy pool
+	wave_generator.enemy_pool = [
+		#zombie_data,
+		#soldier_data,
+		#oss_data
+	]
+
+	# Get spawner and assign wave generator
+	var spawner = $EnemySpawner
+	spawner.wave_generator = wave_generator
+
+	print(\"Wave Spawner Demo Ready!\")
+	print(\"Press space to start first wave\")
+	print(\"Watch the Output dock for spawn messages\")
+
+func _input(event) -> void:
+	if event.is_action_pressed(\"ui_accept\"):  # Space bar
+		var spawner = $EnemySpawner
+		if not spawner.get_is_spawning():
+			spawner.start_wave(0)
+			print(\"Started wave 0!\")
+		else:
+			print(\"Already spawning!\")"
+
+[node name="WaveSpawnerDemo" type="Node2D" unique_id=740485706]
+script = SubResource("GDScript_stqje")
+
+[node name="WaveGenerator" type="WaveGenerator" parent="." unique_id=26005697]
+
+[node name="EnemySpawner" type="EnemySpawner" parent="." unique_id=342195771]
+wave_generator = NodePath("./WaveGenerator")
+spawn_position = Vector2(640, 360)
+#Centerof1280x720windowspawn_area_size = Vector2(200, 100)
+spawn_enabled = true

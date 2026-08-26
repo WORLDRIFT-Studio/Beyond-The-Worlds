@@ -2,6 +2,9 @@
 
 [ext_resource type="PackedScene" uid="uid://bdq2uem5k4p1i" path="res://src/levels/level_test/test_arena.glb" id="1_haekg"]
 [ext_resource type="Shader" uid="uid://dtj0slqivy8qu" path="res://src/common/arena_wave.gdshader" id="2_oein3"]
+[ext_resource type="Script" path="res://scripts/WaveGenerator.gd" id=3]
+[ext_resource type="Script" path="res://scripts/EnemySpawner.gd" id=4]
+[ext_resource type="EnemyData" path="res://resources/enemies/test_enemy.EnemyData" id=5]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2rkrw"]
 render_priority = 0
@@ -15,3 +18,15 @@ shader_parameter/phase = 0.0
 [node name="Cylinder" parent="." index="0" unique_id=982050839]
 unique_name_in_owner = true
 material_override = SubResource("ShaderMaterial_2rkrw")
+
+[node name="WaveSystem" parent="."]
+[node name="WaveGenerator" parent="WaveSystem" type="WaveGenerator"]
+name = "WaveGenerator"
+enemy_pool = [ ExtResource(5) ]
+
+[node name="EnemySpawner" parent="WaveSystem" type="EnemySpawner"]
+name = "EnemySpawner"
+wave_generator = NodePath("./WaveGenerator")
+spawn_position = Vector3(0, 0, 0)  # Center of arena
+spawn_area_size = Vector3(10, 0, 10)  # Spawn within 10 units radius on XZ plane
+spawn_enabled = true

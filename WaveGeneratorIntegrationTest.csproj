@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Godot.NET.Sdk" Version="4.7.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="/home/maksymilian/Desktop/Beyond-The-Worlds/Beyond The Worlds.csproj" />
+  </ItemGroup>
+
+</Project>

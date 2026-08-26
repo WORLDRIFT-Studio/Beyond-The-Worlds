@@ -1,0 +1,23 @@
+[gd_resource type="EnemyData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://resources/EnemyData.gd" id=1]
+
+[resource]
+class_name EnemyData
+cost = 15
+enemy_scene = SubResource( 2 )
+
+[sub_resource type="PackedScene" id=2]
+load_steps=2
+format=3
+
+[sub_resource type="Script" id=3]
+path="res://resources/enemies/soldier.gd"
+language="GDScript"
+
+[sub_resource type="Node" id=4]
+name="Soldier"
+type="Node2D"
+
+[node name="Soldier" type="Node2D"]
+script = SubResource( 3 )
