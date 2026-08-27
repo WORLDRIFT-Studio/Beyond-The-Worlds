@@ -9,9 +9,56 @@ namespace BeyondTheWorlds.entities.components;
 [Icon("res://addons/at-icons/node3d/magic_wand.svg")]
 public partial class ManaComponent : BaseComponent
 {
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready() { }
+    [Signal]
+    public delegate void ManaChangedEventHandler(int currentMana, int maxMana);
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta) { }
+    private int _currentMana;
+    private int _maxMana;
+
+    [Export]
+    public int MaxMana
+    {
+        get => _maxMana;
+        set
+        {
+            _maxMana = value;
+            if (Engine.IsEditorHint())
+                return;
+            EmitSignalManaChanged(CurrentMana, _maxMana);
+        }
+    }
+
+    public int CurrentMana
+    {
+        get => _currentMana;
+        set
+        {
+            _currentMana = value;
+            if (Engine.IsEditorHint())
+                return;
+            EmitSignalManaChanged(_currentMana, _maxMana);
+        }
+    }
+
+    public bool IsFullMana => CurrentMana == _maxMana;
+    public bool IsEmptyMana => CurrentMana <= 0;
+
+    public override void _Ready()
+    {
+        CurrentMana = MaxMana;
+    }
+
+    public void TakeMana(int amount)
+    {
+        if (IsEmptyMana)
+            return;
+        CurrentMana -= amount;
+    }
+
+    public void AddMana(int amount)
+    {
+        if (IsFullMana)
+            return;
+        CurrentMana += amount;
+    }
 }
