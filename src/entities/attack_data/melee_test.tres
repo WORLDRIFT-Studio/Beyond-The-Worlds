@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="MeleeAttackData" format=3 uid="uid://cdcn7cw06rqlh"]
+
+[ext_resource type="Script" uid="uid://dwpyoj30kdo4g" path="res://src/entities/bases/resources/MeleeAttackData.cs" id="1_uhus1"]
+
+[resource]
+script = ExtResource("1_uhus1")
+metadata/_custom_type_script = "uid://dwpyoj30kdo4g"
