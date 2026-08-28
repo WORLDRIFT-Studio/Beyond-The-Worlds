@@ -11,6 +11,12 @@ namespace BeyondTheWorlds.entities.components;
 [Icon("res://addons/at-icons/node3d/target.svg")]
 public partial class RangeComponent : BaseComponent
 {
+	[Signal]
+	public delegate void EntityEnteredAreaEventHandler(Entity entity);
+
+	[Signal]
+	public delegate void EntityExitedAreaEventHandler(Entity target);
+
 	private Area3D? _detectionArea;
 	private CollisionShape3D? _detectionHandler;
 	private CsgSphere3D? _detectionSphere;
@@ -66,6 +72,9 @@ public partial class RangeComponent : BaseComponent
 	{
 		List<string> warnings = [];
 
+		if (GetTree().GetCurrentScene().GetOwner() == this)
+			return [];
+
 		if (_detectionArea is null || _detectionHandler is null || _detectionSphere is null)
 			warnings.Add(
                 "This node must be instanced as a scene. Delete it, and add it from scenes."
@@ -87,10 +96,4 @@ public partial class RangeComponent : BaseComponent
 		if (_detectionSphere != null)
 			_detectionSphere.Radius = Radius;
 	}
-
-	[Signal]
-	public delegate void EntityEnteredAreaEventHandler(Entity entity);
-
-	[Signal]
-	public delegate void EntityExitedAreaEventHandler(Entity target);
 }

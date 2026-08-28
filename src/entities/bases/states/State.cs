@@ -1,24 +1,27 @@
+using System;
 using System.Collections.Generic;
+using BeyondTheWorlds.entities.bases.states;
 using Godot;
 
 namespace BeyondTheWorlds.enemies.bases;
 
 [Tool]
-[GlobalClass, Icon("res://addons/at-icons/node/cog.svg")]
+[GlobalClass]
+[Icon("res://addons/at-icons/node/cog.svg")]
 public abstract partial class State : Node
 {
+    public abstract StateMachine? StateMachine { get; set; }
+    public abstract Node? Parent { get; set; }
+
     public override string[] _GetConfigurationWarnings()
     {
         List<string> warnings = [];
 
-        if (GetParent() is not bases.StateMachine)
+        if (GetParent() is not entities.bases.states.StateMachine)
             warnings.Add("State must be a children of StateMachine");
 
         return warnings.ToArray();
     }
-
-    public abstract StateMachine StateMachine { get; set; }
-    public abstract Node Parent { get; set; }
 
     public virtual void Enter() { }
 

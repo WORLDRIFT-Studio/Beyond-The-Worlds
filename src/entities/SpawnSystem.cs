@@ -1,64 +1,73 @@
+using System;
+using BeyondTheWorlds.entities.models;
 using Godot;
 
-public partial class SpawnSystem : Node3D 
+public partial class SpawnSystem : Node3D
 {
-	[Export] public PackedScene EnemyScene {get;set;}
-	[Export] public MeshInstance3D SpawnArea {get;set;}
+    [Export]
+    public float SpawnY = 0.5f;
 
-	[Export] public float SpawnY = 0.5f;
+    [Export]
+    public Node3D? Target;
 
-	[Export] public Node3D Target;
+    [Export(PropertyHint.Range, "0, 20, 1")]
+    public float Timer = 5.0f;
 
-	[Export(PropertyHint.Range, "0, 20, 1")] public float timer = 5.0f;
-	private Timer SpawnTimer;
+    private Vector3 _spawnPoint;
+    private Timer? _spawnTimer;
 
-	private Vector3 SpawnPoint;
+    [Export]
+    public PackedScene? EnemyScene { get; set; }
 
-	public override void _Ready() 
-	{
-		SpawnTimer = GetNode<Timer>("SpawnTimer");
+    [Export]
+    public MeshInstance3D? SpawnArea { get; set; }
 
-		SpawnTimer.WaitTime = timer;
-		SpawnTimer.Start();
-		SpawnTimer.Timeout += SpawnEnemy;
-	}
+    public override void _Ready()
+    {
+        _spawnTimer = GetNode<Timer>("SpawnTimer");
 
-	private void SpawnEnemy() 
-	{
-		if (EnemyScene == null || SpawnArea == null) return;
+        _spawnTimer.WaitTime = Timer;
+        _spawnTimer.Start();
+        _spawnTimer.Timeout += SpawnEnemy;
+    }
 
-		Vector3 meshPosition = SpawnArea.GlobalPosition;
+    private void SpawnEnemy()
+    {
+        if (EnemyScene == null || SpawnArea == null)
+            return;
 
-		Aabb meshSize = SpawnArea.GetAabb();
-		Vector3 globalScale = SpawnArea.GlobalBasis.Scale;
+        var meshPosition = SpawnArea.GlobalPosition;
 
-		float halfWidthX = (meshSize.Size.X * globalScale.X) / 2f;
-		float halfDepthZ = (meshSize.Size.Z * globalScale.Z) / 2f;
+        var meshSize = SpawnArea.GetAabb();
+        var globalScale = SpawnArea.GlobalBasis.Scale;
 
-		float MinZ = meshPosition.Z - halfDepthZ;
-		float MaxZ = meshPosition.Z + halfDepthZ;
+        var halfWidthX = meshSize.Size.X * globalScale.X / 2f;
+        var halfDepthZ = meshSize.Size.Z * globalScale.Z / 2f;
 
-		float MinX = meshPosition.X - halfWidthX;
-		float MaxX = meshPosition.X + halfWidthX;
+        var minZ = meshPosition.Z - halfDepthZ;
+        var maxZ = meshPosition.Z + halfDepthZ;
 
-		float RandomX = new RandomNumberGenerator().RandfRange(MinX, MaxX);
-		float RandomZ = new RandomNumberGenerator().RandfRange(MinZ, MaxZ);
+        var minX = meshPosition.X - halfWidthX;
+        var maxX = meshPosition.X + halfWidthX;
 
-		float Direction = new RandomNumberGenerator().RandiRange(1,4);
+        var randomX = new RandomNumberGenerator().RandfRange(minX, maxX);
+        var randomZ = new RandomNumberGenerator().RandfRange(minZ, maxZ);
 
-		SpawnPoint = Direction switch
-		{
-			1 => new Vector3(MinX, SpawnY, RandomZ),
-			2 => new Vector3(MaxX, SpawnY, RandomZ),
-			3 => new Vector3(RandomX, SpawnY, MinZ),
-			4 => new Vector3(RandomX, SpawnY, MaxZ),
-			_ => SpawnPoint
-		};
+        float direction = new RandomNumberGenerator().RandiRange(1, 4);
 
-		Enemy enemy = EnemyScene.Instantiate<Enemy>();
+        _spawnPoint = direction switch
+        {
+            1 => new Vector3(minX, SpawnY, randomZ),
+            2 => new Vector3(maxX, SpawnY, randomZ),
+            3 => new Vector3(randomX, SpawnY, minZ),
+            4 => new Vector3(randomX, SpawnY, maxZ),
+            _ => _spawnPoint,
+        };
 
-		AddChild(enemy);
-		enemy.Target = Target;
-		enemy.GlobalPosition = SpawnPoint;
-	}
+        var enemy = EnemyScene.Instantiate<Enemy>();
+
+        AddChild(enemy);
+        enemy.Target = Target;
+        enemy.GlobalPosition = _spawnPoint;
+    }
 }

@@ -1,62 +1,63 @@
+using System;
 using BeyondTheWorlds.autoloads;
 using Godot;
-public partial class Enemy : CharacterBody3D 
+
+namespace BeyondTheWorlds.entities.models;
+
+public partial class Enemy : CharacterBody3D
 {
-	[Export] public Node3D Target {get;set;}
-	private NavigationAgent3D NavAgent;
-	const float SPEED = 3.0f;
+    private NavigationAgent3D? _navAgent;
 
-	public override async void _Ready() 
-	{
-		NavAgent = GetNode<NavigationAgent3D>("NavigationAgent3D");
+    [Export]
+    public Node3D? Target { get; set; }
 
-		NavAgent.VelocityComputed += OnVelocityComputed;
-		NavAgent.TargetReached += OnTargetReached;
+    public override async void _Ready()
+    {
+        _navAgent = GetNode<NavigationAgent3D>("NavigationAgent3D");
 
-		await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
-		UpdateTargetPosition();
-	}
+        _navAgent.VelocityComputed += OnVelocityComputed;
+        _navAgent.TargetReached += OnTargetReached;
 
-	private void OnTargetReached() 
-	{
-		GD.Print("Target reached!");
-		Events.EmitPlayerDamaged(1);
-		QueueFree();
-	}
+        await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
+        UpdateTargetPosition();
+    }
 
-	private void OnVelocityComputed(Vector3 safe_velocity) 
-	{
-		Velocity = Velocity.MoveToward(safe_velocity, 0.25f);
-		MoveAndSlide();
-	}
+    public override void _PhysicsProcess(double delta)
+    {
+        if (_navAgent == null || _navAgent.IsNavigationFinished())
+            return;
 
-	public override void _PhysicsProcess(double delta) 
-	{
-		if (NavAgent.IsNavigationFinished())
-		{
-			return;
-		}
+        var nextPosition = _navAgent.GetNextPathPosition();
+        var direction = (nextPosition - GlobalPosition).Normalized();
 
-		Vector3 NextPosition = NavAgent.GetNextPathPosition();
-		Vector3 Direction = (NextPosition - GlobalPosition).Normalized();
+        _navAgent.SetVelocity(direction * Speed);
 
-		NavAgent.SetVelocity(Direction * SPEED);
+        if (direction.Length() > 0)
+        {
+            var lookTarget = new Vector3(nextPosition.X, GlobalPosition.Y, nextPosition.Z);
+            if (GlobalPosition.DistanceTo(lookTarget) > 0.01)
+                LookAt(lookTarget, Vector3.Up);
+        }
+    }
 
-		if (Direction.Length() > 0)
-		{
-			Vector3 LookTarget = new Vector3(NextPosition.X, GlobalPosition.Y, NextPosition.Z);
-			if (GlobalPosition.DistanceTo(LookTarget) > 0.01)
-			{
-				LookAt(LookTarget, Vector3.Up);
-			}
-		}
-	}
+    private const float Speed = 3.0f;
 
-	private void UpdateTargetPosition() 
-	{
-		if (Target != null && IsInstanceValid(Target))
-		{
-			NavAgent.TargetPosition = Target.GlobalPosition;
-		}
-	}
+    private void OnTargetReached()
+    {
+        GD.Print("Target reached!");
+        Events.EmitPlayerDamaged(1);
+        QueueFree();
+    }
+
+    private void OnVelocityComputed(Vector3 safeVelocity)
+    {
+        Velocity = Velocity.MoveToward(safeVelocity, 0.25f);
+        MoveAndSlide();
+    }
+
+    private void UpdateTargetPosition()
+    {
+        if (Target != null && IsInstanceValid(Target) && _navAgent != null)
+            _navAgent.TargetPosition = Target.GlobalPosition;
+    }
 }

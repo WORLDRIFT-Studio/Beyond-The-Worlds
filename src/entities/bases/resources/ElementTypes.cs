@@ -1,6 +1,6 @@
 namespace BeyondTheWorlds.entities.bases.resources;
 
-public class AttackData
+public enum ElementTypes
 {
     
 }

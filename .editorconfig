@@ -2,3 +2,6 @@ root = true
 
 [*]
 charset = utf-8
+
+[*.cs]
+csharp_preserve_single_line_statements = true

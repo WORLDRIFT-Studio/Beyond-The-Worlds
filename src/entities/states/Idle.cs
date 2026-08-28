@@ -1,22 +1,25 @@
+using System;
 using BeyondTheWorlds.enemies.bases;
 using Godot;
+using StateMachine = BeyondTheWorlds.entities.bases.states.StateMachine;
 
-namespace BeyondTheWorlds.enemies.states;
+namespace BeyondTheWorlds.entities.states;
 
 [Tool]
-[GlobalClass, Icon("res://addons/at-icons/node/hand.svg")]
+[GlobalClass]
+[Icon("res://addons/at-icons/node/hand.svg")]
 public partial class Idle : State
 {
-    private StateMachine _stateMachine;
-    private Node _parent;
+    private Node? _parent;
+    private StateMachine? _stateMachine;
 
-    public override StateMachine StateMachine
+    public override StateMachine? StateMachine
     {
         get => _stateMachine;
         set => _stateMachine = value;
     }
 
-    public override Node Parent
+    public override Node? Parent
     {
         get => _parent;
         set => _parent = value;

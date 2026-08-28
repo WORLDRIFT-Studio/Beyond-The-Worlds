@@ -1,20 +1,24 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using BeyondTheWorlds.enemies.bases;
 using Godot;
 
-namespace BeyondTheWorlds.enemies.bases;
+namespace BeyondTheWorlds.entities.bases.states;
 
 [Tool]
-[GlobalClass, Icon("res://addons/at-icons/node/cog.svg")]
-public partial class  StateMachine: Node
+[GlobalClass]
+[Icon("res://addons/at-icons/node/cog.svg")]
+public partial class StateMachine : Node
 {
-    private Dictionary<string, State> _states = new Dictionary<string, State>();
-    private Node _parent;
-    
+    private readonly Dictionary<string, State> _states = new();
+    private State? _currentState;
+
     [Export]
-    private State _defaultState;
-    private State _currentState;
-    
+    private State? _defaultState;
+
+    private Node? _parent;
+
     public override void _Ready()
     {
         _parent = GetParent();
@@ -25,12 +29,21 @@ public partial class  StateMachine: Node
 
     public override void _PhysicsProcess(double delta)
     {
-        _currentState.PhysicsUpdate(delta);
+        _currentState?.PhysicsUpdate(delta);
     }
 
     public override void _Process(double delta)
     {
-        _currentState.Update(delta);
+        _currentState?.Update(delta);
+    }
+
+    public void ChangeState(string newState)
+    {
+        if (!_states.ContainsKey(newState))
+            return;
+        _currentState?.Exit();
+        _currentState = _states[newState];
+        _currentState.Enter();
     }
 
     private void UpdateStates()
@@ -42,13 +55,5 @@ public partial class  StateMachine: Node
             state.Parent = _parent;
             _states[state.Name] = state;
         }
-    }
-    
-    public void ChangeState(string newState)
-    {
-        if (!_states.ContainsKey(newState)) return;
-        _currentState.Exit();
-        _currentState = _states[newState];
-        _currentState.Enter();
     }
 }
