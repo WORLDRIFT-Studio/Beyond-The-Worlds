@@ -1,6 +1,15 @@
+using System;
+
 namespace BeyondTheWorlds.entities.bases.resources;
 
+[Flags]
 public enum ElementTypes
 {
-    
+    None = 0,
+    Fire = 1 << 0,
+    Water = 1 << 1,
+    Earth = 1 << 2,
+    Air = 1 << 3,
+    Light = 1 << 4,
+    Dark = 1 << 5,
 }

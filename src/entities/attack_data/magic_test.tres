@@ -1,7 +1,0 @@
-[gd_resource type="Resource" script_class="MagicAttackData" format=3 uid="uid://cu87276ph3wmm"]
-
-[ext_resource type="Script" uid="uid://dymy8r7q1y4sn" path="res://src/entities/bases/resources/MagicAttackData.cs" id="1_r27pi"]
-
-[resource]
-script = ExtResource("1_r27pi")
-metadata/_custom_type_script = "uid://dymy8r7q1y4sn"

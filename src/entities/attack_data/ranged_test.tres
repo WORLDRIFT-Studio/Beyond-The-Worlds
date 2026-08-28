@@ -1,7 +1,0 @@
-[gd_resource type="Resource" script_class="RangedAttackData" format=3 uid="uid://se0a3fce8s3a"]
-
-[ext_resource type="Script" uid="uid://doemea25bvfyr" path="res://src/entities/bases/resources/RangedAttackData.cs" id="1_8rvbv"]
-
-[resource]
-script = ExtResource("1_8rvbv")
-metadata/_custom_type_script = "uid://doemea25bvfyr"
