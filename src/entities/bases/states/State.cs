@@ -1,5 +1,9 @@
-using System;
-using System.Collections.Generic;
+// -----------------------------------------------------------------------
+// <copyright file="State.cs" company="World Rift Studio">
+// Copyright (c) World Rift Studio. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
 using BeyondTheWorlds.entities.bases.states;
 using Godot;
 

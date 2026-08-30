@@ -1,25 +1,18 @@
-using System.Collections.Generic;
-using System.Linq;
+// -----------------------------------------------------------------------
+// <copyright file="ComponentContainer.cs" company="World Rift Studio">
+// Copyright (c) World Rift Studio. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
 using Godot;
 
 namespace BeyondTheWorlds.enemies.bases;
 
 [Tool]
-[GlobalClass, Icon("res://addons/at-icons/node/archive.svg")]
+[GlobalClass]
+[Icon("res://addons/at-icons/node/archive.svg")]
 public partial class ComponentContainer : Node3D
 {
-    public T? GetComponent<T>()
-        where T : class
-    {
-        return Components.Values.OfType<T>().FirstOrDefault();
-    }
-
-    public List<T> GetComponents<T>()
-        where T : class
-    {
-        return Components.Values.OfType<T>().ToList();
-    }
-
     public Godot.Collections.Dictionary<string, BaseComponent> Components { get; set; } = new();
 
     public override void _Ready()
@@ -27,10 +20,22 @@ public partial class ComponentContainer : Node3D
         UpdateComponents();
     }
 
+    public T? GetComponent<T>()
+        where T : class
+    {
+        return Components.Values.OfType<T>().FirstOrDefault();
+    }
+
+    public IList<T> GetComponents<T>()
+        where T : class
+    {
+        return Components.Values.OfType<T>().ToList();
+    }
+
     private void UpdateComponents()
     {
-        var children = GetChildren().OfType<BaseComponent>();
-        foreach (var child in children)
+        IEnumerable<BaseComponent> children = GetChildren().OfType<BaseComponent>();
+        foreach (BaseComponent child in children)
         {
             child.Parent = GetOwner<Node3D>();
             Components[child.Name] = child;

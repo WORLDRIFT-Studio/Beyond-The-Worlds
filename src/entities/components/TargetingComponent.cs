@@ -1,8 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
+// -----------------------------------------------------------------------
+// <copyright file="TargetingComponent.cs" company="World Rift Studio">
+// Copyright (c) World Rift Studio. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
 using BeyondTheWorlds.enemies.bases;
 using Godot;
+using Entity = BeyondTheWorlds.entities.bases.types.Entity;
 
 namespace BeyondTheWorlds.entities.components;
 
@@ -23,11 +27,6 @@ public partial class TargetingComponent : BaseComponent
 
     public bool HaveTarget => Target is not null;
 
-    public void ClearTarget()
-    {
-        Target = null;
-    }
-
     public override void _PhysicsProcess(double delta)
     {
         _timer += delta;
@@ -46,6 +45,11 @@ public partial class TargetingComponent : BaseComponent
             warnings.Add("Missing range component. Add it in inspector.");
 
         return [.. warnings, .. base._GetConfigurationWarnings()];
+    }
+
+    public void ClearTarget()
+    {
+        Target = null;
     }
 
     private void SetTarget()

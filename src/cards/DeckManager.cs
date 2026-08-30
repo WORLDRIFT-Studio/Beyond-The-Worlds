@@ -1,5 +1,9 @@
-using System;
-using System.Collections.Generic;
+// -----------------------------------------------------------------------
+// <copyright file="DeckManager.cs" company="World Rift Studio">
+// Copyright (c) World Rift Studio. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
 using BeyondTheWorlds.common.debug_console;
 using Godot;
 

@@ -1,6 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
+// -----------------------------------------------------------------------
+// <copyright file="TableManager.cs" company="World Rift Studio">
+// Copyright (c) World Rift Studio. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
 using BeyondTheWorlds.common.debug_console;
 using Godot;
 using Godot.Collections;

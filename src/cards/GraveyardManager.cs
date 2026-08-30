@@ -1,7 +1,10 @@
+// -----------------------------------------------------------------------
+// <copyright file="GraveyardManager.cs" company="World Rift Studio">
+// Copyright (c) World Rift Studio. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
 using Godot;
-using System;
-using System.Collections.Generic;
-using BeyondTheWorlds.cards;
 
 namespace BeyondTheWorlds.cards;
 
@@ -11,40 +14,40 @@ namespace BeyondTheWorlds.cards;
 [GlobalClass]
 public partial class GraveyardManager : Node
 {
-	private Stack<CardData> Graveyard { get; set; } = [];
+    private Stack<CardData> Graveyard { get; set; } = [];
 
-	/// <summary>
-	/// Dodaje pojedyńczą kartę na szczyt stosu
-	/// </summary>
-	/// <param name="card"></param>
-	public void PushCard(CardData card)
-	{
-		Graveyard.Push(card);
-		TableManager.EmitGraveyardChanged();
-	}
+    /// <summary>
+    /// Dodaje pojedyńczą kartę na szczyt stosu
+    /// </summary>
+    /// <param name="card"></param>
+    public void PushCard(CardData card)
+    {
+        Graveyard.Push(card);
+        TableManager.EmitGraveyardChanged();
+    }
 
-	/// <summary>
-	/// Zwraca stos lub <c>null</c> jeśli stos jest pusty.
-	/// </summary>
-	public Stack<CardData> GetCards()
-	{
-		return Graveyard;
-	}
+    /// <summary>
+    /// Zwraca stos lub <c>null</c> jeśli stos jest pusty.
+    /// </summary>
+    public Stack<CardData> GetCards()
+    {
+        return Graveyard;
+    }
 
-	/// <summary>
-	/// Zwraca liczbę kart na stosie
-	/// </summary>
-	public int GetCardsCount()
-	{
-		return Graveyard.Count;
-	}
+    /// <summary>
+    /// Zwraca liczbę kart na stosie
+    /// </summary>
+    public int GetCardsCount()
+    {
+        return Graveyard.Count;
+    }
 
-	/// <summary>
-	/// Oczyszcza stos z kart 
-	/// </summary>
-	public void ClearGraveyard()
-	{
-		Graveyard.Clear();
-		Graveyard = [];
-	}
+    /// <summary>
+    /// Oczyszcza stos z kart
+    /// </summary>
+    public void ClearGraveyard()
+    {
+        Graveyard.Clear();
+        Graveyard = [];
+    }
 }

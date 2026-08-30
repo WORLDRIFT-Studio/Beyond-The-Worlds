@@ -1,4 +1,9 @@
-using System;
+// -----------------------------------------------------------------------
+// <copyright file="PlayerHealth.cs" company="World Rift Studio">
+// Copyright (c) World Rift Studio. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
 using BeyondTheWorlds.autoloads;
 using Godot;
 

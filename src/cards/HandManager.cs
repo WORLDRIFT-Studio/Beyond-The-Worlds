@@ -1,6 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
+// -----------------------------------------------------------------------
+// <copyright file="HandManager.cs" company="World Rift Studio">
+// Copyright (c) World Rift Studio. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
 using Godot;
 
 namespace BeyondTheWorlds.cards;
@@ -26,21 +29,21 @@ public partial class HandManager : Node
     public void ArangeCards()
     {
         CardOnHand = new List<Node2D>(GetChildren().OfType<Node2D>());
-        var cardsCount = CardOnHand.Count;
+        int cardsCount = CardOnHand.Count;
         if (cardsCount == 0)
             return;
 
-        var currentWidth = cardsCount * CardSpacing;
-        var currentSpacing = currentWidth > MaxWidth ? MaxWidth / cardsCount : CardSpacing;
-        var xOffset = (cardsCount - 1) * currentSpacing / 2;
+        int currentWidth = cardsCount * CardSpacing;
+        float currentSpacing = currentWidth > MaxWidth ? MaxWidth / cardsCount : CardSpacing;
+        float xOffset = (cardsCount - 1) * currentSpacing / 2;
 
-        for (var i = 0; i < cardsCount; i++)
+        for (int i = 0; i < cardsCount; i++)
         {
-            var xPos = CenterX + i * currentSpacing - xOffset;
-            var weight = cardsCount > 1 ? 2f * i / (cardsCount - 1) - 1 : 0f;
+            float xPos = CenterX + i * currentSpacing - xOffset;
+            float weight = cardsCount > 1 ? 2f * i / (cardsCount - 1) - 1 : 0f;
             if (CardsArc != null)
             {
-                var yPos = BaseY + CardsArc.Sample(weight) * -ArcStrength;
+                float yPos = BaseY + CardsArc.Sample(weight) * -ArcStrength;
                 CardOnHand[i].Position = new Vector2(xPos, yPos);
             }
 
@@ -83,7 +86,9 @@ public partial class HandManager : Node
     [Export(PropertyHint.Range, "0, 2000, 10, prefer_slider")]
     private float BaseY { get; set; } = 1200;
 
-    ///Maksymalny obrótw karty
+    /// <summary>
+    ///     Maksymalny obrótw karty
+    /// </summary>
     [Export(PropertyHint.Range, "0, 90, 1, prefer_slider")]
     private int MaxRotation { get; set; } = 20;
 
@@ -91,7 +96,7 @@ public partial class HandManager : Node
     [Export]
     private PackedScene? CardBaseTscn { get; set; }
 
-    public List<Node2D> CardOnHand { get; private set; } = [];
+    public IList<Node2D> CardOnHand { get; private set; } = [];
     private float CenterX { get; set; } = 960;
     private float MaxWidth { get; set; } = 1000f;
 
