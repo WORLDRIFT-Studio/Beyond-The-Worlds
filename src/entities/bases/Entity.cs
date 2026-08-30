@@ -1,10 +1,11 @@
-using System.Collections.Generic;
+using BeyondTheWorlds.enemies.bases;
 using Godot;
 
-namespace BeyondTheWorlds.enemies.bases;
+namespace BeyondTheWorlds.entities.bases;
 
 [Tool]
-[GlobalClass, Icon("res://addons/at-icons/node3d/fingerprint.svg")]
+[GlobalClass]
+[Icon("res://addons/at-icons/node3d/fingerprint.svg")]
 public partial class Entity : Node3D
 {
     [Export]
@@ -28,8 +29,14 @@ public partial class Entity : Node3D
     }
 
     public T? GetComponent<T>()
-        where T : class => ComponentContainer?.GetComponent<T>();
+        where T : class
+    {
+        return ComponentContainer?.GetComponent<T>();
+    }
 
-    public List<T>? GetComponents<T>()
-        where T : class => ComponentContainer?.GetComponents<T>();
+    public IList<T>? GetComponents<T>()
+        where T : class
+    {
+        return ComponentContainer?.GetComponents<T>();
+    }
 }

@@ -1,5 +1,3 @@
-using System;
-
 namespace BeyondTheWorlds.entities.bases.resources;
 
 [Flags]

@@ -1,6 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Globalization;
 using Godot;
 using FileAccess = Godot.FileAccess;
 
@@ -36,7 +34,7 @@ public partial class DebugConsole : Node
     /// <param name="command">Parametr przyjmuje komendę i na jej podsatwie wykonuje operacje</param>
     private void OnConsoleInputTextEntered(string command)
     {
-        var input = command.Split(" ");
+        string[] input = command.Split(" ");
         UserInput(command);
 
         switch (input[0])
@@ -117,8 +115,8 @@ public partial class DebugConsole : Node
     /// <param name="message">Wiadomość logu</param>
     private void ConsoleLog(string level, string type, string message)
     {
-        level = level.ToUpper();
-        var color = level switch
+        level = level.ToUpper(CultureInfo.InvariantCulture);
+        string color = level switch
         {
             "INFO" => "#437ee3", //blue
             "WARNING" => "#c18d48", //orange
@@ -126,9 +124,9 @@ public partial class DebugConsole : Node
             _ => "#b8b3ab", //gray
         };
 
-        var cleanMessage =
+        string cleanMessage =
             $"{Time.GetDatetimeStringFromSystem()} [ {level} ] ({type}) >>> {message}";
-        var formatedMessage =
+        string formatedMessage =
             $"\n[color=#787878][i]{Time.GetDatetimeStringFromSystem().Split("T")[1]}[/i][/color] [color={color}][b][ {level} ][/b][/color] [i][color=#39cc9b]({type})[/color][/i] >>> {message}";
         _logHistory.Add(formatedMessage);
 
@@ -136,7 +134,7 @@ public partial class DebugConsole : Node
 
         if (CurrentWindowInstance != null && IsInstanceValid(CurrentWindowInstance))
         {
-            var console = CurrentWindowInstance.GetNode<RichTextLabel>("%ConsoleOutput");
+            RichTextLabel console = CurrentWindowInstance.GetNode<RichTextLabel>("%ConsoleOutput");
             console.AppendText(formatedMessage);
         }
     }
@@ -163,14 +161,14 @@ public partial class DebugConsole : Node
 
     private void UserInput(string userCommand)
     {
-        var fUserCommand = $"\n[color=#bc90ff] ➜ {userCommand}[/color]";
-        var cUserCommand = $" ➜ {userCommand}";
+        string fUserCommand = $"\n[color=#bc90ff] ➜ {userCommand}[/color]";
+        string cUserCommand = $" ➜ {userCommand}";
 
         _logHistory.Add(cUserCommand);
 
         if (CurrentWindowInstance != null && IsInstanceValid(CurrentWindowInstance))
         {
-            var console = CurrentWindowInstance.GetNode<RichTextLabel>("%ConsoleOutput");
+            RichTextLabel console = CurrentWindowInstance.GetNode<RichTextLabel>("%ConsoleOutput");
             console.AppendText(fUserCommand);
         }
     }
@@ -200,7 +198,7 @@ public partial class DebugConsole : Node
             CurrentWindowInstance?.PopupCentered(new Vector2I(800, 600));
             ConsoleInput?.GrabFocus();
 
-            foreach (var oldLog in _logHistory)
+            foreach (string oldLog in _logHistory)
                 ConsoleOutput?.AppendText(oldLog);
 
             Log("info", "Console", "Console succesfully opened!");
@@ -228,9 +226,9 @@ public partial class DebugConsole : Node
 
     private void OnCommandsSugestionsItemSelected(long index)
     {
-        var commandsSugesions = CurrentWindowInstance?.GetNode<ItemList>("%ConsoleSuggest");
+        ItemList? commandsSugesions = CurrentWindowInstance?.GetNode<ItemList>("%ConsoleSuggest");
 
-        var item = commandsSugesions?.GetItemText((int)index);
+        string? item = commandsSugesions?.GetItemText((int)index);
         if (ConsoleInput != null)
         {
             ConsoleInput.Text = item;
@@ -244,7 +242,7 @@ public partial class DebugConsole : Node
 
     private void OnConsoleInputTextChanged(string newText)
     {
-        var commandsSugesions = CurrentWindowInstance?.GetNode<ItemList>("%ConsoleSuggest");
+        ItemList? commandsSugesions = CurrentWindowInstance?.GetNode<ItemList>("%ConsoleSuggest");
 
         if (string.IsNullOrWhiteSpace(newText))
         {
@@ -255,7 +253,7 @@ public partial class DebugConsole : Node
         {
             commandsSugesions?.Clear();
 
-            var command = newText.Split(" ");
+            string[] command = newText.Split(" ");
 
             var matches = _commandsList
                 .Where(cmd => cmd.StartsWith(command[0], StringComparison.OrdinalIgnoreCase))
@@ -267,7 +265,7 @@ public partial class DebugConsole : Node
             if (commandsSugesions == null)
                 return;
             commandsSugesions.Visible = true;
-            foreach (var match in matches)
+            foreach (string match in matches)
                 commandsSugesions.AddItem(match);
         }
     }

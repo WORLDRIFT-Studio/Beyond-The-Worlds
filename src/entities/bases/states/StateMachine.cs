@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using BeyondTheWorlds.enemies.bases;
 using Godot;
 
@@ -11,7 +8,7 @@ namespace BeyondTheWorlds.entities.bases.states;
 [Icon("res://addons/at-icons/node/cog.svg")]
 public partial class StateMachine : Node
 {
-    private readonly Dictionary<string, State> _states = new();
+    private readonly Dictionary<string, State> _states = new(StringComparer.Ordinal);
     private State? _currentState;
 
     [Export]
@@ -48,8 +45,8 @@ public partial class StateMachine : Node
 
     private void UpdateStates()
     {
-        var children = GetChildren().OfType<State>();
-        foreach (var state in children)
+        IEnumerable<State> children = GetChildren().OfType<State>();
+        foreach (State state in children)
         {
             state.StateMachine = this;
             state.Parent = _parent;

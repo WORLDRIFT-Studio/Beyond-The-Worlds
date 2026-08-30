@@ -1,20 +1,22 @@
-using System;
 using BeyondTheWorlds.entities.models;
 using Godot;
+using Timer = Godot.Timer;
+
+namespace BeyondTheWorlds.entities;
 
 public partial class SpawnSystem : Node3D
 {
-    [Export]
-    public float SpawnY = 0.5f;
-
-    [Export]
-    public Node3D? Target;
-
-    [Export(PropertyHint.Range, "0, 20, 1")]
-    public float Timer = 5.0f;
-
     private Vector3 _spawnPoint;
     private Timer? _spawnTimer;
+
+    [Export]
+    public float SpawnY { get; set; } = 0.5f;
+
+    [Export]
+    public Node3D? Target { get; set; }
+
+    [Export(PropertyHint.Range, "0, 20, 1")]
+    public float Timer { get; set; } = 5.0f;
 
     [Export]
     public PackedScene? EnemyScene { get; set; }
@@ -36,22 +38,22 @@ public partial class SpawnSystem : Node3D
         if (EnemyScene == null || SpawnArea == null)
             return;
 
-        var meshPosition = SpawnArea.GlobalPosition;
+        Vector3 meshPosition = SpawnArea.GlobalPosition;
 
-        var meshSize = SpawnArea.GetAabb();
-        var globalScale = SpawnArea.GlobalBasis.Scale;
+        Aabb meshSize = SpawnArea.GetAabb();
+        Vector3 globalScale = SpawnArea.GlobalBasis.Scale;
 
-        var halfWidthX = meshSize.Size.X * globalScale.X / 2f;
-        var halfDepthZ = meshSize.Size.Z * globalScale.Z / 2f;
+        float halfWidthX = meshSize.Size.X * globalScale.X / 2f;
+        float halfDepthZ = meshSize.Size.Z * globalScale.Z / 2f;
 
-        var minZ = meshPosition.Z - halfDepthZ;
-        var maxZ = meshPosition.Z + halfDepthZ;
+        float minZ = meshPosition.Z - halfDepthZ;
+        float maxZ = meshPosition.Z + halfDepthZ;
 
-        var minX = meshPosition.X - halfWidthX;
-        var maxX = meshPosition.X + halfWidthX;
+        float minX = meshPosition.X - halfWidthX;
+        float maxX = meshPosition.X + halfWidthX;
 
-        var randomX = new RandomNumberGenerator().RandfRange(minX, maxX);
-        var randomZ = new RandomNumberGenerator().RandfRange(minZ, maxZ);
+        float randomX = new RandomNumberGenerator().RandfRange(minX, maxX);
+        float randomZ = new RandomNumberGenerator().RandfRange(minZ, maxZ);
 
         float direction = new RandomNumberGenerator().RandiRange(1, 4);
 
@@ -64,7 +66,7 @@ public partial class SpawnSystem : Node3D
             _ => _spawnPoint,
         };
 
-        var enemy = EnemyScene.Instantiate<Enemy>();
+        Enemy enemy = EnemyScene.Instantiate<Enemy>();
 
         AddChild(enemy);
         enemy.Target = Target;

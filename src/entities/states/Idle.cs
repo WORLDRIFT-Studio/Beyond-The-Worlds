@@ -1,4 +1,3 @@
-using System;
 using BeyondTheWorlds.enemies.bases;
 using Godot;
 using StateMachine = BeyondTheWorlds.entities.bases.states.StateMachine;

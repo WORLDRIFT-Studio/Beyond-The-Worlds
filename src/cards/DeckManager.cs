@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using BeyondTheWorlds.common.debug_console;
 using Godot;
 

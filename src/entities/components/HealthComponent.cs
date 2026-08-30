@@ -1,4 +1,3 @@
-using System;
 using BeyondTheWorlds.enemies.bases;
 using BeyondTheWorlds.Interfaces;
 using Godot;

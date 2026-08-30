@@ -1,8 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using BeyondTheWorlds.enemies.bases;
 using Godot;
+using Entity = BeyondTheWorlds.entities.bases.Entity;
 
 namespace BeyondTheWorlds.entities.components;
 
@@ -23,11 +21,6 @@ public partial class TargetingComponent : BaseComponent
 
     public bool HaveTarget => Target is not null;
 
-    public void ClearTarget()
-    {
-        Target = null;
-    }
-
     public override void _PhysicsProcess(double delta)
     {
         _timer += delta;
@@ -46,6 +39,11 @@ public partial class TargetingComponent : BaseComponent
             warnings.Add("Missing range component. Add it in inspector.");
 
         return [.. warnings, .. base._GetConfigurationWarnings()];
+    }
+
+    public void ClearTarget()
+    {
+        Target = null;
     }
 
     private void SetTarget()
