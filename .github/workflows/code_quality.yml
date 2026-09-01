@@ -1,0 +1,15 @@
+name: code_quality.yml
+on: push, pull_request, workflow_dispatch
+jobs:
+  run_reformat:
+    runs-on: ubuntu-latest
+    name: Check code
+    steps:
+      - name: Restore
+        run: dotnet restore "Beyond The Worlds.sln"
+      - name: Check Formating
+        run: dotnet csharpier check .
+      - name: Check Analyzers
+        run: dotnet format "Beyond The Worlds.sln" --verify-no-changes
+      - name: Build solution
+        run: dotnet build "Beyond The Worlds.sln" --no-restore

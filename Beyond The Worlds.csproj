@@ -9,7 +9,6 @@
     <ItemGroup>
         <Content Include=".sharpierignore" />
         <Content Include="global.json" />
-        <Content Include="stylecop.json" />
     </ItemGroup>
 
     <ItemGroup>
@@ -31,5 +30,9 @@
 
     <ItemGroup>
         <AdditionalFiles Include="stylecop.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="src\entities\enums\" />
     </ItemGroup>
 </Project>
