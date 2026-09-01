@@ -48,8 +48,6 @@ public partial class HandManager : Node
             }
 
             CardOnHand[i].RotationDegrees = weight * MaxRotation;
-            // TODO Zrobić dynamiczne pochylenie kart
-            // TODO Zrobić animacje kart
         }
     }
 

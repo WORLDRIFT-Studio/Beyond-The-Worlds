@@ -19,7 +19,7 @@ public partial class TableManager : Node
     /// <summary>
     ///     Instancja umożliwiająca odwołanie się do niej w każdym skrypcie
     /// </summary>
-    public static TableManager? Instance { get; private set; }
+    private static TableManager? Instance { get; set; }
 
     // Podłącza sygnały, inicjalizuje liczniki
     public override void _Ready()
@@ -56,7 +56,7 @@ public partial class TableManager : Node
             }
 
             var cardsToMove = new List<CardData>(_graveyardManager?.GetCards() ?? []);
-            foreach (var card in cardsToMove)
+            foreach (CardData card in cardsToMove)
                 _deckManager.AddCards(card);
 
             _graveyardManager?.ClearGraveyard();
@@ -72,9 +72,9 @@ public partial class TableManager : Node
     private void RemoveCardsFromHand()
     {
         var cards = new Array<CardBase>(_handManager?.GetChildren().OfType<CardBase>() ?? []);
-        foreach (var card in cards)
+        foreach (CardBase card in cards)
         {
-            var cardData = card.CardInfo;
+            CardData? cardData = card.CardInfo;
             if (cardData != null)
                 _graveyardManager?.PushCard(cardData);
             card.QueueFree();
@@ -92,13 +92,12 @@ public partial class TableManager : Node
             _handManager?.GetCardsCount() < _defaultCardsNumber && _deckManager?.GetCardsCount() > 0
         )
         {
-            var cardData = _deckManager.GetCard();
-            var cardNode = _cardBaseTscn?.Instantiate<CardBase>();
+            CardData? cardData = _deckManager.GetCard();
+            CardBase? cardNode = _cardBaseTscn?.Instantiate<CardBase>();
             if (cardData != null)
                 cardNode?.Initialize(cardData);
             _handManager.AddChild(cardNode);
             DebugConsole.Log("INFO", "CardSys", "Succesfully added card to Player hand.");
-            //TODO: Dodać animacje dodawnia karty
         }
 
         _handManager?.ArangeCards();

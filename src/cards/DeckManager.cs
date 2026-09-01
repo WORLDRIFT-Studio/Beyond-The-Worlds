@@ -19,8 +19,7 @@ public partial class DeckManager : Node
 
     public override void _Ready()
     {
-        // TODO: Usunąć testowe napełnianie po wdrożeniu LoadPlayerDeck
-        for (var i = 0; i < 9; i++)
+        for (int i = 0; i < 9; i++)
             if (TestCard == null)
                 return;
         if (TestCard == null)
@@ -67,11 +66,5 @@ public partial class DeckManager : Node
     public int GetCardsCount()
     {
         return PlayerCards.Count;
-    }
-
-    private void LoadPlayerDeck()
-    {
-        // TODO: Dodać ładowanie decku z zapisu/pliku
-        throw new NotImplementedException();
     }
 }
