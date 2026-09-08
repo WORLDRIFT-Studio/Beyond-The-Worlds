@@ -6,7 +6,7 @@
 
 using Godot;
 
-namespace BeyondTheWorlds.enemies.bases;
+namespace BeyondTheWorlds.entities.bases.components;
 
 [Tool]
 [GlobalClass]
@@ -24,14 +24,14 @@ public abstract partial class BaseComponent : Node3D
     {
         List<string> warnings = [];
 
-        var parent = GetParent();
+        Node parent = GetParent();
 
         if (GetTree().EditedSceneRoot == this)
-            return warnings.ToArray();
+            return [.. warnings];
 
         if (parent is not ComponentContainer && GetTree().EditedSceneRoot != this)
             warnings.Add("Component must be a child of ComponentContainer.");
 
-        return warnings.ToArray();
+        return [.. warnings];
     }
 }

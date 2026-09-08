@@ -6,7 +6,7 @@
 
 using Godot;
 
-namespace BeyondTheWorlds.enemies.bases;
+namespace BeyondTheWorlds.entities.bases.components;
 
 [Tool]
 [GlobalClass]
@@ -29,7 +29,7 @@ public partial class ComponentContainer : Node3D
     public IList<T> GetComponents<T>()
         where T : class
     {
-        return Components.Values.OfType<T>().ToList();
+        return [.. Components.Values.OfType<T>()];
     }
 
     private void UpdateComponents()

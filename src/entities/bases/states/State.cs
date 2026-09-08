@@ -4,10 +4,9 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using BeyondTheWorlds.entities.bases.states;
 using Godot;
 
-namespace BeyondTheWorlds.enemies.bases;
+namespace BeyondTheWorlds.entities.bases.states;
 
 [Tool]
 [GlobalClass]
@@ -21,7 +20,7 @@ public abstract partial class State : Node
     {
         List<string> warnings = [];
 
-        if (GetParent() is not entities.bases.states.StateMachine)
+        if (GetParent() is not states.StateMachine)
             warnings.Add("State must be a children of StateMachine");
 
         return warnings.ToArray();

@@ -4,8 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using BeyondTheWorlds.enemies.bases;
 using Godot;
+using State = BeyondTheWorlds.entities.bases.states.State;
 using StateMachine = BeyondTheWorlds.entities.bases.states.StateMachine;
 
 namespace BeyondTheWorlds.entities.states;

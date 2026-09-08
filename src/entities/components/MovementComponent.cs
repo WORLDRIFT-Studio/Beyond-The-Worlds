@@ -4,8 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using BeyondTheWorlds.enemies.bases;
 using Godot;
+using BaseComponent = BeyondTheWorlds.entities.bases.components.BaseComponent;
 
 namespace BeyondTheWorlds.entities.components;
 

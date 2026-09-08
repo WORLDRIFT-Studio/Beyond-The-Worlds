@@ -10,7 +10,7 @@ public interface IDamageable
 {
     bool IsDead { get; }
     double MaxHealth { get; }
-    double CurrentHealth { get; }
+    double Health { get; }
 
     void TakeDamage(int damage);
 }

@@ -4,7 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using BeyondTheWorlds.enemies.bases;
 using Godot;
 
 namespace BeyondTheWorlds.entities.bases.states;
@@ -14,13 +13,33 @@ namespace BeyondTheWorlds.entities.bases.states;
 [Icon("res://addons/at-icons/node/cog.svg")]
 public partial class StateMachine : Node
 {
-    private readonly Dictionary<string, State> _states = new(StringComparer.Ordinal);
     private State? _currentState;
-
-    [Export]
     private State? _defaultState;
 
     private Node? _parent;
+
+    private readonly Dictionary<string, State> _states = new(StringComparer.Ordinal);
+
+    [Export]
+    private State? DefaultState
+    {
+        get => _defaultState;
+        set
+        {
+            _defaultState = value;
+            UpdateConfigurationWarnings();
+        }
+    }
+
+    public override string[] _GetConfigurationWarnings()
+    {
+        List<string> warnings = [];
+        if (_defaultState == null)
+            warnings.Add(
+                "Default state is null. This node for work need a default state. Add it in inscpector."
+            );
+        return [.. warnings];
+    }
 
     public override void _Ready()
     {
