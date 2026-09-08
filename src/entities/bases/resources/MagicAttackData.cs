@@ -14,7 +14,7 @@ namespace BeyondTheWorlds.entities.bases.resources;
 public partial class MagicAttackData : AttackData
 {
     [Export]
-    public PackedScene? ProjectileScene { get; set; }
+    public ProjectileData? ProjectileData { get; set; }
 
     [Export(PropertyHint.Range, "1, 10, 1, prefer_slider, or_greater, suffix:mana")]
     public int ManaCost { get; set; } = 5;

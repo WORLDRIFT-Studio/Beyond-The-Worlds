@@ -1,21 +1,25 @@
 [gd_scene format=3 uid="uid://x3dihb87wy5a"]
 
-[ext_resource type="Script" uid="uid://bfawwhysttuwx" path="res://src/entities/bases/Entity.cs" id="1_orm24"]
+[ext_resource type="Script" uid="uid://dqng2qn0abxqw" path="res://src/entities/bases/types/Enemy.cs" id="1_bh8cb"]
+[ext_resource type="Script" uid="uid://dv1eb3geg4odg" path="res://src/entities/bases/resources/EnemyData.cs" id="2_kl11a"]
 [ext_resource type="Script" uid="uid://bvic5n1da2jme" path="res://src/entities/bases/components/ComponentContainer.cs" id="2_mqqbq"]
-[ext_resource type="PackedScene" uid="uid://bxnpicgksrp0e" path="res://src/entities/projectile_tscn/projectile_test.tscn" id="4_5kddt"]
-[ext_resource type="Script" uid="uid://dymy8r7q1y4sn" path="res://src/entities/bases/resources/MagicAttackData.cs" id="4_kl11a"]
 [ext_resource type="Script" uid="uid://dprcnb7152x3h" path="res://src/entities/components/RegenerationComponent.cs" id="4_kv56t"]
-[ext_resource type="Script" uid="uid://dre2c3u664dj3" path="res://src/entities/components/AttackComponent.cs" id="5_bh8cb"]
+[ext_resource type="Script" uid="uid://02s4a1di154a" path="res://src/entities/components/AttackComponent.cs" id="5_bh8cb"]
 [ext_resource type="Script" uid="uid://cmrvb3y0yhfir" path="res://src/entities/components/HealthComponent.cs" id="5_gfm82"]
 
-[sub_resource type="Resource" id="Resource_vjg7b"]
-script = ExtResource("4_kl11a")
-ProjectileScene = ExtResource("4_5kddt")
-metadata/_custom_type_script = "uid://dymy8r7q1y4sn"
+[sub_resource type="Resource" id="Resource_kl11a"]
+script = ExtResource("2_kl11a")
+Name = "Cos"
+Description = "ASOfkoaskfoka	"
+EnemyType = 1
+DangerLevel = 27
+metadata/_custom_type_script = "uid://dv1eb3geg4odg"
 
-[node name="Entity" type="Node3D" unique_id=696804520 node_paths=PackedStringArray("ComponentContainer")]
-script = ExtResource("1_orm24")
+[node name="Entity" type="Node3D" unique_id=844227214 node_paths=PackedStringArray("ComponentContainer")]
+script = ExtResource("1_bh8cb")
+EnemyData = SubResource("Resource_kl11a")
 ComponentContainer = NodePath("ComponentContainer")
+metadata/_custom_type_script = "uid://dqng2qn0abxqw"
 
 [node name="ComponentContainer" type="Node3D" parent="." unique_id=1462938055]
 script = ExtResource("2_mqqbq")
@@ -23,8 +27,6 @@ metadata/_custom_type_script = "uid://bvic5n1da2jme"
 
 [node name="AttackComponent" type="Node3D" parent="ComponentContainer" unique_id=210283530]
 script = ExtResource("5_bh8cb")
-CurrentAttackData = SubResource("Resource_vjg7b")
-metadata/_custom_type_script = "uid://dre2c3u664dj3"
 
 [node name="HealthComponent" type="Node3D" parent="ComponentContainer" unique_id=795221362]
 script = ExtResource("5_gfm82")

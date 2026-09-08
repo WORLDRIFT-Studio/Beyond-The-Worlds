@@ -4,8 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using BeyondTheWorlds.enemies.bases;
 using Godot;
+using BaseComponent = BeyondTheWorlds.entities.bases.components.BaseComponent;
 using Entity = BeyondTheWorlds.entities.bases.types.Entity;
 
 namespace BeyondTheWorlds.entities.components;
@@ -41,7 +41,7 @@ public partial class RangeComponent : BaseComponent
     /// <summary>
     ///     Return all entities in range, if no entities in range, return null.
     /// </summary>
-    public IList<Entity>? EntitiesInRange =>
+    public IList<Entity>? GetEntitiesInRange =>
         _detectionArea?.GetOverlappingBodies().Cast<Entity>().ToList();
 
     public override void _Ready()

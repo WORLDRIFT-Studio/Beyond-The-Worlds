@@ -4,7 +4,9 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace BeyondTheWorlds.entities.bases.resources;
+using System;
+
+namespace BeyondTheWorlds.entities.enums;
 
 [Flags]
 public enum ElementTypes

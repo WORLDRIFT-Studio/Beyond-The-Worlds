@@ -31,8 +31,4 @@
     <ItemGroup>
         <AdditionalFiles Include="stylecop.json" />
     </ItemGroup>
-
-    <ItemGroup>
-        <Folder Include="src\entities\enums\" />
-    </ItemGroup>
 </Project>

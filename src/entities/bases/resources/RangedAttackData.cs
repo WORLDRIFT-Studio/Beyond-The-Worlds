@@ -14,5 +14,5 @@ namespace BeyondTheWorlds.entities.bases.resources;
 public partial class RangedAttackData : AttackData
 {
     [Export]
-    public PackedScene? ProjectileScene { get; set; }
+    public ProjectileData? ProjectileData { get; set; }
 }

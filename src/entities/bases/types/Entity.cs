@@ -4,18 +4,28 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using BeyondTheWorlds.enemies.bases;
 using Godot;
+using ComponentContainer = BeyondTheWorlds.entities.bases.components.ComponentContainer;
 
 namespace BeyondTheWorlds.entities.bases.types;
 
 [Tool]
 [GlobalClass]
 [Icon("res://addons/at-icons/node3d/fingerprint.svg")]
-public partial class Entity : Node3D
+public abstract partial class Entity : Node3D
 {
+    private ComponentContainer? _componentContainer;
+
     [Export]
-    public ComponentContainer? ComponentContainer { get; private set; }
+    public ComponentContainer? ComponentContainer
+    {
+        get => _componentContainer;
+        private set
+        {
+            _componentContainer = value;
+            UpdateConfigurationWarnings();
+        }
+    }
 
     public override void _Ready()
     {

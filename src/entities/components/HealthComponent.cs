@@ -4,9 +4,9 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using BeyondTheWorlds.enemies.bases;
 using BeyondTheWorlds.Interfaces;
 using Godot;
+using BaseComponent = BeyondTheWorlds.entities.bases.components.BaseComponent;
 
 namespace BeyondTheWorlds.entities.components;
 
@@ -15,6 +15,12 @@ namespace BeyondTheWorlds.entities.components;
 [Icon("res://addons/at-icons/node3d/heart.svg")]
 public partial class HealthComponent : BaseComponent, IDamageable, IHealable
 {
+    [Signal]
+    public delegate void HealthChangedEventHandler(double currentHealth, double maxHealth);
+
+    [Signal]
+    public delegate void DeathEventHandler();
+
     private double _currentHealth;
 
     private double _maxHealth;
@@ -25,7 +31,7 @@ public partial class HealthComponent : BaseComponent, IDamageable, IHealable
         get => _maxHealth;
         private set
         {
-            var percentage = _currentHealth / _maxHealth;
+            double percentage = _currentHealth / _maxHealth;
             _maxHealth = value;
             _currentHealth += _currentHealth * percentage;
             if (Engine.IsEditorHint())
@@ -34,7 +40,7 @@ public partial class HealthComponent : BaseComponent, IDamageable, IHealable
         }
     }
 
-    public double CurrentHealth
+    public double Health
     {
         get => _currentHealth;
         private set
@@ -65,7 +71,7 @@ public partial class HealthComponent : BaseComponent, IDamageable, IHealable
     {
         if (IsDead || damage <= 0)
             return;
-        CurrentHealth -= damage;
+        Health -= damage;
     }
 
     /// <summary>
@@ -76,7 +82,7 @@ public partial class HealthComponent : BaseComponent, IDamageable, IHealable
     {
         if (IsFullHealed || health <= 0)
             return;
-        CurrentHealth += health;
+        Health += health;
     }
 
     /// <summary>
@@ -87,12 +93,6 @@ public partial class HealthComponent : BaseComponent, IDamageable, IHealable
     {
         if (IsFullHealed || percent <= 0)
             return;
-        CurrentHealth += (int)(_maxHealth * percent);
+        Health += (int)(_maxHealth * percent);
     }
-
-    [Signal]
-    public delegate void HealthChangedEventHandler(double currentHealth, double maxHealth);
-
-    [Signal]
-    public delegate void DeathEventHandler();
 }
