@@ -4,12 +4,13 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using BeyondTheWorlds.entities.bases.resources;
+using Godot;
+
 namespace BeyondTheWorlds.entities.bases.types;
 
 public partial class Hero : Entity
 {
-    public Hero()
-    {
-        throw new NotImplementedException();
-    }
+    [Export]
+    public HeroData? EntityInformation { get; set; }
 }

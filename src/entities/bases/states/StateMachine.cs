@@ -13,12 +13,10 @@ namespace BeyondTheWorlds.entities.bases.states;
 [Icon("res://addons/at-icons/node/cog.svg")]
 public partial class StateMachine : Node
 {
+    private readonly Dictionary<string, State> _states = new(StringComparer.Ordinal);
     private State? _currentState;
     private State? _defaultState;
-
     private Node? _parent;
-
-    private readonly Dictionary<string, State> _states = new(StringComparer.Ordinal);
 
     [Export]
     private State? DefaultState

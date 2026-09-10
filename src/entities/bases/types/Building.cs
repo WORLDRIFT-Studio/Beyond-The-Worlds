@@ -4,12 +4,13 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using BeyondTheWorlds.entities.bases.resources;
+using Godot;
+
 namespace BeyondTheWorlds.entities.bases.types;
 
 public partial class Building : Entity
 {
-    public Building()
-    {
-        throw new NotImplementedException();
-    }
+    [Export]
+    public BuildingData? EntityInformation { get; set; }
 }

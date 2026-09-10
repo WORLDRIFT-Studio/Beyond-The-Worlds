@@ -5,19 +5,34 @@ jobs:
     runs-on: ubuntu-latest
     name: Check code
     steps:
+      #Przygotowanie narzędzi
       - name: Checkout branch
         uses: actions/checkout@v7
       - name: Setup dotnet
         uses: actions/setup-dotnet@v6
       - name: Restore
         run: dotnet restore "Beyond The Worlds.sln"
-      - name: Format Analyzers
-        run: dotnet format "Beyond The Worlds.sln"
       - name: Tool Restore
         run: dotnet tool restore
+
+        #Formatowanie kodu
+      - name: Format Analyzers
+        run: dotnet format "Beyond The Worlds.sln"
+      - name: CSharpier Fomrat
+        run: dotnet csharpier format .
+
+      #Weruyfikacja
+      - name: Verify CSharpier
+        run: dotnet csharpier check .
       - name: Verify Analyzers
         run: dotnet format "Beyond The Worlds.sln" --verify-no-changes
-      - name: Check Formating
-        run: dotnet csharpier check .
+
+      # Commit and push
+      - name: Commit & Push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "style(ci): automatyczne formatowanie kodu [skip ci]"
+          branch: ${{ github.head_ref || github.ref_name }}
+
       - name: Build solution
         run: dotnet build "Beyond The Worlds.sln" --no-restore
