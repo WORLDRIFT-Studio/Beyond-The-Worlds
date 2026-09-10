@@ -9,11 +9,15 @@ jobs:
         uses: actions/checkout@v7
       - name: Setup dotnet
         uses: actions/setup-dotnet@v6
+        with:
+            cache: true
       - name: Restore
         run: dotnet restore "Beyond The Worlds.sln"
+      - name: Format Analyzers
+        run: dotnet format "Beyond The Worlds.sln"
       - name: Tool Restore
         run: dotnet tool restore
-      - name: Check Analyzers
+      - name: Verify Analyzers
         run: dotnet format "Beyond The Worlds.sln" --verify-no-changes
       - name: Check Formating
         run: dotnet csharpier check .
