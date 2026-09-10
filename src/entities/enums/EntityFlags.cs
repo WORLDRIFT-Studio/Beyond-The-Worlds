@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-
 namespace BeyondTheWorlds.entities.enums;
 
 [Flags]
