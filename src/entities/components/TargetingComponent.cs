@@ -1,9 +1,10 @@
-// -----------------------------------------------------------------------
+// -----------------------------------------------------------------------'''//
 // <copyright file="TargetingComponent.cs" company="World Rift Studio">
 // Copyright (c) World Rift Studio. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
+using BeyondTheWorlds.common.debug_console;
 using BeyondTheWorlds.entities.bases.types;
 using BeyondTheWorlds.entities.enums;
 using Godot;
@@ -18,9 +19,8 @@ namespace BeyondTheWorlds.entities.components;
 public partial class TargetingComponent : BaseComponent
 {
     [Signal]
-    public delegate void TargetChangedEventHandler();
+    public delegate void TargetChangedEventHandler(Entity newTarget);
 
-    [Export]
     private RangeComponent? _range;
 
     [Export(PropertyHint.Range, "0.01, 1, 0.01, prefer_slider, suffix:s")]
@@ -28,19 +28,29 @@ public partial class TargetingComponent : BaseComponent
 
     private Entity? _target;
 
-    [Export(PropertyHint.Flags)]
-    private EntityFlags _targetTypes = EntityFlags.Enemy;
+    [Export(PropertyHint.Flags)] private EntityFlags _targetTypes = EntityFlags.Enemy;
 
     private double _timer;
+
+    [Export]
+    private RangeComponent? Range
+    {
+        get => _range;
+        set
+        {
+            _range = value;
+            UpdateConfigurationWarnings();
+        }
+    }
 
     public Entity? Target
     {
         get => _target;
         private set
         {
+            if (value == _target) return;
             _target = value;
-            if (!Engine.IsEditorHint())
-                EmitSignalTargetChanged();
+            EmitSignalTargetChanged(_target);
         }
     }
 
@@ -48,11 +58,11 @@ public partial class TargetingComponent : BaseComponent
 
     public override void _PhysicsProcess(double delta)
     {
+        if (Engine.IsEditorHint()) return;
         _timer += delta;
-        if (_timer < _refreshTime)
-            return;
+        if (_timer < _refreshTime) return;
 
-        SetTarget();
+        UpdateTarget();
         _timer -= _refreshTime;
     }
 
@@ -60,21 +70,23 @@ public partial class TargetingComponent : BaseComponent
     {
         List<string> warnings = [];
 
-        if (_range is null)
-            warnings.Add("Missing range component. Add it in inspector.");
+        if (_range is null) warnings.Add("Missing range component. Add it in inspector.");
 
         return [.. warnings, .. base._GetConfigurationWarnings()];
     }
 
-    public void ClearTarget()
+    public void RefreshTarget()
     {
-        Target = null;
+        UpdateTarget();
     }
 
-    private void SetTarget()
+    private void UpdateTarget()
     {
         if (Parent is null)
+        {
+            DebugConsole.Log(DebugLevel.Error, "TargetingComponent", $"Parrent is non-exist");
             return;
+        }
 
         IList<Entity>? entities = _range?.GetEntitiesInRange;
         Target = entities
@@ -84,6 +96,8 @@ public partial class TargetingComponent : BaseComponent
 
     private bool IsValidType(Entity? entity)
     {
+        if (entity == Parent) return false;
+
         switch (entity)
         {
             case null:

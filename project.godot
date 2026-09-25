@@ -11,6 +11,7 @@ config_version=5
 [application]
 
 config/name="Beyond The Worlds"
+run/main_scene="uid://mbfm4y7umcos"
 config/features=PackedStringArray("4.7", "C#", "Forward Plus")
 
 [autoload]
@@ -25,6 +26,7 @@ DebugConsole="*uid://sotggt4c131d"
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
+window/size/mode=3
 window/size/borderless=true
 window/subwindows/embed_subwindows=false
 window/stretch/mode="canvas_items"
@@ -86,7 +88,7 @@ debug_console={
 
 [physics]
 
-3d/physics_engine="Jolt Physics"
+3d/size/mode=3
 
 [rendering]
 

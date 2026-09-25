@@ -48,7 +48,7 @@ public partial class TableManager : Node
             if (_graveyardManager?.GetCardsCount() == 0)
             {
                 DebugConsole.Log(
-                    "WARNING",
+                    DebugLevel.Warning,
                     "CardSys",
                     "There are no cards in the deck and on the graveyard!"
                 );
@@ -97,7 +97,7 @@ public partial class TableManager : Node
             if (cardData != null)
                 cardNode?.Initialize(cardData);
             _handManager.AddChild(cardNode);
-            DebugConsole.Log("INFO", "CardSys", "Succesfully added card to Player hand.");
+            DebugConsole.Log(DebugLevel.Info, "CardSys", "Succesfully added card to Player hand.");
         }
 
         _handManager?.ArangeCards();

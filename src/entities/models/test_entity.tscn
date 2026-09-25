@@ -1,23 +1,23 @@
 [gd_scene format=3 uid="uid://x3dihb87wy5a"]
 
 [ext_resource type="Script" uid="uid://dqng2qn0abxqw" path="res://src/entities/bases/types/Enemy.cs" id="1_bh8cb"]
-[ext_resource type="Script" uid="uid://dv1eb3geg4odg" path="res://src/entities/bases/resources/EnemyData.cs" id="2_kl11a"]
 [ext_resource type="Script" uid="uid://bvic5n1da2jme" path="res://src/entities/bases/components/ComponentContainer.cs" id="2_mqqbq"]
 [ext_resource type="Script" uid="uid://dprcnb7152x3h" path="res://src/entities/components/RegenerationComponent.cs" id="4_kv56t"]
 [ext_resource type="Script" uid="uid://02s4a1di154a" path="res://src/entities/components/AttackComponent.cs" id="5_bh8cb"]
 [ext_resource type="Script" uid="uid://cmrvb3y0yhfir" path="res://src/entities/components/HealthComponent.cs" id="5_gfm82"]
+[ext_resource type="Script" uid="uid://dfhmi2fh1cymd" path="res://src/entities/components/TargetingComponent.cs" id="7_0bjkc"]
+[ext_resource type="PackedScene" uid="uid://c8rfxueh2hmrb" path="res://src/entities/components/range_component.tscn" id="7_isvui"]
+[ext_resource type="Script" uid="uid://dh48osdcy03na" path="res://src/entities/bases/states/StateMachine.cs" id="8_0bjkc"]
+[ext_resource type="Script" uid="uid://k6xc4s3coynq" path="res://src/entities/components/MovementComponent.cs" id="9_0hrei"]
+[ext_resource type="Script" uid="uid://ha8pj4xh3la0" path="res://src/entities/states/Idle.cs" id="9_qj7wf"]
+[ext_resource type="Script" uid="uid://cq6uaglbunqdp" path="res://src/entities/components/NavigationComponent.cs" id="10_c87tt"]
+[ext_resource type="Script" uid="uid://cwlpm1mpetuob" path="res://src/entities/states/ChaseState.cs" id="13_0hrei"]
 
-[sub_resource type="Resource" id="Resource_kl11a"]
-script = ExtResource("2_kl11a")
-Name = "Cos"
-Description = "ASOfkoaskfoka	"
-EnemyType = 1
-DangerLevel = 27
-metadata/_custom_type_script = "uid://dv1eb3geg4odg"
+[sub_resource type="SphereShape3D" id="SphereShape3D_iwlnr"]
+radius = 0.15062524
 
-[node name="Entity" type="Node3D" unique_id=844227214 node_paths=PackedStringArray("ComponentContainer")]
+[node name="Enemy" type="CharacterBody3D" unique_id=1909651724 node_paths=PackedStringArray("ComponentContainer")]
 script = ExtResource("1_bh8cb")
-EnemyData = SubResource("Resource_kl11a")
 ComponentContainer = NodePath("ComponentContainer")
 metadata/_custom_type_script = "uid://dqng2qn0abxqw"
 
@@ -34,7 +34,50 @@ metadata/_custom_type_script = "uid://cmrvb3y0yhfir"
 
 [node name="RegenerationComponent" type="Node3D" parent="ComponentContainer" unique_id=1311891468 node_paths=PackedStringArray("HealthComponent")]
 script = ExtResource("4_kv56t")
-RegenerationRate = 28.196
-RegenerationPercent = 1.227
+RegenerationRate = 8.0
+RegenerationPercent = 5.0
 HealthComponent = NodePath("../HealthComponent")
 metadata/_custom_type_script = "uid://dprcnb7152x3h"
+
+[node name="MovementComponent" type="Node3D" parent="ComponentContainer" unique_id=1881500542 node_paths=PackedStringArray("TargetingComponent")]
+script = ExtResource("9_0hrei")
+Speed = 1.0
+TargetingComponent = NodePath("../NavigationComponent/TargetingComponent")
+metadata/_custom_type_script = "uid://k6xc4s3coynq"
+
+[node name="NavigationComponent" type="Node3D" parent="ComponentContainer" unique_id=1532664981 node_paths=PackedStringArray("TargetingComponent", "NavigationAgent3D")]
+script = ExtResource("10_c87tt")
+TargetingComponent = NodePath("TargetingComponent")
+NavigationAgent3D = NodePath("NavigationAgent3D")
+metadata/_custom_type_script = "uid://cq6uaglbunqdp"
+
+[node name="TargetingComponent" type="Node3D" parent="ComponentContainer/NavigationComponent" unique_id=1555863830 node_paths=PackedStringArray("Range")]
+script = ExtResource("7_0bjkc")
+_refreshTime = 1.0
+Range = NodePath("RangeComponent")
+metadata/_custom_type_script = "uid://dfhmi2fh1cymd"
+
+[node name="RangeComponent" parent="ComponentContainer/NavigationComponent/TargetingComponent" unique_id=156792368 instance=ExtResource("7_isvui")]
+Radius = 7.825
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="ComponentContainer/NavigationComponent" unique_id=640102405]
+
+[node name="StateMachine" type="Node" parent="." unique_id=1932778045 node_paths=PackedStringArray("DefaultState")]
+script = ExtResource("8_0bjkc")
+DefaultState = NodePath("ChaseState")
+metadata/_custom_type_script = "uid://dh48osdcy03na"
+
+[node name="Idle" type="Node" parent="StateMachine" unique_id=1184267327]
+script = ExtResource("9_qj7wf")
+metadata/_custom_type_script = "uid://ha8pj4xh3la0"
+
+[node name="ChaseState" type="Node" parent="StateMachine" unique_id=1936661950 node_paths=PackedStringArray("Targeting", "Movement", "Navigation")]
+script = ExtResource("13_0hrei")
+Targeting = NodePath("../../ComponentContainer/NavigationComponent/TargetingComponent")
+Movement = NodePath("../../ComponentContainer/MovementComponent")
+Navigation = NodePath("../../ComponentContainer/NavigationComponent")
+metadata/_custom_type_script = "uid://cwlpm1mpetuob"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=750526823]
+shape = SubResource("SphereShape3D_iwlnr")
+debug_color = Color(0, 0.6431373, 0.31764707, 1)

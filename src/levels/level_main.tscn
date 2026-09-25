@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://mbfm4y7umcos"]
 
-[ext_resource type="PackedScene" uid="uid://dshecx4c5mjdp" path="res://src/enemies/test_enemy.tscn" id="1_1oj5k"]
+[ext_resource type="PackedScene" uid="uid://dshecx4c5mjdp" path="res://src/entities/models/test_enemy.tscn" id="1_1oj5k"]
 [ext_resource type="PackedScene" uid="uid://jfvvwru1ymiu" path="res://src/common/orbital_cam/orbital_cam.tscn" id="1_6bm6p"]
 [ext_resource type="PackedScene" uid="uid://bbalg6dcuipww" path="res://src/levels/level_test/test_arena.tscn" id="3_6bm6p"]
 [ext_resource type="Script" uid="uid://bh0qyhgkg0xdn" path="res://src/cards/HandManager.cs" id="4_r246h"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://ciw3natpklfla" path="res://src/cards/DeckManager.cs" id="7_hdchn"]
 [ext_resource type="Resource" uid="uid://b0safyq0k2m6r" path="res://src/cards/cards_bases/test_card.tres" id="8_xowka"]
 [ext_resource type="Script" uid="uid://2a2dnq4eyprw" path="res://src/cards/GraveyardManager.cs" id="9_xowka"]
+[ext_resource type="PackedScene" uid="uid://x3dihb87wy5a" path="res://src/entities/models/test_entity.tscn" id="10_hqt4j"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_yx7mw"]
 sky_top_color = Color(0.10829178, 0.50428545, 0.5544404, 1)
@@ -74,7 +75,6 @@ _cardBaseTscn = ExtResource("5_r246h")
 [node name="HandManager" type="Node" parent="TableManager" unique_id=235432067]
 script = ExtResource("4_r246h")
 CardsArc = SubResource("Curve_r246h")
-CardBaseTscn = ExtResource("5_r246h")
 
 [node name="DeckManager" type="Node" parent="TableManager" unique_id=168628027]
 script = ExtResource("7_hdchn")
@@ -144,3 +144,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Entity" parent="." unique_id=844227214 instance=ExtResource("10_hqt4j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.211308, 1.4421973, -47.475574)
+
+[node name="Entity2" parent="." unique_id=1909651724 instance=ExtResource("10_hqt4j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.509533, 1.4421973, -48.38017)

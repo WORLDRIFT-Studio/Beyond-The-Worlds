@@ -52,7 +52,7 @@ public partial class AttackComponent : BaseComponent
         if (_targetingComponent is null)
         {
             DebugConsole.Log(
-                "ERROR",
+                DebugLevel.Error,
                 "Entities",
                 $"TargetingComponent is null at '{Parent?.Name ?? "unknown"}'."
             );
@@ -77,7 +77,7 @@ public partial class AttackComponent : BaseComponent
                 break;
             default:
                 DebugConsole.Log(
-                    "ERROR",
+                    DebugLevel.Error,
                     "Enemies",
                     $"Enemy '{Parent?.Name ?? "unknown"}' tryied to attack using unknown AttackData"
                 );

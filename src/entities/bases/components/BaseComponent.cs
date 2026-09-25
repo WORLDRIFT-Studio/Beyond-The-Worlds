@@ -4,6 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using BeyondTheWorlds.entities.bases.types;
 using Godot;
 
 namespace BeyondTheWorlds.entities.bases.components;
@@ -13,11 +14,12 @@ namespace BeyondTheWorlds.entities.bases.components;
 [Icon("res://addons/at-icons/node/icons.svg")]
 public abstract partial class BaseComponent : Node3D
 {
-    public Node3D? Parent { get; set; }
+    public Entity? Parent { get; private set; }
 
     public override void _EnterTree()
     {
         UpdateConfigurationWarnings();
+        Parent = FindEntityParent(this);
     }
 
     public override string[] _GetConfigurationWarnings()
@@ -29,9 +31,25 @@ public abstract partial class BaseComponent : Node3D
         if (GetTree().EditedSceneRoot == this)
             return [.. warnings];
 
-        if (parent is not ComponentContainer && GetTree().EditedSceneRoot != this)
+        if (
+            parent is not (ComponentContainer or BaseComponent)
+            && GetTree().EditedSceneRoot != this
+        )
             warnings.Add("Component must be a child of ComponentContainer.");
 
         return [.. warnings];
+    }
+
+    private Entity? FindEntityParent(Node node)
+    {
+        Node? parent = node.GetParent();
+        while (parent != null)
+        {
+            if (parent is Entity entity)
+                return entity;
+            parent = parent.GetParent();
+        }
+
+        return null;
     }
 }

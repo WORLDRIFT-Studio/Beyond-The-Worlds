@@ -14,6 +14,6 @@ namespace BeyondTheWorlds.entities.bases.types;
 [Tool]
 public partial class Enemy : Entity
 {
-    [Export]
-    public EnemyData? EnemyData { get; set; }
+	[Export]
+	public EnemyData? E3nemyData { get; set; }
 }

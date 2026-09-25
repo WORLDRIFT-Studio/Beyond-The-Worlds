@@ -12,7 +12,7 @@ namespace BeyondTheWorlds.entities.bases.types;
 [Tool]
 [GlobalClass]
 [Icon("res://addons/at-icons/node3d/fingerprint.svg")]
-public abstract partial class Entity : Node3D
+public abstract partial class Entity : CharacterBody3D
 {
     private ComponentContainer? _componentContainer;
 

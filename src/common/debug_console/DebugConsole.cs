@@ -4,7 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Globalization;
 using Godot;
 using FileAccess = Godot.FileAccess;
 
@@ -47,16 +46,16 @@ public partial class DebugConsole : Node
         {
             case "pause":
                 GetTree().GetRoot().ProcessMode = ProcessModeEnum.Disabled;
-                Log("INFO", "System", "Game Paused");
+                Log(DebugLevel.Info, "System", "Game Paused");
                 break;
 
             case "unpause":
                 GetTree().GetRoot().ProcessMode = ProcessModeEnum.Always;
-                Log("INFO", "System", "Game Unpaused");
+                Log(DebugLevel.Info, "System", "Game Unpaused");
                 break;
 
             default:
-                Log("ERROR", "System", $"Command '{input[0]}' doesn't exist.");
+                Log(DebugLevel.Info, "System", $"Command '{input[0]}' doesn't exist.");
                 break;
         }
 
@@ -108,7 +107,7 @@ public partial class DebugConsole : Node
     /// <param name="level">Poziom logu — INFO, WARNING, ERROR, oraz pozostałe</param>
     /// <param name="type">Typ logu — skąd pochodzi</param>
     /// <param name="message">Wiadomość logu</param>
-    public static void Log(string level, string type, string message)
+    public static void Log(DebugLevel level, string type, string message)
     {
         Instance?.ConsoleLog(level, type, message);
     }
@@ -119,15 +118,15 @@ public partial class DebugConsole : Node
     /// <param name="level">Poziom logu - INFO, WARNING, ERROR, oraz pozostałe</param>
     /// <param name="type">Typ logu - skąd pochodzi</param>
     /// <param name="message">Wiadomość logu</param>
-    private void ConsoleLog(string level, string type, string message)
+    private void ConsoleLog(DebugLevel level, string type, string message)
     {
-        level = level.ToUpper(CultureInfo.InvariantCulture);
         string color = level switch
         {
-            "INFO" => "#437ee3", //blue
-            "WARNING" => "#c18d48", //orange
-            "ERROR" => "#c4473c", //red
-            _ => "#b8b3ab", //gray
+            DebugLevel.Info => "#437ee3", //blue
+            DebugLevel.Warning => "#c18d48", //orange
+            DebugLevel.Error => "#c4473c", //red
+            DebugLevel.Debug => "#b8b3ab", //gray
+            _ => throw new ArgumentOutOfRangeException(nameof(level), level, null),
         };
 
         string cleanMessage =
@@ -135,6 +134,8 @@ public partial class DebugConsole : Node
         string formatedMessage =
             $"\n[color=#787878][i]{Time.GetDatetimeStringFromSystem().Split("T")[1]}[/i][/color] [color={color}][b][ {level} ][/b][/color] [i][color=#39cc9b]({type})[/color][/i] >>> {message}";
         _logHistory.Add(formatedMessage);
+
+        GD.Print(cleanMessage);
 
         SaveLogs(LogFilePath, cleanMessage);
 
@@ -207,7 +208,7 @@ public partial class DebugConsole : Node
             foreach (string oldLog in _logHistory)
                 ConsoleOutput?.AppendText(oldLog);
 
-            Log("info", "Console", "Console succesfully opened!");
+            Log(DebugLevel.Info, "Console", "Console succesfully opened!");
         }
     }
 

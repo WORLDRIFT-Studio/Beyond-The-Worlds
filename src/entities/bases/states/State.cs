@@ -4,6 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using BeyondTheWorlds.entities.bases.types;
 using Godot;
 
 namespace BeyondTheWorlds.entities.bases.states;
@@ -13,8 +14,8 @@ namespace BeyondTheWorlds.entities.bases.states;
 [Icon("res://addons/at-icons/node/cog.svg")]
 public abstract partial class State : Node
 {
-    public abstract StateMachine? StateMachine { get; set; }
-    public abstract Node? Parent { get; set; }
+    public StateMachine? StateMachine { get; set; }
+    public Entity? Parent { get; set; }
 
     public override string[] _GetConfigurationWarnings()
     {

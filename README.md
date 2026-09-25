@@ -10,13 +10,13 @@ Beyond The Worlds (Root)
 │   └── 📁 themes/                  # Pliki stylów UI Godota (.theme), kolory, styleboxy
 │
 └── 📁 src/                         # Architektura kodu i sceny (Logika gry)
-    ├── 📁 autoloads/               # Singletons / Autoloads (np. Global.cs, AudioManager.cs)
-    ├── 📁 common/                  # Skrypty/Sceny ogólnego przeznaczenia (np. Twój FreeCam)
-    ├── 📁 enemies/                 # Logika, AI, grafika i sceny przeciwników
-    ├── 📁 levels/                  # Sceny poziomów (.tscn), mapy, środowiska (Environment)
-    ├── 📁 objects/                 # Przedmioty interaktywne, przeszkody, skrzynie, znajdźki
-    ├── 📁 ui/                      # Ekrany menu, HUD, paski zdrowia, ekrany pauzy
-    └── 📁 vfx/                     # Efekty cząsteczkowe (GPUParticles), shadery, wybuchy
+	├── 📁 autoloads/               # Singletons / Autoloads (np. Global.cs, AudioManager.cs)
+	├── 📁 common/                  # Skrypty/Sceny ogólnego przeznaczenia (np. Twój FreeCam)
+	├── 📁 enemies/                 # Logika, AI, grafika i sceny przeciwników
+	├── 📁 levels/                  # Sceny poziomów (.tscn), mapy, środowiska (Environment)
+	├── 📁 objects/                 # Przedmioty interaktywne, przeszkody, skrzynie, znajdźki
+	├── 📁 ui/                      # Ekrany menu, HUD, paski zdrowia, ekrany pauzy
+	└── 📁 vfx/                     # Efekty cząsteczkowe (GPUParticles), shadery, wybuchy
 
 W powyższy sposób grupujemy pliki według przezanczenia, izolując je we własnych folderach, ułatwiajć zarządzanie wymaganymi plikami.
 
@@ -34,41 +34,41 @@ Wszystkie skrypty C# muszą być zgodne z oficjalnym stylem .NET oraz architektu
 
 #### Klasy, Struktury i Interfejsy
 * **Klasy i Struktury (`PascalCase`):** Każda klasa dziedzicząca po obiektach Godota musi mieć modyfikator `partial`.
-    ```csharp
-    public partial class FreeCam : CharacterBody3D { }
-    ```
+	```csharp
+	public partial class FreeCam : CharacterBody3D { }
+	```
 * **Interfejsy (`IPascalCase`):** Zawsze zaczynają się od wielkiej litery `I`.
-    ```csharp
-    public interface IDamageable { }
-    ```
+	```csharp
+	public interface IDamageable { }
+	```
 
 #### Metody i Właściwości (Properties)
 * **Metody (`PascalCase`):** Dotyczy to zarówno metod własnych, jak i nadpisywanych z cyklu życia Godota.
-    ```csharp
-    public override void _Ready() { }
-    public void CalculateVelocity() { }
-    ```
+	```csharp
+	public override void _Ready() { }
+	public void CalculateVelocity() { }
+	```
 * **Właściwości (`PascalCase`):** Używaj właściwości z akcesorami zamiast publicznych pól.
-    ```csharp
-    [Export] public float Speed { get; private set; } = 10f;
-    ```
+	```csharp
+	[Export] public float Speed { get; private set; } = 10f;
+	```
 
 #### Pola i Zmienne
 * **Pola prywatne / chronione (`_camelCase`):** Zawsze zaczynane od podkreślenia (underscore).
-    ```csharp
-    private Vector3 _targetVelocity;
-    ```
+	```csharp
+	private Vector3 _targetVelocity;
+	```
 * **Zmienne lokalne i argumenty (`camelCase`):** Pisane małą literą, kolejne słowa wielką.
-    ```csharp
-    float moveUpDown = 0.0f;
-    ```
+	```csharp
+	float moveUpDown = 0.0f;
+	```
 
 #### Obsługa Zdarzeń (Input Event Wyjątek)
 W C# `event` to słowo zastrzeżone. Zamiast pisać `@event`, dobrą praktyką w projekcie jest stosowanie nazwy `inputEvent` lub `@evt`:
 ```csharp
 public override void _UnhandledInput(InputEvent inputEvent)
 {
-    if (inputEvent is InputEventMouseMotion mouseMotion) { }
+	if (inputEvent is InputEventMouseMotion mouseMotion) { }
 }
 
 ---
@@ -94,5 +94,3 @@ Godot jest uruchamiany na systemach operacyjnych różnie traktujących wielkoś
   - Przykład: Plik FreeCam.cs zawiera public partial class FreeCam.
 
 ---
-
-

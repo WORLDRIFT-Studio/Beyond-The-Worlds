@@ -8,64 +8,64 @@ using Godot;
 
 namespace BeyondTheWorlds.cards;
 
-public partial class CardsManager : Control
+public partial class CardsManager : Node
 {
-    [Signal]
-    public delegate void CardsAmmountChangedEventHandler();
+	[Signal]
+	public delegate void CardsAmmountChangedEventHandler();
 
-    public override void _Ready()
-    {
-        CardsAmmountChanged += ArangeCards;
-        ArangeCards();
-    }
+	public override void _Ready()
+	{
+		CardsAmmountChanged += ArangeCards;
+		ArangeCards();
+	}
 
-    private void ArangeCards()
-    {
-        CardOnHand = new List<Node2D>(GetChildren().OfType<Node2D>());
-        var cardsCount = CardOnHand.Count;
-        if (cardsCount == 0)
-            return;
+	private void ArangeCards()
+	{
+		CardOnHand = new List<Node2D>(GetChildren().OfType<Node2D>());
+		int cardsCount = CardOnHand.Count;
+		if (cardsCount == 0)
+			return;
 
-        var currentWidth = cardsCount * CardSpacing;
-        var currentSpacing = currentWidth > MaxWidth ? MaxWidth / cardsCount : CardSpacing;
-        var xOffset = (cardsCount - 1) * currentSpacing / 2;
+		int currentWidth = cardsCount * CardSpacing;
+		float currentSpacing = currentWidth > MaxWidth ? MaxWidth / cardsCount : CardSpacing;
+		float xOffset = (cardsCount - 1) * currentSpacing / 2;
 
-        for (var i = 0; i < cardsCount; i++)
-        {
-            var xPos = CenterX + i * currentSpacing - xOffset;
-            var weight = cardsCount > 1 ? 2f * i / (cardsCount - 1) - 1 : 0f;
-            if (CardsArc == null)
-                return;
-            var yPos = BaseY + CardsArc.Sample(weight) * -ArcStrength;
-            CardOnHand[i].Position = new Vector2(xPos, yPos);
+		for (int i = 0; i < cardsCount; i++)
+		{
+			float xPos = CenterX + i * currentSpacing - xOffset;
+			float weight = cardsCount > 1 ? 2f * i / (cardsCount - 1) - 1 : 0f;
+			if (CardsArc == null)
+				return;
+			float yPos = BaseY + CardsArc.Sample(weight) * -ArcStrength;
+			CardOnHand[i].Position = new Vector2(xPos, yPos);
 
-            CardOnHand[i].RotationDegrees = weight * MaxRotation;
-        }
-    }
+			CardOnHand[i].RotationDegrees = weight * MaxRotation;
+		}
+	}
 
-    #region Variables
+	#region Variables
 
-    [Export]
-    private Curve? CardsArc { get; set; }
+	[Export]
+	private Curve? CardsArc { get; set; }
 
-    [Export]
-    private PointMesh? StartEnd { get; set; }
+	[Export]
+	private PointMesh? StartEnd { get; set; }
 
-    [Export(PropertyHint.Range, "0, 200, 1, prefer_slider")]
-    private short CardSpacing { get; set; } = 150;
+	[Export(PropertyHint.Range, "0, 200, 1, prefer_slider")]
+	private short CardSpacing { get; set; } = 150;
 
-    [Export(PropertyHint.Range, "0, 200, 1, prefer_slider")]
-    private short ArcStrength { get; set; } = 100;
+	[Export(PropertyHint.Range, "0, 200, 1, prefer_slider")]
+	private short ArcStrength { get; set; } = 100;
 
-    [Export(PropertyHint.Range, "0, 2000, 10, prefer_slider")]
-    private float BaseY { get; set; } = 1200;
+	[Export(PropertyHint.Range, "0, 2000, 10, prefer_slider")]
+	private float BaseY { get; set; } = 1200;
 
-    [Export(PropertyHint.Range, "0, 90, 1, prefer_slider")]
-    private int MaxRotation { get; set; } = 20;
+	[Export(PropertyHint.Range, "0, 90, 1, prefer_slider")]
+	private int MaxRotation { get; set; } = 20;
 
-    private List<Node2D>? CardOnHand { get; set; }
-    private float CenterX { get; set; } = 960;
-    private float MaxWidth { get; set; } = 1000f;
+	private List<Node2D>? CardOnHand { get; set; }
+	private float CenterX { get; set; } = 960;
+	private float MaxWidth { get; set; } = 1000f;
 
-    #endregion
+	#endregion
 }

@@ -35,7 +35,7 @@ public partial class DeckManager : Node
     {
         if (PlayerCards.Count == 0)
         {
-            DebugConsole.Log("WARNING", "CardSys", "Tried to get card from empty stack");
+            DebugConsole.Log(DebugLevel.Warning, "CardSys", "Tried to get card from empty stack");
             return null;
         }
 
@@ -48,7 +48,7 @@ public partial class DeckManager : Node
     /// <param name="receivedCards">Nowy stos kart do załadowania.</param>
     public void AddCards(Stack<CardData> receivedCards)
     {
-        DebugConsole.Log("INFO", "CardSys", "Received new card set");
+        DebugConsole.Log(DebugLevel.Warning, "CardSys", "Received new card set");
         PlayerCards = receivedCards;
     }
 
