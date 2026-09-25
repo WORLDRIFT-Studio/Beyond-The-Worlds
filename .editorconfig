@@ -113,6 +113,7 @@ dotnet_diagnostic.IDE0055.severity = warning
 dotnet_diagnostic.SA1000.severity = none
 dotnet_diagnostic.SA1004.severity = none
 dotnet_diagnostic.SA1005.severity = none
+dotnet_diagnostic.SA1008.severity = none
 dotnet_diagnostic.SA1009.severity = none
 dotnet_diagnostic.SA1010.severity = none
 dotnet_diagnostic.SA1027.severity = none
@@ -143,6 +144,8 @@ dotnet_diagnostic.SA1204.severity = none
 
 # C# operator precedence is considered sufficiently explicit.
 dotnet_diagnostic.SA1407.severity = none
+
+dotnet_diagnostic.SA1520.severity = none
 
 # Documentation is not required for every member in a game project.
 dotnet_diagnostic.SA1600.severity = none
