@@ -18,9 +18,12 @@ public partial class ChaseState : State
     public override string[] _GetConfigurationWarnings()
     {
         List<string> warnings = [];
-        if (Navigation is null) warnings.Add("Navigation is null");
-        if (Targeting is null) warnings.Add("Targeting is null");
-        if (Movement is null) warnings.Add("Movement is null");
+        if (Navigation is null)
+            warnings.Add("Navigation is null");
+        if (Targeting is null)
+            warnings.Add("Targeting is null");
+        if (Movement is null)
+            warnings.Add("Movement is null");
 
         return [.. base._GetConfigurationWarnings(), .. warnings];
     }
@@ -38,7 +41,8 @@ public partial class ChaseState : State
 
         Vector3? waypoint = Navigation?.GetNextWaypoint();
 
-        if (Targeting.Target is null || waypoint is null) return;
+        if (Targeting.Target is null || waypoint is null)
+            return;
         Movement.MoveInDirection(waypoint.Value.DirectionTo(Targeting.Target.GlobalPosition));
     }
 

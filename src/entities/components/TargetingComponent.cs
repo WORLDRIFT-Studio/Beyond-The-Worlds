@@ -28,7 +28,8 @@ public partial class TargetingComponent : BaseComponent
 
     private Entity? _target;
 
-    [Export(PropertyHint.Flags)] private EntityFlags _targetTypes = EntityFlags.Enemy;
+    [Export(PropertyHint.Flags)]
+    private EntityFlags _targetTypes = EntityFlags.Enemy;
 
     private double _timer;
 
@@ -48,7 +49,8 @@ public partial class TargetingComponent : BaseComponent
         get => _target;
         private set
         {
-            if (value == _target) return;
+            if (value == _target)
+                return;
             _target = value;
             EmitSignalTargetChanged(_target);
         }
@@ -58,9 +60,11 @@ public partial class TargetingComponent : BaseComponent
 
     public override void _PhysicsProcess(double delta)
     {
-        if (Engine.IsEditorHint()) return;
+        if (Engine.IsEditorHint())
+            return;
         _timer += delta;
-        if (_timer < _refreshTime) return;
+        if (_timer < _refreshTime)
+            return;
 
         UpdateTarget();
         _timer -= _refreshTime;
@@ -70,7 +74,8 @@ public partial class TargetingComponent : BaseComponent
     {
         List<string> warnings = [];
 
-        if (_range is null) warnings.Add("Missing range component. Add it in inspector.");
+        if (_range is null)
+            warnings.Add("Missing range component. Add it in inspector.");
 
         return [.. warnings, .. base._GetConfigurationWarnings()];
     }
@@ -96,7 +101,8 @@ public partial class TargetingComponent : BaseComponent
 
     private bool IsValidType(Entity? entity)
     {
-        if (entity == Parent) return false;
+        if (entity == Parent)
+            return false;
 
         switch (entity)
         {

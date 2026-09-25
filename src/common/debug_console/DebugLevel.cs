@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-
 namespace BeyondTheWorlds.common.debug_console;
 
 public enum DebugLevel

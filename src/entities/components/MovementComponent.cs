@@ -57,7 +57,8 @@ public partial class MovementComponent : BaseComponent
             return;
         }
 
-        if (_direction == null) return;
+        if (_direction == null)
+            return;
 
         Parent.Velocity = _direction.Value * (float)Speed;
         Parent.MoveAndSlide();
